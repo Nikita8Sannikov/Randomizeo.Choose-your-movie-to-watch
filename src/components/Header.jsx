@@ -1,43 +1,62 @@
+import React from "react"
+import { useState } from "react"
 import Input from "./Input"
 import Button from "./Button"
 
-export default function Header () {
-    return(
-      <>
+export default function Header() {
+  const [filmName, setFilmName] = useState("")
+  const [filmUrl, setFilmUrl] = useState("")
+
+  const handleFilmNameChange = (event) => setFilmName(event.target.value)
+  const handleFilmUrlChange = (event) => setFilmUrl(event.target.value)
+
+  function handleClick(event) {
+    event.preventDefault()
+    console.log("Название фильма:", filmName)
+    console.log("URL обложки:", filmUrl)
+  }
+  return (
+    <>
       <div className="add-film">
         <form>
-            <Input description="Введите название фильма"
-             placeholder="название"
-              labelFor="text1"
-               id="text1"/>
-            <Input description="Введите URL обложки"
-             placeholder="URL"
-              labelFor="text2"
-               id="text2"/>
-          
-  
-          
-          <Button className="add-button">Добавить</Button>
-         
-          <div className="search-area">
-          <Input 
-             placeholder="Введи название"
-              labelFor="text"
-              className="search" />
+          <Input
+            description="Введите название фильма"
+            placeholder="название"
+            labelFor="text1"
+            id="text1"
+            value={filmName}
+            onChange={handleFilmNameChange}
+          />
+          <Input
+            description="Введите URL обложки"
+            placeholder="URL"
+            labelFor="text2"
+            id="text2"
+            value={filmUrl}
+            onChange={handleFilmUrlChange}
+          />
 
-            <ul id="filter-results">
-  
-            </ul>
+          <Button className="add-button" onclick={handleClick}>
+            Добавить
+          </Button>
+
+          <div className="search-area">
+            <Input
+              placeholder="Введи название"
+              labelFor="text"
+              className="search"
+            />
+
+            <ul id="filter-results"></ul>
           </div>
         </form>
       </div>
-  
+
       <div className="result">
-      
-      <Button className="add-button">Что смотрим сегодня?</Button>
+        <Button className="button">Что смотрим сегодня?</Button>
         <div className="output">#</div>
         <div className="res" id="result"></div>
       </div>
-      </>
-    )
-  }
+    </>
+  )
+}

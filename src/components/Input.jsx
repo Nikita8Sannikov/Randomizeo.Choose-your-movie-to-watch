@@ -1,8 +1,26 @@
-export default function Input({labelFor, description, id, placeholder }) {
+import React from "react"
+import { useState } from "react"
+
+export default function Input({
+  labelFor,
+  description,
+  id,
+  placeholder,
+  value,
+  onChange,
+}) {
+
+
   return (
     <>
       <label htmlFor={labelFor}>{description}</label>
-      <input type="text" id={id} placeholder={placeholder} />
+      <input
+        type="text"
+        id={id}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
     </>
   )
 }

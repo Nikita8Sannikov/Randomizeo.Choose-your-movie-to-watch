@@ -1,5 +1,9 @@
-export default function({className, children}) {
-    return(
-        <button className={className}>{children}</button>
-    )
+import { $ } from "../base"
+
+export default function ({ className, children, onclick }) {
+  return (
+    <button className={className} onClick={onclick}>
+      {children}
+    </button>
+  )
 }
