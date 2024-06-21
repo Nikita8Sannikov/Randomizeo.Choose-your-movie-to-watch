@@ -2,6 +2,7 @@ import React from "react"
 import { useState } from "react"
 import Input from "./Input"
 import Button from "./Button"
+import Card from "./Card"
 
 export default function Header() {
   const [filmName, setFilmName] = useState("")
@@ -38,13 +39,13 @@ export default function Header() {
     console.log("URL обложки:", filmUrl)
     const newMovie = {
       title: filmName,
-      img: filmUrl
-  }
-  const updatedMovies = [...movies, newMovie];
-  console.log("Updated Movies:", updatedMovies);
+      img: filmUrl,
+    }
+    const updatedMovies = [...movies, newMovie]
+    console.log("Updated Movies:", updatedMovies)
 
-  setMovies(updatedMovies);
-  
+    setMovies(updatedMovies)
+
     setFilmName("")
     setFilmUrl("")
   }
@@ -88,7 +89,12 @@ export default function Header() {
       <div className="result">
         <Button className="button">Что смотрим сегодня?</Button>
         <div className="output">#</div>
-        <div className="res" id="result"></div>
+        <div className="res" id="result">
+          {movies.map((movie) => (
+             <Card 
+             key={movie.id} movie={movie}/>
+          ))}
+        </div>
       </div>
     </>
   )
