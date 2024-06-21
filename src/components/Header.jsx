@@ -6,6 +6,28 @@ import Button from "./Button"
 export default function Header() {
   const [filmName, setFilmName] = useState("")
   const [filmUrl, setFilmUrl] = useState("")
+  const [movies, setMovies] = useState([
+    {
+      id: 1,
+      title: "Дракула Брэма Стокера",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-6QE9dBnvT2N9CjHp2DZOAWKOLWCZMlppgexdIBbvWQ&s",
+    },
+    {
+      id: 2,
+      title: "Город Грехов",
+      img: "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/6025abef-078b-4385-9cec-8237194ed38e/600x900",
+    },
+    {
+      id: 3,
+      title: "Автостопом по галактике",
+      img: "https://thumbs.dfs.ivi.ru/storage4/contents/3/a/7da3eac3e71e63c85b578305a86143.jpg",
+    },
+    {
+      id: 4,
+      title: "Завтрак у Тиффани",
+      img: "https://thumbs.dfs.ivi.ru/storage8/contents/9/1/e225fa76749bff29a36d96e3401296.jpg",
+    },
+  ])
 
   const handleFilmNameChange = (event) => setFilmName(event.target.value)
   const handleFilmUrlChange = (event) => setFilmUrl(event.target.value)
@@ -14,6 +36,17 @@ export default function Header() {
     event.preventDefault()
     console.log("Название фильма:", filmName)
     console.log("URL обложки:", filmUrl)
+    const newMovie = {
+      title: filmName,
+      img: filmUrl
+  }
+  const updatedMovies = [...movies, newMovie];
+  console.log("Updated Movies:", updatedMovies);
+
+  setMovies(updatedMovies);
+  
+    setFilmName("")
+    setFilmUrl("")
   }
   return (
     <>
