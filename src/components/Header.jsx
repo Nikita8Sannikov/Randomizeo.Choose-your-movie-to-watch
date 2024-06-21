@@ -16,7 +16,8 @@ export default function Header () {
                id="text2"/>
           
   
-          <Button className="add-button" title="Добавить"/>
+          
+          <Button className="add-button">Добавить</Button>
          
           <div className="search-area">
           <Input 
@@ -32,8 +33,8 @@ export default function Header () {
       </div>
   
       <div className="result">
-      <Button className="button" title="Что смотрим сегодня?"/>
-        
+      
+      <Button className="add-button">Что смотрим сегодня?</Button>
         <div className="output">#</div>
         <div className="res" id="result"></div>
       </div>
