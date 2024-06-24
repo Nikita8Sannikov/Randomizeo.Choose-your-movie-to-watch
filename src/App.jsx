@@ -2,6 +2,7 @@ import React from "react"
 import { useState } from "react"
 import Header from "./components/Header"
 import MoviesSection from "./components/MoviesSection"
+import ResultSection from "./components/ResultSection"
 
 function App() {
   const [movies, setMovies] = useState([
@@ -47,6 +48,7 @@ function App() {
   return (
     <div>
       <Header addMovie={addMovie}/>
+      <ResultSection/>
       <MoviesSection movies={movies}/>
     </div>
   )

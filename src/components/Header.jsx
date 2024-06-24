@@ -18,7 +18,7 @@ export default function Header({addMovie}) {
     setFilmName("")
     setFilmUrl("")
   }
-  
+
   return (
     <>
       <div className="add-film">
@@ -54,14 +54,6 @@ export default function Header({addMovie}) {
             <ul id="filter-results"></ul>
           </div>
         </form>
-      </div>
-
-      <div className="result">
-        <Button className="button">Что смотрим сегодня?</Button>
-        <div className="output">#</div>
-        <div className="res" id="result">
-       
-        </div>
       </div>
     </>
   )
