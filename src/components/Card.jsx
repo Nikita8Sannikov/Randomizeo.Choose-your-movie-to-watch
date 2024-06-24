@@ -1,18 +1,18 @@
 import React from "react"
 
-export default function Card({movie}) {
+export default function Card({title, id, img }) {
     return(
-        <div className="card" key={movie.title}>
-        <img src={movie.img} alt={movie.title} />
+        <div className="card" >
+        <img src={img} alt={title} />
         <div className="card-body">
-          <h5 className="card-title">{movie.title}</h5>
+          <h5 className="card-title">{title}</h5>
           <p className="card-text">описание</p>
           <div className="btns">
             <button
               href="#"
               className="btn btn-primary"
               data-btn="description"
-              data-id={movie.id}
+              data-id={id}
             >
               Описание
             </button>
@@ -20,7 +20,7 @@ export default function Card({movie}) {
               href="#"
               className="btn btn-danger"
               data-btn="viewed"
-              data-id={movie.id}
+              data-id={id}
             >
               Просмотрено
             </button>
