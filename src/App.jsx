@@ -3,6 +3,8 @@ import { useState } from "react"
 import Header from "./components/Header"
 import MoviesSection from "./components/MoviesSection"
 import ResultSection from "./components/ResultSection"
+import TabsSection from "./components/TabsSection"
+import WatchedSection from "./components/WathcedSection"
 
 function App() {
   const [movies, setMovies] = useState([
@@ -27,6 +29,7 @@ function App() {
       img: "https://thumbs.dfs.ivi.ru/storage8/contents/9/1/e225fa76749bff29a36d96e3401296.jpg",
     },
   ])
+   
 
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0);
@@ -41,16 +44,27 @@ function App() {
     }
     const updatedMovies = [...movies, newMovie]
     console.log("Updated Movies:", updatedMovies)
-
     setMovies(updatedMovies)
   }
 
+  const [tab, setTab] = useState('main')
+
   return (
-    <div>
-      <Header addMovie={addMovie}/>
-      <ResultSection/>
-      <MoviesSection movies={movies}/>
-    </div>
+    <>
+    <main>
+      <TabsSection active={tab} onChange={(current) => setTab(current)}/>
+      
+      {tab === 'main' && (
+        <>
+        <Header addMovie={addMovie}/>
+         <ResultSection/>
+         <MoviesSection movies={movies}/>
+        </>
+      ) }
+
+      {tab === 'watched' && <WatchedSection/> }
+    </main>
+    </>
   )
 }
 

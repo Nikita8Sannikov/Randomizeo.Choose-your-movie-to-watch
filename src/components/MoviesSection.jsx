@@ -6,7 +6,7 @@ export default function MoviesSection({movies}) {
         <div className="film-container" id = "films">
      {movies.map((movie) => (
              <Card 
-              key={movie.title}
+              key={movie.id}
                {...movie}/>
           ))}
      </div>
