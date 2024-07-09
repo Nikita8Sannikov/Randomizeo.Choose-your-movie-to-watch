@@ -56,7 +56,7 @@ function App() {
       
       {tab === 'main' && (
         <>
-        <Header addMovie={addMovie}/>
+        <Header addMovie={addMovie} movies={movies}/>
          <ResultSection/>
          <MoviesSection movies={movies}/>
         </>
