@@ -48,6 +48,7 @@ function App() {
   }
 
   const [tab, setTab] = useState('main')
+ 
 
   return (
     <>
@@ -57,7 +58,7 @@ function App() {
       {tab === 'main' && (
         <>
         <Header addMovie={addMovie} movies={movies}/>
-         <ResultSection/>
+         <ResultSection movies={movies} />
          <MoviesSection movies={movies}/>
         </>
       ) }
