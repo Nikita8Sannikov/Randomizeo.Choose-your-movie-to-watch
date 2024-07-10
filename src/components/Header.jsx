@@ -51,14 +51,7 @@ export default function Header({addMovie, movies}) {
             Добавить
           </Button>
 
-          <div className="search-area">
-            <Input
-              placeholder="Введи название"
-              labelFor="text"
-              className="search"
-              value={searchFilm}
-              onChange={searchFilmChange}
-            />
+          
 
             <ul id="filter-results">
               {filter(searchFilm, movies).map((movie) => (
@@ -68,7 +61,7 @@ export default function Header({addMovie, movies}) {
           ))
               }
             </ul>
-          </div>
+          
         </form>
       </div>
     </>

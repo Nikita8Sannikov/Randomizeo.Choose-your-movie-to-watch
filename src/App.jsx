@@ -3,8 +3,8 @@ import { useState } from "react"
 import Header from "./components/Header"
 import MoviesSection from "./components/MoviesSection"
 import ResultSection from "./components/ResultSection"
-import TabsSection from "./components/TabsSection"
 import WatchedSection from "./components/WathcedSection"
+import Head from "./components/Head"
 
 function App() {
   const [movies, setMovies] = useState([
@@ -53,8 +53,9 @@ function App() {
   return (
     <>
     <main>
-      <TabsSection active={tab} onChange={(current) => setTab(current)}/>
-      
+      {/* <<TabsSection active={tab} onChange={(current) => setTab(current)}/>> */}
+      <Head active={tab} onChange={(current) => setTab(current)}/>
+        <div className="content">
       {tab === 'main' && (
         <>
         <Header addMovie={addMovie} movies={movies}/>
@@ -64,6 +65,7 @@ function App() {
       ) }
 
       {tab === 'watched' && <WatchedSection/> }
+      </div>
     </main>
     </>
   )
