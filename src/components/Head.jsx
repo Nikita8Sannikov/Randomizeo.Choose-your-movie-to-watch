@@ -1,11 +1,9 @@
 import React from 'react'
 import TabsSection from './TabsSection'
 import Input from './Input'
-import { useState } from 'react'
 
-const Head = ({active, onChange}) => {
+const Head = ({active, onChange, searchFilm, setSearchFilm}) => {
 // const [tab, setTab] = useState('main')
-const [searchFilm, setSearchFilm] = useState("")
 const searchFilmChange = (event) => setSearchFilm(event.target.value) 
   return (
     <>

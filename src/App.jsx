@@ -6,6 +6,7 @@ import ResultSection from "./components/ResultSection"
 import WatchedSection from "./components/WathcedSection"
 import Head from "./components/Head"
 import AddKinopoisk from "./components/AddKinopoisk"
+import Filter from "./components/Filter"
 
 function App() {
   const [movies, setMovies] = useState([
@@ -49,19 +50,19 @@ function App() {
   }
 
   const [tab, setTab] = useState('main')
- 
+  const [searchFilm, setSearchFilm] = useState("")
 
   return (
     <>
     <main>
       {/* <<TabsSection active={tab} onChange={(current) => setTab(current)}/>> */}
-      <Head active={tab} onChange={(current) => setTab(current)}/>
+      <Head active={tab} onChange={(current) => setTab(current)} searchFilm={searchFilm} setSearchFilm={setSearchFilm} />
         <div className="content">
       {tab === 'main' && (
         <>
         <AddKinopoisk/>
-
-        <Header addMovie={addMovie} movies={movies}/>
+        <Filter movies={movies} searchFilm={searchFilm}/>
+        <Header addMovie={addMovie} />
         <ResultSection movies={movies} />
          <MoviesSection movies={movies}/>
         </>
