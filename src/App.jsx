@@ -5,6 +5,7 @@ import MoviesSection from "./components/MoviesSection"
 import ResultSection from "./components/ResultSection"
 import WatchedSection from "./components/WathcedSection"
 import Head from "./components/Head"
+import AddKinopoisk from "./components/AddKinopoisk"
 
 function App() {
   const [movies, setMovies] = useState([
@@ -58,8 +59,10 @@ function App() {
         <div className="content">
       {tab === 'main' && (
         <>
+        <AddKinopoisk/>
+
         <Header addMovie={addMovie} movies={movies}/>
-         <ResultSection movies={movies} />
+        <ResultSection movies={movies} />
          <MoviesSection movies={movies}/>
         </>
       ) }
