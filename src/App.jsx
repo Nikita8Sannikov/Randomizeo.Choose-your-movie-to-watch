@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import Header from "./components/Header"
+import AddFilmOption from "./components/AddFilmOption"
 import MoviesSection from "./components/MoviesSection"
 import ResultSection from "./components/ResultSection"
 import WatchedSection from "./components/WathcedSection"
@@ -31,11 +31,10 @@ function App() {
       img: "https://thumbs.dfs.ivi.ru/storage8/contents/9/1/e225fa76749bff29a36d96e3401296.jpg",
     },
   ])
-   
 
   function getNextId(movies) {
-    const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0);
-    return maxId + 1;
+    const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
+    return maxId + 1
   }
 
   function addMovie(title, img) {
@@ -49,28 +48,32 @@ function App() {
     setMovies(updatedMovies)
   }
 
-  const [tab, setTab] = useState('main')
+  const [tab, setTab] = useState("main")
   const [searchFilm, setSearchFilm] = useState("")
 
   return (
     <>
-    <main>
-      {/* <<TabsSection active={tab} onChange={(current) => setTab(current)}/>> */}
-      <Head active={tab} onChange={(current) => setTab(current)} searchFilm={searchFilm} setSearchFilm={setSearchFilm} />
+      <main>
+        <Head
+          active={tab}
+          onChange={(current) => setTab(current)}
+          searchFilm={searchFilm}
+          setSearchFilm={setSearchFilm}
+        />
         <div className="content">
-      {tab === 'main' && (
-        <>
-        <AddKinopoisk/>
-        <Filter movies={movies} searchFilm={searchFilm}/>
-        <Header addMovie={addMovie} />
-        <ResultSection movies={movies} />
-         <MoviesSection movies={movies}/>
-        </>
-      ) }
+          {tab === "main" && (
+            <>
+              <AddKinopoisk />
+              <Filter movies={movies} searchFilm={searchFilm} />
+              <AddFilmOption addMovie={addMovie} />
+              <ResultSection movies={movies} />
+              <MoviesSection movies={movies} />
+            </>
+          )}
 
-      {tab === 'watched' && <WatchedSection/> }
-      </div>
-    </main>
+          {tab === "watched" && <WatchedSection />}
+        </div>
+      </main>
     </>
   )
 }
