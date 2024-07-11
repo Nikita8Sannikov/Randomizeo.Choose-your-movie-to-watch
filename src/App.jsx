@@ -7,6 +7,8 @@ import WatchedSection from "./components/WathcedSection"
 import Head from "./components/Head"
 import AddKinopoisk from "./components/AddKinopoisk"
 import Filter from "./components/Filter"
+import Modal from "./components/Modal"
+import { ModalProvider } from './components/ModalContext';
 
 function App() {
   const [movies, setMovies] = useState([
@@ -53,6 +55,7 @@ function App() {
 
   return (
     <>
+    <ModalProvider>
       <main>
         <Head
           active={tab}
@@ -60,6 +63,7 @@ function App() {
           searchFilm={searchFilm}
           setSearchFilm={setSearchFilm}
         />
+        <Modal/>
         <div className="content">
           {tab === "main" && (
             <>
@@ -74,6 +78,7 @@ function App() {
           {tab === "watched" && <WatchedSection />}
         </div>
       </main>
+      </ModalProvider>
     </>
   )
 }
