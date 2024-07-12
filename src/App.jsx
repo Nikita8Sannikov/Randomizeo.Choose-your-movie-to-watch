@@ -34,6 +34,8 @@ function App() {
     },
   ])
 
+  const [watchedMovies, setWatchedMovies] = useState([])
+
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
     return maxId + 1
@@ -49,6 +51,22 @@ function App() {
     console.log("Updated Movies:", updatedMovies)
     setMovies(updatedMovies)
   }
+
+  function addToWatchedMovies(movie) {
+    const newWatchedMovie = {
+      id: getNextId(watchedMovies),
+      title: movie.title,
+      img: movie.img,
+    }
+    const updatedWatchedMovies = [...watchedMovies, newWatchedMovie]
+    console.log("Updated Watched Movies:", updatedWatchedMovies)
+    setWatchedMovies(updatedWatchedMovies)
+  }
+
+  const removeMovie = (movie) => {
+    setMovies(movies.filter(m => m.id !== movie.id));
+  };
+
 
   const [tab, setTab] = useState("main")
   const [searchFilm, setSearchFilm] = useState("")
@@ -71,11 +89,11 @@ function App() {
               <Filter movies={movies} searchFilm={searchFilm} />
               <AddFilmOption addMovie={addMovie} />
               <ResultSection movies={movies} />
-              <MoviesSection movies={movies} />
+              <MoviesSection movies={movies} addToWatchedMovies={addToWatchedMovies} removeMovie={removeMovie}/>
             </>
           )}
 
-          {tab === "watched" && <WatchedSection />}
+          {tab === "watched" && <WatchedSection movies={watchedMovies}/>}
         </div>
       </main>
       </ModalProvider>
