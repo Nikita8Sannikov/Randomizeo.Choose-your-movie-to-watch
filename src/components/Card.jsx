@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
-import { ModalContext } from './ModalContext'
+import { ModalContext } from './Modal/ModalContext'
 import Button from "./Button"
-
+import styles from "./Modal/Modal.module.css"
 
 export default function Card({movie, addToWatchedMovies, removeMovie }) {
   const { openModal, closeModal } = useContext(ModalContext)
@@ -10,7 +10,9 @@ export default function Card({movie, addToWatchedMovies, removeMovie }) {
     openModal( movie.title,
       <>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ipsam alias, odit maiores reiciendis totam rem. Nemo repellendus voluptatibus commodi!</p>
+        <div className={styles.modalFooter}>
       <Button onclick={closeModal}>Ок</Button>
+      </div> 
       </>
     )
   }
@@ -19,8 +21,10 @@ export default function Card({movie, addToWatchedMovies, removeMovie }) {
     openModal( 'Добавить в просмотренные?',
       <>
         <p>Вы добавляете: <strong>{movie.title}</strong> в просмотренные</p>
+        <div className={styles.modalFooter}>
         <Button onclick={confirmViewed}>Да</Button>
         <Button onclick={showDeleteConfirmation}>Нет</Button>
+        </div>
       </>
     )
   }
@@ -28,8 +32,10 @@ export default function Card({movie, addToWatchedMovies, removeMovie }) {
     openModal('Удалить фильм?',
       <>
         <p>Вы удаляете: <strong>{movie.title}</strong> из текущего списка</p>
+        <div className={styles.modalFooter}>
         <Button onclick={confirmDelete}>Да</Button>
         <Button onclick={closeModal}>Нет</Button>
+        </div>
       </>
     );
   };

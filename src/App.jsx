@@ -7,8 +7,8 @@ import WatchedSection from "./components/WathcedSection"
 import Head from "./components/Head"
 import AddKinopoisk from "./components/AddKinopoisk"
 import Filter from "./components/Filter"
-import Modal from "./components/Modal"
-import { ModalProvider } from './components/ModalContext';
+import Modal from "./components/Modal/Modal"
+import { ModalProvider } from './components/Modal/ModalContext';
 
 function App() {
   const [movies, setMovies] = useState([
