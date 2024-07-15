@@ -1,0 +1,78 @@
+.result{
+    display: flex;
+    /* flex-direction: column; */
+    /* font-family: cursive, sans-serif ; */
+    justify-content: center;
+}
+.outputSection{
+    margin-top: 45px;
+}
+.outputSection>h3{
+    font-size: 90px;
+    color: white;
+}
+.output{
+    color: white;
+}
+#result{
+    display: flex;
+    justify-content: center;
+}
+.mainButton{
+    display: flex;
+    justify-content: center; 
+    margin-top: 113px;
+    
+}
+.button{
+    outline: none;
+    /* border: 1px solid #ecdede; */
+    border: none;
+    padding: 29px 144px;
+    font-size: 30px;
+    border-radius: 25px;
+    /* background-color: #5b099b; */
+    color: white;
+    cursor: pointer;
+    background: 
+     radial-gradient(
+        circle at 47% 0,
+        rgba(91 9 155 /-0.5) 20%,
+        rgba(91 9 155/0.5) 58%
+      ),
+    
+    radial-gradient(
+      circle at 47% 0,
+      rgba(170 34 156 / 0.92) 24%,
+      rgba(162 95 248 / 0.89) 85%
+    ),
+     radial-gradient(
+      circle at 46% 0,
+      rgba(194 67 254 / 1) 0%,
+      rgba(182 47 246 / 0.12) 100%
+    ),
+     radial-gradient(
+      circle at 35% 0,
+      rgba(255 255 255 / 0.73) 0%,
+      rgba(255 255 255 / 0.12) 100%
+    ),
+     radial-gradient(
+      circle at 50% 0,
+      rgba(255 255 255 / 1) 0%,
+      rgba(255 255 255 / 0) 100%
+    ),
+     radial-gradient(
+      circle at 80% 0,
+      rgba(255 255 255 / 1) 0%,
+      rgba(255 255 255 / 0) 100%
+    )
+    ;
+    box-shadow: 
+    0px 14.55px 100px 0px rgba(125, 20, 208, 0.8),
+    14.55px 22.09px 150px 0px rgba(218, 37, 156, 0.3),
+    -29.09px -29.09px 100px 0px rgba(102, 67, 242, 0.3),
+    0px 0px 14.55px 0px rgba(255, 255, 255, 0.4),
+    inset 0px 0px 14.55px 0px rgba(255, 255, 255, 0.4)
+
+    ;
+}

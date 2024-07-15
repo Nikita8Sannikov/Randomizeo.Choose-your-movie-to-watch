@@ -1,11 +1,12 @@
 import React from "react"
-import Button from "./Button"
-import Card from "./Card"
+import Button from "../Button"
+import Card from "../Card"
 import { useState } from "react"
+import styles from "./ResultSection.module.css"
 
 export default function ResultSection({movies}) {
   const [randomMovie, setRandomMovie] = useState(null)
-  const [outputText, setOutputText] = useState('#');
+  const [outputText, setOutputText] = useState('');
   
   function randomInteger(min, max) {
     let rand = min + Math.random() * (max + 1 - min);
@@ -25,13 +26,13 @@ export default function ResultSection({movies}) {
   }
 
     return(
-        <div className="result">
-          <div class="output-section">
-           <div className="main-button"> 
-        <Button className="button" onclick={() => handleRandomMovie()}>Что смотрим сегодня?</Button>
+        <div className={styles.result}>
+          <div class={styles.outputSection}>
+           <div className={styles.mainButton}> 
+        <Button className={styles.button} onclick={() => handleRandomMovie()}>Что смотрим сегодня?</Button>
             </div>
-        <div className="output">{outputText}</div>
-        <div className="res" id="result">
+        <div className={styles.output}>{outputText}</div>
+        <div className="res" id={styles.result}>
         {randomMovie && (
           <Card
             movie = {randomMovie}
