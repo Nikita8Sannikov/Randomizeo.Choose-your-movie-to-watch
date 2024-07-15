@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { useState } from "react"
+import { useState, useRef  } from "react"
 import AddFilmOption from "./components/AddFilm/AddFilmOption"
 import MoviesSection from "./components/MoviesSection"
 import ResultSection from "./components/ResultSection/ResultSection"
@@ -67,25 +67,27 @@ function App() {
     setMovies(movies.filter(m => m.id !== movie.id));
   };
 
+
+  const movieRefs = useRef([]);
+  movieRefs.current = [];
+
   useEffect(() => {
-    arrangeCards()
+    arrangeCards(100)
   }, [movies])
 
-  // const cardRefs = useRef([]);
-
+  
   function arrangeCards(y=0) {
-    // const cards = cardRefs.current;
     const cardsPerRow = 5;
     const cardWidth = 350; // ширина карточки + расстояние между карточками
     const cardHeight = 600; // высота карточки
   
     // console.log('Total cards:', cards.length);
-  
-    movies.forEach((card, index) => {
+    if (Array.isArray(movieRefs.current)) {
+      movieRefs.current.forEach((card, index) => {
       const rowIndex = Math.floor(index / cardsPerRow);
       const positionInRow = index % cardsPerRow;
       let offsetX, offsetY;
-  
+      console.log(card);
       // Расчет позиции X
       if (positionInRow === 0) {
         offsetX = 0;
@@ -99,10 +101,14 @@ function App() {
       offsetY = rowIndex * (cardHeight + 20) - Math.abs(offsetX) * 0.3;
   
       // console.log(`Card ${index}: rowIndex=${rowIndex}, positionInRow=${positionInRow}, offsetX=${offsetX}, offsetY=${offsetY}`);
-  
+      if (card) {
       card.style.transform = `translate(${offsetX}px, ${offsetY+y}px)`;
+      }
     });
+  }else {
+    console.error('movieRefs.current is not an array');
   }
+}
 
 
   const [tab, setTab] = useState("main")
@@ -126,7 +132,9 @@ function App() {
               <Filter movies={movies} searchFilm={searchFilm} />
               <AddFilmOption addMovie={addMovie} />
               <ResultSection movies={movies} />
-              <MoviesSection movies={movies} />
+              <MoviesSection movies={movies}
+                      movieRefs={movieRefs}
+                />
             </>
           )}
 

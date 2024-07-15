@@ -3,11 +3,11 @@ import { ModalContext } from './Modal/ModalContext'
 import Button from "./Button"
 import styles from "./MovieSection.module.css"
 
-export default function Card({movie}) {
+export default function Card({movie, cardRef }) {
   const { showDetails, showViewedConfirmation } = useContext(ModalContext)
 
     return(
-        <div className={styles.card}>
+        <div className={styles.card} ref={cardRef}>
         <div className={styles.imgWrapper}>
         
         <img src={movie.img} alt={movie.title} className={styles.cardImg} />
