@@ -26,7 +26,10 @@ export default function ResultSection({movies}) {
 
     return(
         <div className="result">
+          <div class="output-section">
+           <div className="main-button"> 
         <Button className="button" onclick={() => handleRandomMovie()}>Что смотрим сегодня?</Button>
+            </div>
         <div className="output">{outputText}</div>
         <div className="res" id="result">
         {randomMovie && (
@@ -38,6 +41,7 @@ export default function ResultSection({movies}) {
           />
         )}
         </div>
+      </div>
       </div>
     )
 }

@@ -1,12 +1,13 @@
 import React from "react"
-import Input from "./Input"
-import Button from "./Button"
+import Input from "../Input"
+import Button from "../Button"
+import styles from "./AddFilmSection.module.css"
 
 const AddKinopoisk = () => {
   return (
-    <>
-      <div className="kinopoiskSection">
-        <div className="input-kinopoisk">
+    <div className={styles.addFilm}>
+      <div className={styles.kinopoiskSection}>
+        <div className={styles.inputKinopoisk}>
           <Input
             type="text"
             id="text3"
@@ -16,9 +17,9 @@ const AddKinopoisk = () => {
             <span className="fa-solid fa-bars fa-3x bars-icon"></span>
           </Button>
         </div>
-        <Button className="add-kinopoisk-button">Добавить фильм</Button>
+        <Button className={styles.addKinopoiskButton}>Добавить фильм</Button>
       </div>
-    </>
+    </div>
   )
 }
 

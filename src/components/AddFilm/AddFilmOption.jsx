@@ -1,7 +1,8 @@
 import React from "react"
 import { useState } from "react"
-import Input from "./Input"
-import Button from "./Button"
+import Input from "../Input"
+import Button from "../Button"
+import styles from "./AddFilmSection.module.css"
 
 export default function AddFilmOption({addMovie, movies}) {
   const [filmName, setFilmName] = useState("")
@@ -23,8 +24,9 @@ export default function AddFilmOption({addMovie, movies}) {
 
   return (
     <>
-      <div className="add-film">
-        <form>
+      <div className={styles.addFilmOptions}>
+      <div className={styles.addSection}>
+      <div className={styles.addInputs}>
           <Input
             description="Введите название фильма"
             placeholder="название"
@@ -41,12 +43,12 @@ export default function AddFilmOption({addMovie, movies}) {
             value={filmUrl}
             onChange={handleFilmUrlChange}
           />
-
-          <Button className="add-button" onclick={handleClick}>
+            </div>
+          <Button className={styles.addButton} onclick={handleClick}>
             Добавить
           </Button>
 
-        </form>
+       </div>
       </div>
     </>
   )

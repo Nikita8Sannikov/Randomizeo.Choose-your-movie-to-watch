@@ -1,11 +1,11 @@
 import React from "react"
 import { useState } from "react"
-import AddFilmOption from "./components/AddFilmOption"
+import AddFilmOption from "./components/AddFilm/AddFilmOption"
 import MoviesSection from "./components/MoviesSection"
 import ResultSection from "./components/ResultSection"
 import WatchedSection from "./components/WathcedSection"
 import Header from "./components/Header/Header"
-import AddKinopoisk from "./components/AddKinopoisk"
+import AddKinopoisk from "./components/AddFilm/AddKinopoisk"
 import Filter from "./components/Filter"
 import Modal from "./components/Modal/Modal"
 import { ModalProvider } from './components/Modal/ModalContext';
