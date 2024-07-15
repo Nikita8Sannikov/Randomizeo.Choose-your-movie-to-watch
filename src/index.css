@@ -1,3 +1,29 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Manrope', sans-serif;
+  background: linear-gradient(0deg, #151616 -103%, #000000 13%);
+  /* color: white; */
+  /* max-width: 1900px; */
+  margin: auto;
+}
+main{
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+.content{
+  margin-top: 107px;
+  }
+
+
+
+
+
+
 .film-container{
   display: flex;
   justify-content: space-between;

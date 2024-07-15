@@ -1,0 +1,60 @@
+.header{
+    /* width: 100%; */
+    display: flex;
+    justify-content: space-between;
+    margin: 47px 42px;
+    align-items: center;
+    z-index: 1000;
+}
+.logoSection{
+    display: flex;
+    align-items: center;
+}
+.logo{
+    display: flex;
+}
+
+.siteName{
+    margin-left: 15px;
+}
+.siteName>h1{
+    font-size: 40px;
+    color: white;
+}
+.searchArea{
+    position: relative;
+}
+.searchArea>input{
+    font-size: 20px;
+    /* padding: 18px 172px; */
+    border-radius: 25px;
+    padding: 18px 48px;
+    width: 450px;
+    background-color: #302E31;
+    color: white;
+    outline: none;
+    border: 1px solid white;
+    caret-color: white;
+}
+.searchIcon{
+    position: absolute;
+    color: white;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+.navigationSection{
+    margin-left: 80px;
+}
+.navButton{
+    outline: none;
+    font-size: 23px;
+    border-radius: 25px;
+    padding: 5px;
+    background-color: rgb(68 68 68 / 0%);
+    color: white;
+    cursor: pointer;
+    /* border: 1px solid #2C2C2E; */
+    border: none;
+}

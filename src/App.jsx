@@ -4,7 +4,7 @@ import AddFilmOption from "./components/AddFilmOption"
 import MoviesSection from "./components/MoviesSection"
 import ResultSection from "./components/ResultSection"
 import WatchedSection from "./components/WathcedSection"
-import Head from "./components/Head"
+import Header from "./components/Header/Header"
 import AddKinopoisk from "./components/AddKinopoisk"
 import Filter from "./components/Filter"
 import Modal from "./components/Modal/Modal"
@@ -75,7 +75,7 @@ function App() {
     <>
     <ModalProvider>
       <main>
-        <Head
+        <Header
           active={tab}
           onChange={(current) => setTab(current)}
           searchFilm={searchFilm}
