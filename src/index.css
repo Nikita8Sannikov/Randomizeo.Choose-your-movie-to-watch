@@ -24,12 +24,6 @@ main{
 
 
 
-.film-container{
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  flex-wrap: wrap;
-}
 .card {
   width: 30vh;
   margin: 10px;

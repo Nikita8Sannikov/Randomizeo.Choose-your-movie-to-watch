@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useState } from "react"
 import AddFilmOption from "./components/AddFilm/AddFilmOption"
 import MoviesSection from "./components/MoviesSection"
@@ -66,6 +66,43 @@ function App() {
   const removeMovie = (movie) => {
     setMovies(movies.filter(m => m.id !== movie.id));
   };
+
+  useEffect(() => {
+    arrangeCards()
+  }, [movies])
+
+  // const cardRefs = useRef([]);
+
+  function arrangeCards(y=0) {
+    // const cards = cardRefs.current;
+    const cardsPerRow = 5;
+    const cardWidth = 350; // ширина карточки + расстояние между карточками
+    const cardHeight = 600; // высота карточки
+  
+    // console.log('Total cards:', cards.length);
+  
+    movies.forEach((card, index) => {
+      const rowIndex = Math.floor(index / cardsPerRow);
+      const positionInRow = index % cardsPerRow;
+      let offsetX, offsetY;
+  
+      // Расчет позиции X
+      if (positionInRow === 0) {
+        offsetX = 0;
+      } else if (positionInRow % 2 === 1) {
+        offsetX = -Math.ceil(positionInRow / 2) * cardWidth;
+      } else {
+        offsetX = Math.ceil(positionInRow / 2) * cardWidth;
+      }
+  
+      // Увеличим коэффициент для более глубокой дуги
+      offsetY = rowIndex * (cardHeight + 20) - Math.abs(offsetX) * 0.3;
+  
+      // console.log(`Card ${index}: rowIndex=${rowIndex}, positionInRow=${positionInRow}, offsetX=${offsetX}, offsetY=${offsetY}`);
+  
+      card.style.transform = `translate(${offsetX}px, ${offsetY+y}px)`;
+    });
+  }
 
 
   const [tab, setTab] = useState("main")

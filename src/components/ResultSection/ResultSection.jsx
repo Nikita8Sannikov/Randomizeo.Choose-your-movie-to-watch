@@ -27,7 +27,7 @@ export default function ResultSection({movies}) {
 
     return(
         <div className={styles.result}>
-          <div class={styles.outputSection}>
+          <div className={styles.outputSection}>
            <div className={styles.mainButton}> 
         <Button className={styles.button} onclick={() => handleRandomMovie()}>Что смотрим сегодня?</Button>
             </div>
