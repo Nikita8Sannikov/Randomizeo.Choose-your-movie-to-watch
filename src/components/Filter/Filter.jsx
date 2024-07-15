@@ -1,5 +1,6 @@
 import React from 'react'
-import Card from './Card';
+import Card from '../Card';
+import styles from "./Filter.module.css"
 
 const Filter = ({movies, searchFilm}) => {
     function filter(val, filmList){
@@ -8,8 +9,7 @@ const Filter = ({movies, searchFilm}) => {
       }
   return (
     <>
-    
-    <ul id="filter-results">
+    <ul id={styles.filterResults}>
               {filter(searchFilm, movies).map((movie) => (
              <Card 
               key={movie.id}

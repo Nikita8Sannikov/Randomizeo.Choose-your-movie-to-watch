@@ -6,7 +6,7 @@ import ResultSection from "./components/ResultSection"
 import WatchedSection from "./components/WathcedSection"
 import Header from "./components/Header/Header"
 import AddKinopoisk from "./components/AddFilm/AddKinopoisk"
-import Filter from "./components/Filter"
+import Filter from "./components/Filter/Filter"
 import Modal from "./components/Modal/Modal"
 import { ModalProvider } from './components/Modal/ModalContext';
 
