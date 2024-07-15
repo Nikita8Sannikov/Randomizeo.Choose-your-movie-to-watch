@@ -73,7 +73,7 @@ function App() {
 
   return (
     <>
-    <ModalProvider>
+    <ModalProvider addToWatchedMovies={addToWatchedMovies} removeMovie={removeMovie}>
       <main>
         <Header
           active={tab}
@@ -89,7 +89,7 @@ function App() {
               <Filter movies={movies} searchFilm={searchFilm} />
               <AddFilmOption addMovie={addMovie} />
               <ResultSection movies={movies} />
-              <MoviesSection movies={movies} addToWatchedMovies={addToWatchedMovies} removeMovie={removeMovie}/>
+              <MoviesSection movies={movies} />
             </>
           )}
 

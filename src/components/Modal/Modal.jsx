@@ -5,6 +5,7 @@ import  styles from "./Modal.module.css"
 const Modal = () => {
   const{isModalOpen, isModalClosing, modalContent, modalTitle, closeModal} = useContext(ModalContext)
   const [modalClass, setModalClass] = useState(styles.modal)
+  
   useEffect(() => {
     let timeoutId
     if(isModalOpen) {
@@ -18,6 +19,7 @@ const Modal = () => {
     return () => clearTimeout(timeoutId)
   }, [isModalOpen, isModalClosing])
 
+  
   if (!isModalOpen && !isModalClosing) return null;
 
   return (
