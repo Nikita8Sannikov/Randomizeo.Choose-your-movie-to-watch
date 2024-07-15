@@ -13,7 +13,7 @@ const Filter = ({movies, searchFilm}) => {
               {filter(searchFilm, movies).map((movie) => (
              <Card 
               key={movie.id}
-               {...movie}/>
+              movie = {movie}/>
           ))
               }
             </ul>

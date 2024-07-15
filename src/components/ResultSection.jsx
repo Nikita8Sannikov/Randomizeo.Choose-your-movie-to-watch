@@ -31,6 +31,7 @@ export default function ResultSection({movies}) {
         <div className="res" id="result">
         {randomMovie && (
           <Card
+            movie = {randomMovie}
             title={randomMovie.title}
             id={randomMovie.id}
             img={randomMovie.img}
