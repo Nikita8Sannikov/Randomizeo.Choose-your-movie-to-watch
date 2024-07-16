@@ -19,70 +19,14 @@ main{
   margin-top: 107px;
   }
 
-
-
-
-
-
-.card {
-  width: 30vh;
-  margin: 10px;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  .view-icon{
+    pointer-events: none;
 }
-.card>img{
-  width: 100%;
+.trash-icon{
+    pointer-events: none;
 }
-.card-body{
-  font-family: cursive, sans-serif ;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.card-title {
-  word-wrap: break-word;
-}
-.result{
-  display: flex;
-  flex-direction: column;
-  font-family: cursive, sans-serif ;
-}
-#result{
-  display: flex;
-  justify-content: center;
-
-}
-.output{
-  display: flex;
-  justify-content: center;
-  font-size: 24px;
-}
-.output-image{
-  display: flex;
-  justify-content: center;
-}
-.output-image>img{
-  width: 20vh;
-}
-.big-text {
-  font-size: 24px;
-  font-weight: bold;
-}
-.button{
-  outline: none;
-  border: 1px solid #ecdede;
-}
-
-#filter-results{
-  display: flex;
-}
-.search-area{
-  margin-top: 10px;
+.star-icon{
+    background: linear-gradient(45deg,#afaf16 , white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

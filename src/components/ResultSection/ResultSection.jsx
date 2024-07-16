@@ -18,6 +18,7 @@ export default function ResultSection({movies}) {
     setTimeout(() =>{
     if(movies == undefined || movies.length === 0 ){
       alert('Добавьте хотя бы 1 фильм..')
+      return
    }
    const randomMovie =  movies[randomInteger(0, movies.length-1)]
    setRandomMovie(randomMovie);
@@ -33,13 +34,15 @@ export default function ResultSection({movies}) {
         <Button className={styles.button} onclick={() => handleRandomMovie()}>Тык</Button>
             </div>
         <div className={styles.output}>{outputText}</div>
-        <div className="res" id={styles.result}>
+        <div className={styles.res}
+        // id={styles.result}
+        >
         {randomMovie && (
           <Card
             movie = {randomMovie}
-            title={randomMovie.title}
-            id={randomMovie.id}
-            img={randomMovie.img}
+            // title={randomMovie.title}
+            // id={randomMovie.id}
+            // img={randomMovie.img}
           />
         )}
         </div>

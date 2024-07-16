@@ -87,7 +87,7 @@ function App() {
       const rowIndex = Math.floor(index / cardsPerRow);
       const positionInRow = index % cardsPerRow;
       let offsetX, offsetY;
-      console.log(card);
+      // console.log(card);
       // Расчет позиции X
       if (positionInRow === 0) {
         offsetX = 0;

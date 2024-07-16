@@ -43,6 +43,9 @@
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
+
+    background-color: #302E31;
+    border: none;
 }
 .navigationSection{
     margin-left: 80px;

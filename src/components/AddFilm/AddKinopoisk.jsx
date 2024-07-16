@@ -13,7 +13,7 @@ const AddKinopoisk = () => {
             id="text3"
             placeholder="Введите ссылку на Кинопоиск"
           />
-          <Button className="bars-btn">
+          <Button className={styles.barsBtn}>
             <span className="fa-solid fa-bars fa-3x bars-icon"></span>
           </Button>
         </div>

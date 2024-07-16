@@ -17,7 +17,9 @@ export default function Card({movie, cardRef }) {
         </div>
         <div className={styles.cardBody}>
           <h5 className={styles.cardTitle}>{movie.title}</h5>
-          <p className={styles.cardText}>описание</p>
+          <p className={styles.cardText}>
+          <i className="fa-solid fa-star star-icon"></i>
+            рейтинг</p>
           <div className={styles.buttonSection}>
             <Button
               href="#"
@@ -35,7 +37,7 @@ export default function Card({movie, cardRef }) {
               data-id={movie.id}
               onclick={() => showViewedConfirmation(movie)}
             >
-              Просмотрено
+              <span className="fa-regular fa-eye view-icon"></span>
             </Button>
           </div>
         </div>
