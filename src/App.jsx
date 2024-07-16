@@ -113,6 +113,7 @@ function App() {
 
   const [tab, setTab] = useState("main")
   const [searchFilm, setSearchFilm] = useState("")
+  const [optionsShow, setOptionsShow] = useState(false)
 
   return (
     <>
@@ -128,9 +129,9 @@ function App() {
         <div className="content">
           {tab === "main" && (
             <>
-              <AddKinopoisk />
+              <AddKinopoisk optionsShow={optionsShow} setOptionsShow={setOptionsShow} />
               <Filter movies={movies} searchFilm={searchFilm} />
-              <AddFilmOption addMovie={addMovie} />
+              {optionsShow && <AddFilmOption addMovie={addMovie} optionsShow={optionsShow}/>}
               <ResultSection movies={movies} />
               <MoviesSection movies={movies}
                       movieRefs={movieRefs}

@@ -43,9 +43,6 @@
     transform: translateY(-50%);
     position: absolute;
 }
-.bars-icon{
-    pointer-events: none;
-}
 .addKinopoiskButton{
     /* padding: 30px 117px; */
     padding: 24px;
@@ -59,13 +56,14 @@
     cursor: pointer;
 }
 .addFilmOptions {
-    display: none;
+    /* display: none; */
     justify-content: center;
     color:white;
 }
 .addSection{
     display: flex;
     margin: 10px 150px 0 0;
+    justify-content: center;
 }
 .addInputs>input{
     font-size: 15px;

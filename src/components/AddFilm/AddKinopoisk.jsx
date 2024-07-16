@@ -3,7 +3,7 @@ import Input from "../Input"
 import Button from "../Button"
 import styles from "./AddFilmSection.module.css"
 
-const AddKinopoisk = () => {
+const AddKinopoisk = ({optionsShow, setOptionsShow}) => {
   return (
     <div className={styles.addFilm}>
       <div className={styles.kinopoiskSection}>
@@ -13,7 +13,7 @@ const AddKinopoisk = () => {
             id="text3"
             placeholder="Введите ссылку на Кинопоиск"
           />
-          <Button className={styles.barsBtn}>
+          <Button className={styles.barsBtn} onclick={() => setOptionsShow(prev => !prev)}>
             <span className="fa-solid fa-bars fa-3x bars-icon"></span>
           </Button>
         </div>

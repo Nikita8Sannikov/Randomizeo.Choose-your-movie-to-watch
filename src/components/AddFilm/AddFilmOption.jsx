@@ -4,7 +4,7 @@ import Input from "../Input"
 import Button from "../Button"
 import styles from "./AddFilmSection.module.css"
 
-export default function AddFilmOption({addMovie, movies}) {
+export default function AddFilmOption({addMovie, movies, optionsShow }) {
   const [filmName, setFilmName] = useState("")
   const [filmUrl, setFilmUrl] = useState("")
 
@@ -28,16 +28,14 @@ export default function AddFilmOption({addMovie, movies}) {
       <div className={styles.addSection}>
       <div className={styles.addInputs}>
           <Input
-            description="Введите название фильма"
-            placeholder="название"
+            placeholder="Введите название фильма"
             labelFor="text1"
             id="text1"
             value={filmName}
             onChange={handleFilmNameChange}
           />
           <Input
-            description="Введите URL обложки"
-            placeholder="URL"
+            placeholder="Введите URL обложки"
             labelFor="text2"
             id="text2"
             value={filmUrl}

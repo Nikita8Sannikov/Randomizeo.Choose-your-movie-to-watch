@@ -30,3 +30,6 @@ main{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.bars-icon{
+  pointer-events: none;
+}
