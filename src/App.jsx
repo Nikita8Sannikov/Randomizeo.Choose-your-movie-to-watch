@@ -35,7 +35,7 @@ function App() {
   ])
 
   const [watchedMovies, setWatchedMovies] = useState([])
-
+  const [searchFilm, setSearchFilm] = useState("")
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
     return maxId + 1
@@ -67,7 +67,7 @@ function App() {
     setMovies(movies.filter(m => m.id !== movie.id));
   };
 
-
+  
   const movieRefs = useRef([]);
   movieRefs.current = [];
 
@@ -75,19 +75,19 @@ function App() {
     arrangeCards(100)
   }, [movies])
 
-  
+ 
   function arrangeCards(y=0) {
     const cardsPerRow = 5;
     const cardWidth = 350; // ширина карточки + расстояние между карточками
     const cardHeight = 600; // высота карточки
   
-    // console.log('Total cards:', cards.length);
+    // console.log('Total cards:', movieRefs.current);
     if (Array.isArray(movieRefs.current)) {
       movieRefs.current.forEach((card, index) => {
       const rowIndex = Math.floor(index / cardsPerRow);
       const positionInRow = index % cardsPerRow;
       let offsetX, offsetY;
-      // console.log(card);
+      // console.log(movieRefs.current);
       // Расчет позиции X
       if (positionInRow === 0) {
         offsetX = 0;
@@ -112,7 +112,7 @@ function App() {
 
 
   const [tab, setTab] = useState("main")
-  const [searchFilm, setSearchFilm] = useState("")
+
   const [optionsShow, setOptionsShow] = useState(false)
 
   return (

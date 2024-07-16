@@ -1,13 +1,14 @@
 import React, { useContext } from "react"
 import { ModalContext } from './Modal/ModalContext'
 import Button from "./Button"
-import styles from "./MovieSection.module.css"
+// import styles from "./MovieSection.module.css"
+import styles from "./Card.module.css"
 
-export default function Card({movie, cardRef }) {
+export default function Card({movie, cardRef, styleType }) {
   const { showDetails, showViewedConfirmation } = useContext(ModalContext)
-
+  const className = `${styles.card} ${styles[styleType]}`
     return(
-        <div className={styles.card} ref={cardRef}>
+        <div className={className} ref={cardRef}>
         <div className={styles.imgWrapper}>
         
         <img src={movie.img} alt={movie.title} className={styles.cardImg} />

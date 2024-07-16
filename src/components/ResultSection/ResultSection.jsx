@@ -40,6 +40,7 @@ export default function ResultSection({movies}) {
         {randomMovie && (
           <Card
             movie = {randomMovie}
+            styleType="result" 
             // title={randomMovie.title}
             // id={randomMovie.id}
             // img={randomMovie.img}
