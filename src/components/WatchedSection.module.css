@@ -1,0 +1,8 @@
+.filmContainer{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    position: relative;
+}

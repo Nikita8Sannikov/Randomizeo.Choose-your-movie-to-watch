@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import Card from "./Card"
 import styles from "./MovieSection.module.css"
-import { CardContext } from './CardContext'
 import { ModalContext } from './Modal/ModalContext'
 import Button from "./Button"
 

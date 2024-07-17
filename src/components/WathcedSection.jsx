@@ -2,29 +2,31 @@ import React, { useContext } from 'react'
 import Card from "./Card"
 import { ModalContext } from './Modal/ModalContext'
 import Button from "./Button"
-
-
-const watchedSectionContent = (movie) => (
-  <>
-    <Button
-      href="#"
-      className={styles.btn}
-      data-btn="description"
-      onClick={() => showDetails(movie)}
-    >
-      Описание
-    </Button>
-  </>
-)
+import styles from "./WatchedSection.module.css"
 
 const WathcedSection = ({movies}) => {
   const { showDetails } = useContext(ModalContext);
+
+  const watchedSectionContent = (movie) => (
+    <>
+      <Button
+        href="#"
+        className={styles.btn}
+        data-btn="description"
+        onClick={() => showDetails(movie)}
+      >
+        Описание
+      </Button>
+    </>
+  )
+  
   return (
-    <div className="film-container" id="watched-films">
+    <div className={styles.filmContainer}  id="watched-films">
       {movies.map((movie) => (
              <Card 
               key={movie.id}
               movie = {movie}
+              styleType="watchedSection"
               buttons={watchedSectionContent(movie)}
               />
           ))}
