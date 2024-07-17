@@ -3,7 +3,7 @@ import Card, {StyledButton} from "./Card"
 import { ModalContext } from './Modal/ModalContext'
 import styles from "./WatchedSection.module.css"
 
-const WathcedSection = ({movies}) => {
+const WathcedSection = ({movies, movieRefs,}) => {
   const { showDetails, showWatchedDeleteConfirmation, watchedMovies, setWatchedMovies } = useContext(ModalContext);
 
   const watchedSectionContent = (movie) => (
@@ -23,10 +23,11 @@ const WathcedSection = ({movies}) => {
   
   return (
     <div className={styles.filmContainer}  id="watched-films">
-      {movies.map((movie) => (
+      {movies.map((movie, index) => (
              <Card 
               key={movie.id}
               movie = {movie}
+              cardRef={(el) => (movieRefs.current[index] = el)}
               styleType="watchedSection"
               buttons={watchedSectionContent(movie)}
               />

@@ -36,6 +36,9 @@ function App() {
 
   const [watchedMovies, setWatchedMovies] = useState([])
   const [searchFilm, setSearchFilm] = useState("")
+  const [tab, setTab] = useState("main")
+  const [optionsShow, setOptionsShow] = useState(false)
+  
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
     return maxId + 1
@@ -72,8 +75,9 @@ function App() {
   movieRefs.current = [];
 
   useEffect(() => {
-    arrangeCards(100)
-  }, [movies])
+    const y = tab === 'main'? 100 : 200
+    arrangeCards(y)
+  }, [movies,watchedMovies, tab])
 
  
   function arrangeCards(y=0) {
@@ -111,9 +115,7 @@ function App() {
 }
 
 
-  const [tab, setTab] = useState("main")
 
-  const [optionsShow, setOptionsShow] = useState(false)
 
   return (
     <>
@@ -141,7 +143,9 @@ function App() {
             </>
           )}
 
-          {tab === "watched" && <WatchedSection movies={watchedMovies}/>}
+          {tab === "watched" && <WatchedSection movies={watchedMovies}
+            movieRefs={movieRefs}
+          />}
         </div>
       </main>
       </ModalProvider>
