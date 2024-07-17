@@ -9,14 +9,11 @@ const WathcedSection = ({movies}) => {
 
   const watchedSectionContent = (movie) => (
     <>
-      <Button
-        href="#"
-        className={styles.btn}
-        data-btn="description"
+      <StyledButton
         onClick={() => showDetails(movie)}
       >
         Описание
-      </Button>
+      </StyledButton>
     </>
   )
   

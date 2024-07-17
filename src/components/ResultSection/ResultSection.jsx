@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import Button from "../Button"
-import Card from "../Card"
+import Card, {StyledButton} from "../Card"
 import { useState } from "react"
 import styles from "./ResultSection.module.css"
 import { ModalContext } from '../Modal/ModalContext'
@@ -29,14 +29,11 @@ export default function ResultSection({movies}) {
 
   const resultSectionContent = (movie) => (
     <>
-      <Button
-        href="#"
-        className={styles.btn}
-        data-btn="description"
+      <StyledButton
         onClick={() => showDetails(movie)}
       >
         Подробнее
-      </Button>
+      </StyledButton>
     </>
   )
 

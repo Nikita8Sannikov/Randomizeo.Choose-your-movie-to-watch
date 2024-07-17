@@ -1,8 +1,7 @@
 import React, { useContext } from "react"
-import Card from "./Card"
+import Card, {StyledButton} from "./Card"
 import styles from "./MovieSection.module.css"
 import { ModalContext } from './Modal/ModalContext'
-import Button from "./Button"
 
 export default function MoviesSection({
   movies,
@@ -14,24 +13,16 @@ export default function MoviesSection({
 
     const movieSectionContent = (movie) => (
       <>
-        <Button
-              href="#"
-              className={styles.btn}
-              data-btn="description"
-              // data-id={movie.id}
-              onclick={() => showDetails(movie)}
+        <StyledButton
+          onClick={() => showDetails(movie)}
             >
               Описание
-            </Button>
-            <Button
-              href="#"
-              className={styles.btn}
-              data-btn="viewed"
-              // data-id={movie.id}
-              onclick={() => showViewedConfirmation(movie)}
+        </StyledButton>
+        <StyledButton
+          onClick={() => showViewedConfirmation(movie)}
             >
-              <span className="fa-regular fa-eye view-icon"></span>
-            </Button>
+          <span className="fa-regular fa-eye view-icon"></span>
+        </StyledButton>
       </>
     );
 

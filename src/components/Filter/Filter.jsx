@@ -1,9 +1,7 @@
 import React, { useContext } from 'react'
-import Card from '../Card';
+import Card, {StyledButton} from "../Card"
 import styles from "./Filter.module.css"
 import { ModalContext } from '../Modal/ModalContext'
-import Button from "../Button"
-
 
 const Filter = ({movies, searchFilm}) => {
   const { showDetails, showViewedConfirmation } = useContext(ModalContext)
@@ -15,24 +13,16 @@ const Filter = ({movies, searchFilm}) => {
 
 const filterContent = (movie) => (
         <>
-         <Button
-              href="#"
-              className={styles.btn}
-              data-btn="description"
-              // data-id={movie.id}
+         <StyledButton
               onclick={() => showDetails(movie)}
             >
               Описание
-            </Button>
-            <Button
-              href="#"
-              className={styles.btn}
-              data-btn="viewed"
-              // data-id={movie.id}
+            </StyledButton>
+            <StyledButton
               onclick={() => showViewedConfirmation(movie)}
             >
               <span className="fa-regular fa-eye view-icon"></span>
-            </Button>
+            </StyledButton>
         </>
       )    
 
