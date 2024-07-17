@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { useState, useRef  } from "react"
+import React from "react"
+import { useState, useRef, useEffect   } from "react"
 import AddFilmOption from "./components/AddFilm/AddFilmOption"
 import MoviesSection from "./components/MoviesSection"
 import ResultSection from "./components/ResultSection/ResultSection"
@@ -9,7 +9,6 @@ import AddKinopoisk from "./components/AddFilm/AddKinopoisk"
 import Filter from "./components/Filter/Filter"
 import Modal from "./components/Modal/Modal"
 import { ModalProvider } from './components/Modal/ModalContext';
-import { CardProvider } from './components/CardContext';
 
 function App() {
   const [movies, setMovies] = useState([
@@ -64,8 +63,8 @@ function App() {
     setWatchedMovies(updatedWatchedMovies)
   }
 
-  const removeMovie = (movie) => {
-    setMovies(movies.filter(m => m.id !== movie.id));
+  const removeMovieFromList = (movie, list, setList) => {
+    setList(list.filter(m => m.id !== movie.id));
   };
 
   
@@ -118,7 +117,9 @@ function App() {
 
   return (
     <>
-    <ModalProvider addToWatchedMovies={addToWatchedMovies} removeMovie={removeMovie}>
+    <ModalProvider addToWatchedMovies={addToWatchedMovies} removeMovieFromList={removeMovieFromList}
+    movies={movies} setMovies={setMovies} watchedMovies={watchedMovies} setWatchedMovies={setWatchedMovies}
+    >
       <main>
         <Header
           active={tab}

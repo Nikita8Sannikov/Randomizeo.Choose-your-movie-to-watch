@@ -1,11 +1,10 @@
 import React, { useContext } from 'react'
-import Card from "./Card"
+import Card, {StyledButton} from "./Card"
 import { ModalContext } from './Modal/ModalContext'
-import Button from "./Button"
 import styles from "./WatchedSection.module.css"
 
 const WathcedSection = ({movies}) => {
-  const { showDetails } = useContext(ModalContext);
+  const { showDetails, showWatchedDeleteConfirmation, watchedMovies, setWatchedMovies } = useContext(ModalContext);
 
   const watchedSectionContent = (movie) => (
     <>
@@ -13,6 +12,11 @@ const WathcedSection = ({movies}) => {
         onClick={() => showDetails(movie)}
       >
         Описание
+      </StyledButton>
+      <StyledButton
+        onClick={() => showWatchedDeleteConfirmation(movie, watchedMovies, setWatchedMovies)}
+      >
+        удалить
       </StyledButton>
     </>
   )
