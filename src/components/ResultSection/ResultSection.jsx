@@ -1,13 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import Button from "../Button"
 import Card from "../Card"
 import { useState } from "react"
 import styles from "./ResultSection.module.css"
+import { ModalContext } from '../Modal/ModalContext'
 
 export default function ResultSection({movies}) {
   const [randomMovie, setRandomMovie] = useState(null)
   const [outputText, setOutputText] = useState('');
-  
+  const { showDetails } = useContext(ModalContext)
   function randomInteger(min, max) {
     let rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand)
@@ -26,6 +27,19 @@ export default function ResultSection({movies}) {
   }, 1000)
   }
 
+  const resultSectionContent = (movie) => (
+    <>
+      <Button
+        href="#"
+        className={styles.btn}
+        data-btn="description"
+        onClick={() => showDetails(movie)}
+      >
+        Подробнее
+      </Button>
+    </>
+  )
+
     return(
         <div className={styles.result}>
           <div className={styles.outputSection}>
@@ -41,6 +55,7 @@ export default function ResultSection({movies}) {
           <Card
             movie = {randomMovie}
             styleType="result" 
+            buttons={resultSectionContent(randomMovie)}
             // title={randomMovie.title}
             // id={randomMovie.id}
             // img={randomMovie.img}
