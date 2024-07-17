@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ModalContext } from './ModalContext'
 import  styles from "./Modal.module.css"
+import Button from "../Button"
 
 const Modal = () => {
   const{isModalOpen, isModalClosing, modalContent, modalTitle, closeModal} = useContext(ModalContext)
@@ -40,3 +41,9 @@ const Modal = () => {
 }
 
 export default Modal
+
+export const StyledButton = ({ onClick, children }) => (
+  <Button className={styles.btn} onclick={onClick}>
+    {children}
+  </Button>
+);

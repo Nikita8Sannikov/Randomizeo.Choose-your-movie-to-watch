@@ -80,3 +80,13 @@
     margin-left: 5px;
     border-width:1px;
 }
+.btn{
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: rgb(68 68 68 / 0%);
+    outline: none;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+}

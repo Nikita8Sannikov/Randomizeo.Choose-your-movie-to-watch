@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import  styles from "./Modal.module.css"
 import Button from "../Button"
+import {StyledButton} from "./Modal"
 export const ModalContext = React.createContext()
 
 export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromList, movies, setMovies, watchedMovies, setWatchedMovies }) => {
@@ -28,7 +29,7 @@ export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromLis
           <>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ipsam alias, odit maiores reiciendis totam rem. Nemo repellendus voluptatibus commodi!</p>
             <div className={styles.modalFooter}>
-          <Button onclick={closeModal}>Ок</Button>
+          <StyledButton onClick={closeModal}>Ок</StyledButton>
           </div> 
           </>
         )
@@ -39,8 +40,8 @@ export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromLis
           <>
             <p>Вы добавляете: <strong>{movie.title}</strong> в просмотренные</p>
             <div className={styles.modalFooter}>
-            <Button onclick={() => confirmViewed (movie, list, setList)}>Да</Button>
-            <Button onclick={() => showDeleteConfirmation(movie, list, setList)}>Нет</Button>
+            <StyledButton onClick={() => confirmViewed (movie, list, setList)}>Да</StyledButton>
+            <StyledButton onClick={() => showDeleteConfirmation(movie, list, setList)}>Нет</StyledButton>
             </div>
           </>
         )
@@ -50,8 +51,8 @@ export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromLis
           <>
             <p>Вы удаляете: <strong>{movie.title}</strong> из текущего списка</p>
             <div className={styles.modalFooter}>
-            <Button onclick={() => confirmDelete(movie, list, setList)}>Да</Button>
-            <Button onclick={closeModal}>Нет</Button>
+            <StyledButton onClick={() => confirmDelete(movie, list, setList)}>Да</StyledButton>
+            <StyledButton onClick={closeModal}>Нет</StyledButton>
             </div>
           </>
         )
