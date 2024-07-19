@@ -11,12 +11,12 @@ const WathcedSection = ({movies, movieRefs,}) => {
       <StyledButton
         onClick={() => showDetails(movie)}
       >
-        Описание
+        Подробнее
       </StyledButton>
       <StyledButton
         onClick={() => showWatchedDeleteConfirmation(movie, watchedMovies, setWatchedMovies)}
       >
-        удалить
+        <span class="fa-regular fa-trash-can trash-icon"></span>
       </StyledButton>
     </>
   )

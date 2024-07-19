@@ -46,11 +46,16 @@ function App() {
     return maxId + 1
   }
 
-  function addMovie(title, img) {
+  function addMovie(title, img, shortDescription='', description='', year='', genres='', rating='') {
     const newMovie = {
       id: getNextId(movies),
       title,
       img,
+      shortDescription,
+      description,
+      year,
+      genres,
+      rating
     }
     const updatedMovies = [newMovie, ...movies]
     console.log("Updated Movies:", updatedMovies)
@@ -62,6 +67,11 @@ function App() {
       id: getNextId(watchedMovies),
       title: movie.title,
       img: movie.img,
+      shortDescription: movie.shortDescription,
+      description: movie.description,
+      year: movie.year,
+      genres: movie.genres,
+      rating: movie.rating
     }
     const updatedWatchedMovies = [...watchedMovies, newWatchedMovie]
     console.log("Updated Watched Movies:", updatedWatchedMovies)
@@ -157,7 +167,7 @@ fetch(urlWithParams, options)
   console.log(data.genres.map(genre => genre.name).join(', ')); 
   console.log(data.rating.kp); 
 
-  addMovie(data.name, data.poster.previewUrl)
+  addMovie(data.name, data.poster.previewUrl, data.shortDescription, data.description, data.year, data.genres.map(genre => genre.name).join(', '), data.rating.kp.toFixed(2) )
   // allMovies.push( {id:getNextId(allMovies), title: data.name, img: data.poster.previewUrl, shortDescription: data.shortDescription, description: data.description, year: data.year, genres: data.genres.map(genre => genre.name).join(', '), rating: data.rating.kp.toFixed(2)})
 
 })

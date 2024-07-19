@@ -14,7 +14,7 @@ export default function MoviesSection({
         <StyledButton
           onClick={() => showDetails(movie)}e
             >
-              Описание
+              Подробнее
         </StyledButton>
         <StyledButton
           onClick={() => showViewedConfirmation(movie, movies, setMovies)}

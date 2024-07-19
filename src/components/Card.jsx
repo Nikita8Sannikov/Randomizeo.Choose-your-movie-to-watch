@@ -10,14 +10,21 @@ export default function Card({movie, cardRef, styleType, buttons }) {
         
         <img src={movie.img} alt={movie.title} className={styles.cardImg} />
         <div className={styles.descriptionLayer}>
-        <p className={styles.cardText}>Описание по кнопке ниже &#8595 </p>
+        <p className={styles.cardText}>
+          <>
+          {movie.shortDescription ||'Описание по кнопке ниже ↓'} 
+          <br></br>
+          <i>{movie.genres||''}</i>
+          </>
+          </p>
         </div>
         </div>
         <div className={styles.cardBody}>
-          <h5 className={styles.cardTitle}>{movie.title}</h5>
+          <h5 className={styles.cardTitle}>{movie.title} {(movie.year || '') && `(${movie.year})`}</h5>
           <p className={styles.cardText}>
           <i className="fa-solid fa-star star-icon"></i>
-            рейтинг</p>
+          {movie.rating || ''}
+          </p>
           <div className={styles.buttonSection}>
              {buttons}
              </div>

@@ -27,7 +27,7 @@ export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromLis
       const showDetails = (movie) => {
         openModal( movie.title,
           <>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ipsam alias, odit maiores reiciendis totam rem. Nemo repellendus voluptatibus commodi!</p>
+            <p>{ movie.description }</p>
             <div className={styles.modalFooter}>
           <StyledButton onClick={closeModal}>Ок</StyledButton>
           </div> 
