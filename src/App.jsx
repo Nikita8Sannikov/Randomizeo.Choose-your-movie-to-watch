@@ -38,7 +38,9 @@ function App() {
   const [searchFilm, setSearchFilm] = useState("")
   const [tab, setTab] = useState("main")
   const [optionsShow, setOptionsShow] = useState(false)
-  
+  const [kinopoisk, setKinopoisk] = useState("")
+  const [kinoId, setKinoId] = useState(null)
+
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
     return maxId + 1
@@ -50,7 +52,7 @@ function App() {
       title,
       img,
     }
-    const updatedMovies = [...movies, newMovie]
+    const updatedMovies = [newMovie, ...movies]
     console.log("Updated Movies:", updatedMovies)
     setMovies(updatedMovies)
   }
@@ -114,6 +116,57 @@ function App() {
   }
 }
 
+//Блок добавления фильма по ссылке с кинопоиска
+
+  // URL API для поиска фильма 
+const apiUrl = 'https://api.kinopoisk.dev/v1.4/movie';
+
+// API ключ
+const apiKey = '1QSQYSZ-PNCMBA2-JX6Q2NJ-24SE8J7';
+
+const options = {
+  method: 'GET', 
+  headers: {
+   'X-API-KEY': apiKey,
+  }
+};
+
+ const handleAddFilm = (id) => {
+    setKinoId(id)
+  }
+  
+useEffect(() => {
+  if(kinoId){
+    const urlWithParams = `${apiUrl}/${kinoId}`
+    // console.log('newUrl',urlWithParams)
+  
+fetch(urlWithParams, options)
+.then(response => {
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json(); 
+})
+.then(data => {
+  console.log(data); 
+  console.log(data.name); 
+  console.log(data.shortDescription); 
+  console.log(data.description); 
+  console.log(data.year); 
+  console.log(data.poster.previewUrl); 
+  console.log(data.genres.map(genre => genre.name).join(', ')); 
+  console.log(data.rating.kp); 
+
+  addMovie(data.name, data.poster.previewUrl)
+  // allMovies.push( {id:getNextId(allMovies), title: data.name, img: data.poster.previewUrl, shortDescription: data.shortDescription, description: data.description, year: data.year, genres: data.genres.map(genre => genre.name).join(', '), rating: data.rating.kp.toFixed(2)})
+
+})
+.catch(error => {
+  console.error('Ошибка запроса:', error); 
+})
+  setKinoId(null)
+  }
+}, [kinoId])
 
 
 
@@ -127,13 +180,17 @@ function App() {
           active={tab}
           onChange={(current) => setTab(current)}
           searchFilm={searchFilm}
-          setSearchFilm={setSearchFilm}
+          setSearchFilm = {setSearchFilm}
         />
         <Modal/>
         <div className="content">
           {tab === "main" && (
             <>
-              <AddKinopoisk optionsShow={optionsShow} setOptionsShow={setOptionsShow} />
+              <AddKinopoisk optionsShow={optionsShow} setOptionsShow={setOptionsShow}
+               kinopoisk={kinopoisk}
+               setKinopoisk = {setKinopoisk}
+               handleAddFilm={handleAddFilm} 
+               />
               <Filter movies={movies} searchFilm={searchFilm} />
               {optionsShow && <AddFilmOption addMovie={addMovie} optionsShow={optionsShow}/>}
               <ResultSection movies={movies} />
