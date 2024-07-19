@@ -21,17 +21,18 @@
     caret-color: white;
     color: white;
 }
-/* .clickable{
-    position: absolute;
-    top: 0;
-    right: 35%;
-} */
-/* .clickable>p{
-    color: blue;
-    text-decoration: underline dotted blue;
-    cursor: pointer;
-    position: absolute;
-} */
+.inputKinopoisk>input:focus {
+    background-color: #302E31;
+  }
+.inputKinopoisk>input:-webkit-autofill,
+.inputKinopoisk>input:-webkit-autofill:hover,
+.inputKinopoisk>input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+  }  
+.inputKinopoisk>input:-moz-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+  }
 .barsBtn{
     color: white;
     background-color:#302E31;
@@ -76,6 +77,19 @@
     color: white;
     margin: 0 10px;
 }
+.addInputs>input:focus {
+    background-color: #302E31;
+  }
+.addInputs>input:-webkit-autofill,
+.addInputs>input:-webkit-autofill:hover,
+.addInputs>input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+  }  
+.addInputs>input:-moz-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
 .addButton {
     padding: 10px;
     border-radius: 15px;
