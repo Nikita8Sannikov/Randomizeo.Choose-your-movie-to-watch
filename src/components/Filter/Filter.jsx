@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Card, {StyledButton} from "../Card"
+import Card, {StyledButton} from "../Card/Card"
 import styles from "./Filter.module.css"
 import { ModalContext } from '../Modal/ModalContext'
 

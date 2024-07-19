@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import  styles from "./Modal.module.css"
-import Button from "../Button"
 import {StyledButton} from "./Modal"
 export const ModalContext = React.createContext()
 

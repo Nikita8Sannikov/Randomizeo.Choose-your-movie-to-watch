@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import Card, {StyledButton} from "./Card"
-import { ModalContext } from './Modal/ModalContext'
+import Card, {StyledButton} from "../Card/Card"
+import { ModalContext } from '../Modal/ModalContext'
 import styles from "./WatchedSection.module.css"
 
 const WathcedSection = ({movies, movieRefs,}) => {

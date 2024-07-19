@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
-import Card, {StyledButton} from "./Card"
+import Card, {StyledButton} from "../Card/Card"
 import styles from "./MovieSection.module.css"
-import { ModalContext } from './Modal/ModalContext'
+import { ModalContext } from '../Modal/ModalContext'
 
 export default function MoviesSection({
   movies,

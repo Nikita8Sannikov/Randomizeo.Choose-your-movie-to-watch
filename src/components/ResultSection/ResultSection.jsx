@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import Button from "../Button"
-import Card, {StyledButton} from "../Card"
+import Card, {StyledButton} from "../Card/Card"
 import { useState } from "react"
 import styles from "./ResultSection.module.css"
 import { ModalContext } from '../Modal/ModalContext'

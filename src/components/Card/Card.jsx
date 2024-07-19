@@ -1,6 +1,6 @@
 import React from "react"
 import styles from "./Card.module.css"
-import Button from "./Button"
+import Button from "../Button"
 
 export default function Card({movie, cardRef, styleType, buttons }) {
   const className = `${styles.card} ${styles[styleType]}`
