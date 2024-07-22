@@ -1,13 +1,24 @@
-import React from 'react'
-import Button from '../Button'
-import  styles from "./Header.module.css"
+import React from "react"
+import Button from "../Button"
+import styles from "./Header.module.css"
+import { useNavigate } from "react-router-dom"
 
-const TabsSection = ({active, onChange}) => {
+const TabsSection = () => {
+  const navigate = useNavigate()
   return (
     <section className={styles.navigationSection}>
-        <Button isActive={active === 'main'} onclick={() => onChange('main')} className={styles.navButton}>Будем смотреть</Button>
-        <Button isActive={active === 'watched'} onclick={() => onChange('watched')} className={styles.navButton}>Просмотренные</Button>
-
+      <Button
+        onclick={() => navigate("/")}
+        className={styles.navButton}
+      >
+        Будем смотреть
+      </Button>
+      <Button
+        onclick={() => navigate("/watched")}
+        className={styles.navButton}
+      >
+        Просмотренные
+      </Button>
     </section>
   )
 }

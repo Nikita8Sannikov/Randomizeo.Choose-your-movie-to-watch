@@ -12,6 +12,7 @@
 }
 .logo{
     display: flex;
+    cursor: pointer;
 }
 
 .siteName{
@@ -20,6 +21,7 @@
 .siteName>h1{
     font-size: 40px;
     color: white;
+    cursor: pointer;
 }
 .searchArea{
     position: relative;
