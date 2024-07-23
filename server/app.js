@@ -1,7 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import config from 'config'
-import movieRoutes from './routes/movies.js'
+import movieRoutes from './routes/movie.js'
 
 const app = express()
 

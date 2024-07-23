@@ -6,6 +6,7 @@ import Header from "./components/Header/Header"
 import Modal from "./components/Modal/Modal"
 import { ModalProvider } from "./components/Modal/ModalContext"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { addMovie as addMovieToApi } from "./api"
 
 function App() {
   const [movies, setMovies] = useState([
@@ -41,7 +42,7 @@ function App() {
     return maxId + 1
   }
 
-  function addMovie(
+  async function addMovie(
     title,
     img,
     shortDescription = "",
@@ -60,9 +61,15 @@ function App() {
       genres,
       rating,
     }
-    const updatedMovies = [newMovie, ...movies]
-    console.log("Updated Movies:", updatedMovies)
-    setMovies(updatedMovies)
+
+    try{
+      await addMovieToApi(newMovie)
+      const updatedMovies = [newMovie, ...movies]
+      console.log("Updated Movies:", updatedMovies)
+      setMovies(updatedMovies)
+    }catch(error) {
+      console.error("Error adding movie to the API:", error)
+    }
   }
 
   function addToWatchedMovies(movie) {

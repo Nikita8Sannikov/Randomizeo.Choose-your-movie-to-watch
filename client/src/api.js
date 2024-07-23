@@ -9,7 +9,13 @@ export const addMovie = async (movie) => {
       },
       body: JSON.stringify(movie),
     })
-    return await response.json()
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data
   } catch (error) {
     console.error("Error adding movie:", error)
     throw error

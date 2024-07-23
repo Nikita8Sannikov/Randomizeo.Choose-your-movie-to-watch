@@ -3,6 +3,10 @@ import Movie from "../models/Movie.js"
 
 const router = Router()
 
+router.get('/', (req, res) => {
+  res.send('Hello from the server!');
+})
+
 // Роут для добавления нового фильма
 router.post("/add", async (req, res) => {
   try {
@@ -29,7 +33,8 @@ router.post("/add", async (req, res) => {
     await newMovie.save()
     res.status(201).json(newMovie)
   } catch (error) {
-    res.status(500).json({ message: "Server error" })
+    console.error('Error adding movie:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 })
 

@@ -2,11 +2,11 @@
     "name": "randomizeo",
     "version": "1.0.0",
     "scripts": {
-      "start": "concurrently \"npm run server\" \"npm run client\"",
-      "server": "cd server && npm run server",
-      "client": "cd client && npm run dev"
+        "start": "concurrently \"npm run server\" \"npm run client\"",
+        "server": "cd server && npm run server",
+        "client": "cd client && npm run dev"
     },
     "dependencies": {
-      "concurrently": "^8.2.2"
+        "concurrently": "^8.2.2"
     }
-  }
+}
