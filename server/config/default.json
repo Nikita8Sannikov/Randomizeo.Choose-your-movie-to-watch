@@ -1,0 +1,4 @@
+{
+    "port": 5000,
+    "mongoUri": "mongodb+srv://sannikovnikita1992:DAfbbc66@randomizeo-cluster.fz0zprk.mongodb.net/app?retryWrites=true&w=majority&appName=Randomizeo-Cluster"
+}
