@@ -16,7 +16,7 @@ const WathcedSection = ({ movies, movieRefs, arrangeCards }) => {
   useEffect(() => {
     const y = location.pathname === "/" ? 100 : 200
     arrangeCards(y)
-  }, [watchedMovies, location.pathname])
+  }, [movies, location.pathname])
 
   const watchedSectionContent = (movie) => (
     <>
