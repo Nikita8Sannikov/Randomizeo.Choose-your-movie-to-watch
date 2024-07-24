@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import config from 'config'
 import movieRoutes from './routes/movie.js'
+import watchedMovieRoutes from './routes/watchedMovies.js'
 
 const app = express()
 
@@ -9,8 +10,8 @@ app.use(express.json()); // Миддлвар для обработки JSON-те
 
 // Использование роутов для обработки запросов по пути /api/movies
 app.use('/api/movies', movieRoutes);
-
-
+// Использование роутов для обработки запросов по пути /api/watched-movies
+app.use('/api/watched-movies', watchedMovieRoutes);
 
 const PORT = config.get('port') || 5000
 

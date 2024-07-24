@@ -1,11 +1,7 @@
 import { Router } from "express"
-import Movie from "../models/Movie.js"
+import WatchedMovie  from "../models/WatchedMovie.js"
 
 const router = Router()
-
-// router.get('/', (req, res) => {
-//   res.send('Hello from the server!');
-// })
 
 // Роут для добавления нового фильма
 router.post("/add", async (req, res) => {
@@ -20,7 +16,7 @@ router.post("/add", async (req, res) => {
       genres,
       rating,
     } = req.body
-    const newMovie = new Movie({
+    const newWatchedMovie= new WatchedMovie({
       id,
       title,
       img,
@@ -30,8 +26,8 @@ router.post("/add", async (req, res) => {
       genres,
       rating,
     })
-    await newMovie.save()
-    res.status(201).json(newMovie)
+    await newWatchedMovie.save()
+    res.status(201).json(newWatchedMovie)
   } catch (error) {
     console.error('Error adding movie:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -41,45 +37,18 @@ router.post("/add", async (req, res) => {
 // Роут для получения всех фильмов
 router.get("/", async (req, res) => {
   try {
-    const movies = await Movie.find()
+    const movies = await WatchedMovie.find()
     res.json(movies)
   } catch (error) {
     res.status(500).json({ message: "Server error" })
   }
 })
 
-// // Роут для получения просмотренных фильмов
-// router.get("/watched", async (req, res) => {
-//   try {
-//     const movies = await Movie.find({ watched: true })
-//     res.json(movies)
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error" })
-//   }
-// })
-
-// // Роут для обновления статуса фильма
-// router.put("/update/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params
-//     const { watched } = req.body
-//     const movie = await Movie.findOne({ id })
-//     if (!movie) {
-//       return res.status(404).json({ message: "Movie not found" })
-//     }
-//     movie.watched = watched
-//     await movie.save()
-//     res.json(movie)
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error" })
-//   }
-// })
-
 // Роут для удаления фильма
 router.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params
-    const movie = await Movie.findOneAndDelete({ id })
+    const movie = await WatchedMovie.findOneAndDelete({ id })
     if (!movie) {
       return res.status(404).json({ message: "Movie not found" })
     }

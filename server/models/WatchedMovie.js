@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 
 const { Schema, model } = mongoose
 
-const movieSchema = new Schema({
+const watchedMovieSchema = new Schema({
+  // id: { type: Number, unique: true }, // id фильма
     id: { type: Number }, // id фильма
     title: { type: String, required: true }, // Название фильма 
     img: { type: String, required: true }, // URL изображения
@@ -13,4 +14,4 @@ const movieSchema = new Schema({
     rating: String, // Рейтинг фильма
   })
 
-export default model('Movie', movieSchema)
+export default model('WatchedMovie', watchedMovieSchema)
