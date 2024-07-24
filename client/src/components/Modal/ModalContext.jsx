@@ -3,7 +3,7 @@ import  styles from "./Modal.module.css"
 import {StyledButton} from "./Modal"
 export const ModalContext = React.createContext()
 
-export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromList, movies, setMovies, watchedMovies, setWatchedMovies }) => {
+export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromList, movies, setMovies, watchedMovies, setWatchedMovies, deleteMovie }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalContent, setModalContent] = useState(null)
     const [modalTitle, setModalTitle] = useState(null)
@@ -63,10 +63,15 @@ export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromLis
         showDeleteConfirmation(movie, list, setList)
       }
     
-      const confirmDelete = (movie, list, setList) => {
-        removeMovieFromList(movie, list, setList)
-        closeModal();
-      };
+      const confirmDelete = async (movie, list, setList) => {
+        try{
+         await deleteMovie(movie, list, setList)
+        //  removeMovieFromList(movie, list, setList)
+         closeModal()
+        }catch(error){
+          console.error("Error deleting movie:", error)
+        }
+      }
     
 
       return (

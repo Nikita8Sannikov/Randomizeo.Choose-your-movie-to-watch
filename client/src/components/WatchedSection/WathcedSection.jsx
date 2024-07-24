@@ -26,7 +26,7 @@ const WathcedSection = ({ movies, movieRefs, arrangeCards }) => {
           showWatchedDeleteConfirmation(movie, watchedMovies, setWatchedMovies)
         }
       >
-        <span class="fa-regular fa-trash-can trash-icon"></span>
+        <span className="fa-regular fa-trash-can trash-icon"></span>
       </StyledButton>
     </>
   )

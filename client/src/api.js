@@ -73,8 +73,16 @@ export const deleteMovie = async (id) => {
   try {
     const response = await fetch(`/api/movies/delete/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    return await response.json()
+    if (!response.ok){
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data
   } catch (error) {
     console.error("Error deleting movie:", error)
     throw error

@@ -8,6 +8,7 @@ import { ModalProvider } from "./components/Modal/ModalContext"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { addMovie as addMovieToApi } from "./api"
 import { getMovies as getMoviesFromApi } from "./api"
+import { deleteMovie as deleteMoviesFromApi } from "./api"
 
 function App() {
   const [movies, setMovies] = useState([
@@ -102,6 +103,15 @@ function App() {
     setWatchedMovies(updatedWatchedMovies)
   }
 
+  async function deleteMovie(movie, list, setList){
+      try{
+        await deleteMoviesFromApi(movie.id)
+        removeMovieFromList (movie, list, setList) 
+      }catch(error) {
+        console.error("Error deleting movies:", error)
+      }
+    }
+    
   const removeMovieFromList = (movie, list, setList) => {
     setList(list.filter((m) => m.id !== movie.id))
   }
@@ -212,6 +222,7 @@ function App() {
         setMovies={setMovies}
         watchedMovies={watchedMovies}
         setWatchedMovies={setWatchedMovies}
+        deleteMovie={deleteMovie}
       >
         <main>
           <Header searchFilm={searchFilm} setSearchFilm={setSearchFilm} />
