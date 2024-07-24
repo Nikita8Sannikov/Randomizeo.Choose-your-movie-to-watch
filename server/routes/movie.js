@@ -3,9 +3,9 @@ import Movie from "../models/Movie.js"
 
 const router = Router()
 
-router.get('/', (req, res) => {
-  res.send('Hello from the server!');
-})
+// router.get('/', (req, res) => {
+//   res.send('Hello from the server!');
+// })
 
 // Роут для добавления нового фильма
 router.post("/add", async (req, res) => {

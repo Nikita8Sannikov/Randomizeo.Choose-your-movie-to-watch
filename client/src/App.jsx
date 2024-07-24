@@ -7,6 +7,7 @@ import Modal from "./components/Modal/Modal"
 import { ModalProvider } from "./components/Modal/ModalContext"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { addMovie as addMovieToApi } from "./api"
+import { getMovies as getMoviesFromApi } from "./api"
 
 function App() {
   const [movies, setMovies] = useState([
@@ -42,6 +43,19 @@ function App() {
     return maxId + 1
   }
 
+  useEffect(() => {
+    async function fetchMovies(){
+      try{
+        const fetchedMovies = await getMoviesFromApi()
+        setMovies(fetchedMovies)
+      }catch(error) {
+        console.error("Error loading movies:", error)
+      }
+    }
+    fetchMovies()
+  
+  }, [])
+  
   async function addMovie(
     title,
     img,

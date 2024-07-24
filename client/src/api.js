@@ -24,8 +24,19 @@ export const addMovie = async (movie) => {
 
 export const getMovies = async () => {
   try {
-    const response = await fetch("/api/movies")
-    return await response.json()
+    const response = await fetch("/api/movies", {
+      method: 'GET',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+    })
+
+    if (!response.ok){
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data
   } catch (error) {
     console.error("Error getting movies:", error)
     throw error
