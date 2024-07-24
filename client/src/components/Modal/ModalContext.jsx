@@ -3,7 +3,7 @@ import  styles from "./Modal.module.css"
 import {StyledButton} from "./Modal"
 export const ModalContext = React.createContext()
 
-export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromList, movies, setMovies, watchedMovies, setWatchedMovies, deleteMovie }) => {
+export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies, watchedMovies, setWatchedMovies, deleteMovie, deleteWatchedMovie }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalContent, setModalContent] = useState(null)
     const [modalTitle, setModalTitle] = useState(null)
@@ -45,17 +45,16 @@ export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromLis
           </>
         )
       }
-      const showDeleteConfirmation = (movie, list, setList) => {
+      const showDeleteConfirmation = (movie, list, setList, isWatched=false) => {
         openModal('Удалить фильм?',
           <>
             <p>Вы удаляете: <strong>{movie.title}</strong> из текущего списка</p>
             <div className={styles.modalFooter}>
-            <StyledButton onClick={() => confirmDelete(movie, list, setList)}>Да</StyledButton>
+            <StyledButton onClick={() => confirmDelete(movie, list, setList, isWatched)}>Да</StyledButton>
             <StyledButton onClick={closeModal}>Нет</StyledButton>
             </div>
           </>
         )
-        console.log(watchedMovies);
       }
       const confirmViewed =  (movie, list, setList) => {
         addToWatchedMovies(movie)
@@ -63,9 +62,14 @@ export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromLis
         showDeleteConfirmation(movie, list, setList)
       }
     
-      const confirmDelete = async (movie, list, setList) => {
+      const confirmDelete = async (movie, list, setList, isWatched) => {
         try{
-         await deleteMovie(movie, list, setList)
+          if(!isWatched){
+            await deleteMovie(movie, list, setList)
+          }else{
+            await deleteWatchedMovie(movie, list, setList)
+          }
+         
         //  removeMovieFromList(movie, list, setList)
          closeModal()
         }catch(error){
@@ -78,7 +82,7 @@ export const ModalProvider = ({ children, addToWatchedMovies, removeMovieFromLis
         <ModalContext.Provider value={{ isModalClosing, isModalOpen,modalTitle, modalContent, openModal, closeModal,
          showDetails, showViewedConfirmation: (movie)=>showViewedConfirmation(movie, movies, setMovies),
           showDeleteConfirmation,
-          showWatchedDeleteConfirmation: (movie) => showDeleteConfirmation(movie, watchedMovies, setWatchedMovies) }}>
+          showWatchedDeleteConfirmation: (movie) => showDeleteConfirmation(movie, watchedMovies, setWatchedMovies, true) }}>
           {children}
         </ModalContext.Provider>
       )

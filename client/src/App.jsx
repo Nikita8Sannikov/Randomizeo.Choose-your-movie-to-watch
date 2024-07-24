@@ -7,31 +7,35 @@ import Modal from "./components/Modal/Modal"
 import { ModalProvider } from "./components/Modal/ModalContext"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { addMovie as addMovieToApi } from "./api"
+import { addWatchedMovie as addWatchedMovieToApi } from "./api"
 import { getMovies as getMoviesFromApi } from "./api"
+import { getWatchedMovies as getWatchedMoviesFromApi } from "./api"
 import { deleteMovie as deleteMoviesFromApi } from "./api"
+import { deleteWatchedMovie as deleteWatchedMoviesFromApi } from "./api"
+
 
 function App() {
   const [movies, setMovies] = useState([
-    {
-      id: 1,
-      title: "Дракула Брэма Стокера",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-6QE9dBnvT2N9CjHp2DZOAWKOLWCZMlppgexdIBbvWQ&s",
-    },
-    {
-      id: 2,
-      title: "Город Грехов",
-      img: "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/6025abef-078b-4385-9cec-8237194ed38e/600x900",
-    },
-    {
-      id: 3,
-      title: "Автостопом по галактике",
-      img: "https://thumbs.dfs.ivi.ru/storage4/contents/3/a/7da3eac3e71e63c85b578305a86143.jpg",
-    },
-    {
-      id: 4,
-      title: "Завтрак у Тиффани",
-      img: "https://thumbs.dfs.ivi.ru/storage8/contents/9/1/e225fa76749bff29a36d96e3401296.jpg",
-    },
+    // {
+    //   id: 1,
+    //   title: "Дракула Брэма Стокера",
+    //   img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-6QE9dBnvT2N9CjHp2DZOAWKOLWCZMlppgexdIBbvWQ&s",
+    // },
+    // {
+    //   id: 2,
+    //   title: "Город Грехов",
+    //   img: "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/6025abef-078b-4385-9cec-8237194ed38e/600x900",
+    // },
+    // {
+    //   id: 3,
+    //   title: "Автостопом по галактике",
+    //   img: "https://thumbs.dfs.ivi.ru/storage4/contents/3/a/7da3eac3e71e63c85b578305a86143.jpg",
+    // },
+    // {
+    //   id: 4,
+    //   title: "Завтрак у Тиффани",
+    //   img: "https://thumbs.dfs.ivi.ru/storage8/contents/9/1/e225fa76749bff29a36d96e3401296.jpg",
+    // },
   ])
   const [watchedMovies, setWatchedMovies] = useState([])
   const [searchFilm, setSearchFilm] = useState("")
@@ -44,17 +48,26 @@ function App() {
     return maxId + 1
   }
 
-  useEffect(() => {
-    async function fetchMovies(){
-      try{
-        const fetchedMovies = await getMoviesFromApi()
-        setMovies(fetchedMovies)
-      }catch(error) {
-        console.error("Error loading movies:", error)
-      }
+  async function fetchMovies(){
+    try{
+      const fetchedMovies = await getMoviesFromApi()
+      setMovies(fetchedMovies)
+    }catch(error) {
+      console.error("Error loading movies:", error)
     }
+  }
+  async function fetchWatchedMovies(){
+    try{
+      const fetchedWatchedMovies = await getWatchedMoviesFromApi()
+      setWatchedMovies(fetchedWatchedMovies)
+    }catch(error) {
+      console.error("Error loading movies:", error)
+    }
+  }
+
+  useEffect(() => {
     fetchMovies()
-  
+    fetchWatchedMovies()
   }, [])
   
   async function addMovie(
@@ -87,7 +100,7 @@ function App() {
     }
   }
 
-  function addToWatchedMovies(movie) {
+  async function addToWatchedMovies(movie) {
     const newWatchedMovie = {
       id: getNextId(watchedMovies),
       title: movie.title,
@@ -98,14 +111,28 @@ function App() {
       genres: movie.genres,
       rating: movie.rating,
     }
-    const updatedWatchedMovies = [...watchedMovies, newWatchedMovie]
-    console.log("Updated Watched Movies:", updatedWatchedMovies)
-    setWatchedMovies(updatedWatchedMovies)
+    try{
+      await addWatchedMovieToApi(newWatchedMovie)
+      const updatedWatchedMovies = [...watchedMovies, newWatchedMovie]
+      console.log("Updated Watched Movies:", updatedWatchedMovies)
+      setWatchedMovies(updatedWatchedMovies)
+    }catch(error){
+      console.error("Error adding watched movie to the API:", error)
+    }
   }
 
   async function deleteMovie(movie, list, setList){
       try{
         await deleteMoviesFromApi(movie.id)
+        removeMovieFromList (movie, list, setList) 
+      }catch(error) {
+        console.error("Error deleting movies:", error)
+      }
+    }
+
+  async function deleteWatchedMovie(movie, list, setList){
+      try{
+        await deleteWatchedMoviesFromApi(movie.id)
         removeMovieFromList (movie, list, setList) 
       }catch(error) {
         console.error("Error deleting movies:", error)
@@ -223,6 +250,7 @@ function App() {
         watchedMovies={watchedMovies}
         setWatchedMovies={setWatchedMovies}
         deleteMovie={deleteMovie}
+        deleteWatchedMovie={deleteWatchedMovie}
       >
         <main>
           <Header searchFilm={searchFilm} setSearchFilm={setSearchFilm} />
