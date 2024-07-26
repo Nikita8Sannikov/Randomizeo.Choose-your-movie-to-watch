@@ -42,6 +42,8 @@ function App() {
   const [optionsShow, setOptionsShow] = useState(false)
   const [kinopoisk, setKinopoisk] = useState("")
   const [kinoId, setKinoId] = useState(null)
+  const [randomMovie, setRandomMovie] = useState(null)
+  const [outputText, setOutputText] = useState('')
 
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
@@ -144,7 +146,13 @@ function App() {
   }
   
  const handleFocus = () => {
-  setSearchFilm("")
+  if (searchFilm) {
+    setSearchFilm("");
+  }
+  if (randomMovie && outputText) {
+    setRandomMovie(null);
+    setOutputText("");
+  }
  }
 
   //расположение карточек фильмов
@@ -276,6 +284,10 @@ function App() {
                     addMovie={addMovie}
                     arrangeCards={arrangeCards}
                     onFocus={handleFocus} 
+                    randomMovie={randomMovie}
+                    setRandomMovie={setRandomMovie}
+                    outputText={outputText}
+                    setOutputText={setOutputText}
                   />
                 }
               />

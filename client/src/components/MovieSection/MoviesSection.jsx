@@ -19,7 +19,11 @@ export default function MoviesSection({
   searchFilm,
   addMovie,
   arrangeCards,
-  onFocus
+  onFocus,
+  randomMovie,
+  setRandomMovie,
+  outputText,
+  setOutputText
 }) {
   const location = useLocation()
 
@@ -63,7 +67,13 @@ export default function MoviesSection({
           {optionsShow && (
             <AddFilmOption addMovie={addMovie} optionsShow={optionsShow} />
           )}
-          <ResultSection movies={movies} />
+          <ResultSection
+           movies={movies}
+           randomMovie={randomMovie}
+           setRandomMovie={setRandomMovie}
+           outputText={outputText}
+           setOutputText={setOutputText}
+          />
         </>
       )}
       <div className={styles.filmContainer} id="films">

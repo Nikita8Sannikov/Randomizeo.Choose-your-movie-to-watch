@@ -5,9 +5,9 @@ import { useState } from "react"
 import styles from "./ResultSection.module.css"
 import { ModalContext } from '../Modal/ModalContext'
 
-export default function ResultSection({movies}) {
-  const [randomMovie, setRandomMovie] = useState(null)
-  const [outputText, setOutputText] = useState('');
+export default function ResultSection({movies, randomMovie, setRandomMovie, outputText, setOutputText }) {
+  // const [randomMovie, setRandomMovie] = useState(null)
+  // const [outputText, setOutputText] = useState('')
   const { showDetails } = useContext(ModalContext)
   function randomInteger(min, max) {
     let rand = min + Math.random() * (max + 1 - min);
