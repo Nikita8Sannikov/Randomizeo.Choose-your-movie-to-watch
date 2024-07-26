@@ -142,6 +142,10 @@ function App() {
   const removeMovieFromList = (movie, list, setList) => {
     setList(list.filter((m) => m.id !== movie.id))
   }
+  
+ const handleFocus = () => {
+  setSearchFilm("")
+ }
 
   //расположение карточек фильмов
   const movieRefs = useRef([])
@@ -271,6 +275,7 @@ function App() {
                     searchFilm={searchFilm}
                     addMovie={addMovie}
                     arrangeCards={arrangeCards}
+                    onFocus={handleFocus} 
                   />
                 }
               />

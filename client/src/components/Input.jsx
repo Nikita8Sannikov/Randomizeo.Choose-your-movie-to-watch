@@ -1,3 +1,4 @@
+
 export default function Input({
   labelFor,
   description,
@@ -5,6 +6,7 @@ export default function Input({
   placeholder,
   value,
   onChange,
+  onFocus
 }) {
 
 
@@ -17,6 +19,7 @@ export default function Input({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
       />
     </>
   )

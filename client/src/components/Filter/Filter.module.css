@@ -2,3 +2,7 @@
     display: flex;
     justify-content: center;
 }
+#filterResults>p{
+    margin-top: 20px;
+    color: white;
+}

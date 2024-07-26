@@ -3,7 +3,7 @@ import Input from "../Input"
 import Button from "../Button"
 import styles from "./AddFilmSection.module.css"
 
-const AddKinopoisk = ({optionsShow, setOptionsShow, kinopoisk, setKinopoisk, handleAddFilm}) => {
+const AddKinopoisk = ({optionsShow, setOptionsShow, kinopoisk, setKinopoisk, handleAddFilm, onFocus}) => {
  const addKinopoisk = (event) => setKinopoisk(event.target.value)
  const AddFilmClick = () => {
   if(kinopoisk){
@@ -24,6 +24,7 @@ const AddKinopoisk = ({optionsShow, setOptionsShow, kinopoisk, setKinopoisk, han
             placeholder="Введите ссылку на Кинопоиск"
             value = {kinopoisk}
             onChange={addKinopoisk}
+            onFocus={onFocus}
           />
           <Button className={styles.barsBtn} onclick={() => setOptionsShow(prev => !prev)}>
             <span className="fa-solid fa-bars fa-3x bars-icon"></span>

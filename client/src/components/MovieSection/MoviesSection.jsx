@@ -19,6 +19,7 @@ export default function MoviesSection({
   searchFilm,
   addMovie,
   arrangeCards,
+  onFocus
 }) {
   const location = useLocation()
 
@@ -56,6 +57,7 @@ export default function MoviesSection({
             kinopoisk={kinopoisk}
             setKinopoisk={setKinopoisk}
             handleAddFilm={handleAddFilm}
+            onFocus={onFocus}
           />
           <Filter movies={movies} searchFilm={searchFilm} />
           {optionsShow && (
