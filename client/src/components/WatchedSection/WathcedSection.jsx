@@ -3,14 +3,22 @@ import Card, { StyledButton } from "../Card/Card"
 import { ModalContext } from "../Modal/ModalContext"
 import styles from "./WatchedSection.module.css"
 import { useLocation } from "react-router-dom"
+import Filter from "../Filter/Filter"
+import { WatchedFilterContext  } from "../Filter/WatchedFilterContext"
 
-const WathcedSection = ({ movies, movieRefs, arrangeCards }) => {
+const WathcedSection = ({ movies, movieRefs, arrangeCards, searchFilm, setSearchFilm  }) => {
   const {
     showDetails,
     showWatchedDeleteConfirmation,
     watchedMovies,
     setWatchedMovies,
   } = useContext(ModalContext)
+const { searchTerm, setSearchTerm } = useContext(WatchedFilterContext);
+
+// useEffect(() => {
+//   setContext('watched')
+// }, [setContext])
+
   const location = useLocation()
 
   useEffect(() => {
@@ -32,6 +40,8 @@ const WathcedSection = ({ movies, movieRefs, arrangeCards }) => {
   )
 
   return (
+    <>
+    <Filter watchedMovies={movies} searchFilm={searchTerm} setSearchFilm={setSearchTerm} />
     <div className={styles.filmContainer} id="watched-films">
       {movies.map((movie, index) => (
         <Card
@@ -43,6 +53,7 @@ const WathcedSection = ({ movies, movieRefs, arrangeCards }) => {
         />
       ))}
     </div>
+    </>
   )
 }
 

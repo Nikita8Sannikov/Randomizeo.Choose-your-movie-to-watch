@@ -3,11 +3,22 @@ import TabsSection from "./TabsSection"
 import Input from "../Input"
 import styles from "./Header.module.css"
 import Button from "../Button"
-import { useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
+import { MoviesFilterContext } from "../Filter/MoviesFilterContext"
+import { WatchedFilterContext } from "../Filter/WatchedFilterContext"
 
-const Header = ({ searchFilm, setSearchFilm }) => {
-  const searchFilmChange = (event) => setSearchFilm(event.target.value)
+const Header = () => {
+
+  const searchFilmChange = (event) => setSearchTerm(event.target.value)
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const isWatchedPage = location.pathname === "/watched"
+
+  const { searchTerm, setSearchTerm } = useContext(
+    isWatchedPage ? WatchedFilterContext : MoviesFilterContext
+  )
 
   return (
     <nav className={styles.header}>
@@ -28,7 +39,7 @@ const Header = ({ searchFilm, setSearchFilm }) => {
           placeholder="Найти фильм"
           labelFor="text"
           className="search"
-          value={searchFilm}
+          value={searchTerm}
           onChange={searchFilmChange}
         />
         <Button className={styles.searchIcon}>

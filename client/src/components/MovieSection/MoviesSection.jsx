@@ -7,6 +7,7 @@ import AddKinopoisk from "../AddFilm/AddKinopoisk"
 import Filter from "../Filter/Filter"
 import ResultSection from "../ResultSection/ResultSection"
 import AddFilmOption from "../AddFilm/AddFilmOption"
+import { MoviesFilterContext } from "../Filter/MoviesFilterContext"
 
 export default function MoviesSection({
   movies,
@@ -23,10 +24,26 @@ export default function MoviesSection({
   randomMovie,
   setRandomMovie,
   outputText,
-  setOutputText
+  setOutputText,
+  setSearchFilm
 }) {
+  const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext);
   const location = useLocation()
 
+  const handleFocus = () => {
+    if (searchTerm) {
+      setSearchTerm("");
+    }
+    if (randomMovie && outputText) {
+      setRandomMovie(null);
+      setOutputText("");
+    }
+   }
+
+  // useEffect(() => {
+  //   setContext('movies')
+  // }, [setContext])
+  
   useEffect(() => {
     const y = location.pathname === "/" ? 100 : 200
     arrangeCards(y)
@@ -61,9 +78,9 @@ export default function MoviesSection({
             kinopoisk={kinopoisk}
             setKinopoisk={setKinopoisk}
             handleAddFilm={handleAddFilm}
-            onFocus={onFocus}
+            onFocus={handleFocus}
           />
-          <Filter movies={movies} searchFilm={searchFilm} />
+          <Filter movies={movies} searchFilm={searchTerm} setSearchFilm={setSearchTerm} />
           {optionsShow && (
             <AddFilmOption addMovie={addMovie} optionsShow={optionsShow} />
           )}

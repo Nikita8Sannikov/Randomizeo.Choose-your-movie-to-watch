@@ -5,6 +5,8 @@ import WatchedSection from "./components/WatchedSection/WathcedSection"
 import Header from "./components/Header/Header"
 import Modal from "./components/Modal/Modal"
 import { ModalProvider } from "./components/Modal/ModalContext"
+import { MoviesFilterProvider } from "./components/Filter/MoviesFilterContext"
+import { WatchedFilterProvider } from "./components/Filter/WatchedFilterContext"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { addMovie as addMovieToApi } from "./api"
 import { addWatchedMovie as addWatchedMovieToApi } from "./api"
@@ -12,7 +14,6 @@ import { getMovies as getMoviesFromApi } from "./api"
 import { getWatchedMovies as getWatchedMoviesFromApi } from "./api"
 import { deleteMovie as deleteMoviesFromApi } from "./api"
 import { deleteWatchedMovie as deleteWatchedMoviesFromApi } from "./api"
-
 
 function App() {
   const [movies, setMovies] = useState([
@@ -38,31 +39,30 @@ function App() {
     // },
   ])
   const [watchedMovies, setWatchedMovies] = useState([])
-  const [searchFilm, setSearchFilm] = useState("")
   const [optionsShow, setOptionsShow] = useState(false)
   const [kinopoisk, setKinopoisk] = useState("")
   const [kinoId, setKinoId] = useState(null)
   const [randomMovie, setRandomMovie] = useState(null)
-  const [outputText, setOutputText] = useState('')
+  const [outputText, setOutputText] = useState("")
 
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
     return maxId + 1
   }
 
-  async function fetchMovies(){
-    try{
+  async function fetchMovies() {
+    try {
       const fetchedMovies = await getMoviesFromApi()
       setMovies(fetchedMovies)
-    }catch(error) {
+    } catch (error) {
       console.error("Error loading movies:", error)
     }
   }
-  async function fetchWatchedMovies(){
-    try{
+  async function fetchWatchedMovies() {
+    try {
       const fetchedWatchedMovies = await getWatchedMoviesFromApi()
       setWatchedMovies(fetchedWatchedMovies)
-    }catch(error) {
+    } catch (error) {
       console.error("Error loading movies:", error)
     }
   }
@@ -71,7 +71,7 @@ function App() {
     fetchMovies()
     fetchWatchedMovies()
   }, [])
-  
+
   async function addMovie(
     title,
     img,
@@ -92,12 +92,12 @@ function App() {
       rating,
     }
 
-    try{
+    try {
       await addMovieToApi(newMovie)
       const updatedMovies = [newMovie, ...movies]
       console.log("Updated Movies:", updatedMovies)
       setMovies(updatedMovies)
-    }catch(error) {
+    } catch (error) {
       console.error("Error adding movie to the API:", error)
     }
   }
@@ -113,47 +113,37 @@ function App() {
       genres: movie.genres,
       rating: movie.rating,
     }
-    try{
+    try {
       await addWatchedMovieToApi(newWatchedMovie)
       const updatedWatchedMovies = [...watchedMovies, newWatchedMovie]
       console.log("Updated Watched Movies:", updatedWatchedMovies)
       setWatchedMovies(updatedWatchedMovies)
-    }catch(error){
+    } catch (error) {
       console.error("Error adding watched movie to the API:", error)
     }
   }
 
-  async function deleteMovie(movie, list, setList){
-      try{
-        await deleteMoviesFromApi(movie.id)
-        removeMovieFromList (movie, list, setList) 
-      }catch(error) {
-        console.error("Error deleting movies:", error)
-      }
+  async function deleteMovie(movie, list, setList) {
+    try {
+      await deleteMoviesFromApi(movie.id)
+      removeMovieFromList(movie, list, setList)
+    } catch (error) {
+      console.error("Error deleting movies:", error)
     }
+  }
 
-  async function deleteWatchedMovie(movie, list, setList){
-      try{
-        await deleteWatchedMoviesFromApi(movie.id)
-        removeMovieFromList (movie, list, setList) 
-      }catch(error) {
-        console.error("Error deleting movies:", error)
-      }
+  async function deleteWatchedMovie(movie, list, setList) {
+    try {
+      await deleteWatchedMoviesFromApi(movie.id)
+      removeMovieFromList(movie, list, setList)
+    } catch (error) {
+      console.error("Error deleting movies:", error)
     }
-    
+  }
+
   const removeMovieFromList = (movie, list, setList) => {
     setList(list.filter((m) => m.id !== movie.id))
   }
-  
- const handleFocus = () => {
-  if (searchFilm) {
-    setSearchFilm("");
-  }
-  if (randomMovie && outputText) {
-    setRandomMovie(null);
-    setOutputText("");
-  }
- }
 
   //расположение карточек фильмов
   const movieRefs = useRef([])
@@ -162,7 +152,8 @@ function App() {
   function arrangeCards(y = 0) {
     const cardsPerRow = 5
     const cardWidth = 350 // ширина карточки + расстояние между карточками
-    const cardHeight = 600 // высота карточки
+    const cardHeight = 650 // высота карточки
+    let maxOffsetY = 0
 
     // console.log('Total cards:', movieRefs.current);
     if (Array.isArray(movieRefs.current)) {
@@ -254,57 +245,59 @@ function App() {
 
   return (
     <Router>
-      <ModalProvider
-        addToWatchedMovies={addToWatchedMovies}
-        removeMovieFromList={removeMovieFromList}
-        movies={movies}
-        setMovies={setMovies}
-        watchedMovies={watchedMovies}
-        setWatchedMovies={setWatchedMovies}
-        deleteMovie={deleteMovie}
-        deleteWatchedMovie={deleteWatchedMovie}
-      >
-        <main>
-          <Header searchFilm={searchFilm} setSearchFilm={setSearchFilm} />
-          <Modal />
-          <div className="content">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <MoviesSection
-                    movies={movies}
-                    movieRefs={movieRefs}
-                    optionsShow={optionsShow}
-                    setOptionsShow={setOptionsShow}
-                    kinopoisk={kinopoisk}
-                    setKinopoisk={setKinopoisk}
-                    handleAddFilm={handleAddFilm}
-                    searchFilm={searchFilm}
-                    addMovie={addMovie}
-                    arrangeCards={arrangeCards}
-                    onFocus={handleFocus} 
-                    randomMovie={randomMovie}
-                    setRandomMovie={setRandomMovie}
-                    outputText={outputText}
-                    setOutputText={setOutputText}
+      <MoviesFilterProvider>
+        <WatchedFilterProvider>
+          <ModalProvider
+            addToWatchedMovies={addToWatchedMovies}
+            removeMovieFromList={removeMovieFromList}
+            movies={movies}
+            setMovies={setMovies}
+            watchedMovies={watchedMovies}
+            setWatchedMovies={setWatchedMovies}
+            deleteMovie={deleteMovie}
+            deleteWatchedMovie={deleteWatchedMovie}
+          >
+            <main>
+              <Header />
+              <Modal />
+              <div className="content">
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <MoviesSection
+                        movies={movies}
+                        movieRefs={movieRefs}
+                        optionsShow={optionsShow}
+                        setOptionsShow={setOptionsShow}
+                        kinopoisk={kinopoisk}
+                        setKinopoisk={setKinopoisk}
+                        handleAddFilm={handleAddFilm}
+                        addMovie={addMovie}
+                        arrangeCards={arrangeCards}
+                        randomMovie={randomMovie}
+                        setRandomMovie={setRandomMovie}
+                        outputText={outputText}
+                        setOutputText={setOutputText}
+                      />
+                    }
                   />
-                }
-              />
-              <Route
-                path="/watched"
-                element={
-                  <WatchedSection
-                    movies={watchedMovies}
-                    movieRefs={movieRefs}
-                    arrangeCards={arrangeCards}
+                  <Route
+                    path="/watched"
+                    element={
+                      <WatchedSection
+                        movies={watchedMovies}
+                        movieRefs={movieRefs}
+                        arrangeCards={arrangeCards}
+                      />
+                    }
                   />
-                }
-              />
-            </Routes>
-          </div>
-        </main>
-      </ModalProvider>
+                </Routes>
+              </div>
+            </main>
+          </ModalProvider>
+        </WatchedFilterProvider>
+      </MoviesFilterProvider>
     </Router>
   )
 }
