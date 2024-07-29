@@ -186,16 +186,10 @@ function App() {
 
   //Блок добавления фильма по ссылке с кинопоиска
 
-  // URL API для поиска фильма
-  const apiUrl = "https://api.kinopoisk.dev/v1.4/movie"
-
-  // API ключ
-  const apiKey = "1QSQYSZ-PNCMBA2-JX6Q2NJ-24SE8J7"
-
   const options = {
     method: "GET",
     headers: {
-      "X-API-KEY": apiKey,
+      "X-API-KEY": import.meta.env.VITE_API_KEY,
     },
   }
 
@@ -205,9 +199,9 @@ function App() {
 
   useEffect(() => {
     if (kinoId) {
-      const urlWithParams = `${apiUrl}/${kinoId}`
-      // console.log('newUrl',urlWithParams)
-
+      const urlWithParams = `${import.meta.env.VITE_API_URL}/${kinoId}`
+      console.log('newUrl',urlWithParams)
+      
       fetch(urlWithParams, options)
         .then((response) => {
           if (!response.ok) {
