@@ -1,21 +1,21 @@
 # Randomizeo
 
-## Описание
+## Description
 
-Приложение для выбора фильмов с возможностью добавления в список для просмотра и отметки просмотренных фильмов.
+An application for randomly selecting movies from your added list, with the ability to add movies to a watch list.
 
-## Установка и запуск
+## Installation and launch
 
-1. Клонируйте репозиторий
-	git clone https://github.com/Nikita8Sannikov/movieToWach-react.git
-2. Перейдите в директорию проекта
-	cd movieToWach-react
-3. Установите зависимости
-	npm install
-4. Запустите проект
-	npm start
+1. Clone the repository
+git clone https://github.com/Nikita8Sannikov/movieToWach-react.git
+2. Go to the project directory
+cd movieToWach-react
+3. Install dependencies
+npm install
+4. Run the project
+npm start
 
-## Используемые технологии
+## Technologies Used
 - React
 - Express
 - MongoDB
