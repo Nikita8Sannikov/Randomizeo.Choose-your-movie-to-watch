@@ -52,8 +52,7 @@ export default function MoviesSection({
     location.pathname,
   ])
 
-  const { showDetails, showViewedConfirmation, setMovies } =
-    useContext(ModalContext)
+  const { showDetails, showViewedConfirmation, setMovies } = useContext(ModalContext)
 
   const movieSectionContent = (movie) => (
     <>

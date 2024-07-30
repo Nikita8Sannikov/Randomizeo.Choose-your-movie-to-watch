@@ -4,7 +4,7 @@ import  styles from "./Modal.module.css"
 import Button from "../Button"
 
 const Modal = () => {
-  const{isModalOpen, isModalClosing, modalContent, modalTitle, closeModal} = useContext(ModalContext)
+  const{isModalOpen, isModalClosing, modalContent, modalButtons, modalTitle, closeModal} = useContext(ModalContext)
   const [modalClass, setModalClass] = useState(styles.modal)
   
   useEffect(() => {
@@ -25,14 +25,17 @@ const Modal = () => {
 
   return (
     <div className={modalClass}>
-      <div className={styles.modalOverlay}>
-        <div className={styles.modalWindow}>
+      <div className={styles.modalOverlay} onClick={closeModal}>
+        <div className={styles.modalWindow} onClick={(e) => e.stopPropagation()}>
           <div className={styles.modalHeader}>
             <span className={styles.modalTitle}> {modalTitle}</span>
           <span className={styles.modalClose} onClick={closeModal} >&times;</span>
           </div>
          <div className={styles.modalBody} >
             {modalContent}
+          </div>
+          <div className={styles.modalFooter}>
+          {modalButtons}
           </div>
         </div>
       </div>

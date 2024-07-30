@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import  styles from "./Modal.module.css"
 import {StyledButton} from "./Modal"
 export const ModalContext = React.createContext()
 
@@ -8,10 +7,11 @@ export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies,
     const [modalContent, setModalContent] = useState(null)
     const [modalTitle, setModalTitle] = useState(null)
     const [isModalClosing,  setIsModalClosing] = useState(false)
+    const [modalButtons, setModalButtons] = useState(null)
 
-
-    const openModal = ( title, content) => {
+    const openModal = ( title, content, buttons) => {
         setModalContent(content)
+        setModalButtons(buttons)
         setIsModalOpen(true)
         setModalTitle(title)
       }
@@ -19,40 +19,33 @@ export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies,
       const closeModal = () => {
         setIsModalOpen(false)
         setModalContent(null)
+        setModalButtons(null)
         setModalTitle(null)
         setIsModalClosing(true)
       }
 
       const showDetails = (movie) => {
         openModal( movie.title,
-          <>
-            <p>{ movie.description }</p>
-            <div className={styles.modalFooter}>
+            <p>{ movie.description }</p> ,
           <StyledButton onClick={closeModal}>Ок</StyledButton>
-          </div> 
-          </>
         )
       }
     
       const showViewedConfirmation = (movie, list, setList) => {
         openModal( 'Добавить в просмотренные?',
+            <p>Вы добавляете: <strong>{movie.title}</strong> в просмотренные</p>,
           <>
-            <p>Вы добавляете: <strong>{movie.title}</strong> в просмотренные</p>
-            <div className={styles.modalFooter}>
             <StyledButton onClick={() => confirmViewed (movie, list, setList)}>Да</StyledButton>
             <StyledButton onClick={() => showDeleteConfirmation(movie, list, setList)}>Нет</StyledButton>
-            </div>
           </>
         )
       }
       const showDeleteConfirmation = (movie, list, setList, isWatched=false) => {
         openModal('Удалить фильм?',
+            <p>Вы удаляете: <strong>{movie.title}</strong> из текущего списка</p>,
           <>
-            <p>Вы удаляете: <strong>{movie.title}</strong> из текущего списка</p>
-            <div className={styles.modalFooter}>
             <StyledButton onClick={() => confirmDelete(movie, list, setList, isWatched)}>Да</StyledButton>
             <StyledButton onClick={closeModal}>Нет</StyledButton>
-            </div>
           </>
         )
       }
@@ -79,7 +72,7 @@ export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies,
     
 
       return (
-        <ModalContext.Provider value={{ isModalClosing, isModalOpen,modalTitle, modalContent, openModal, closeModal,
+        <ModalContext.Provider value={{ isModalClosing, isModalOpen,modalTitle, modalContent, modalButtons, openModal, closeModal,
          showDetails, showViewedConfirmation: (movie)=>showViewedConfirmation(movie, movies, setMovies),
           showDeleteConfirmation,
           showWatchedDeleteConfirmation: (movie) => showDeleteConfirmation(movie, watchedMovies, setWatchedMovies, true) }}>
