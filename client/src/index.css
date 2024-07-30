@@ -33,3 +33,8 @@ main{
 .bars-icon{
   pointer-events: none;
 }
+@media(max-width: 770px){
+  .content{
+    margin-top: 70px;
+    }
+}

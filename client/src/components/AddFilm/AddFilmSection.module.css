@@ -89,7 +89,6 @@
 .addInputs>input:-moz-autofill {
     transition: background-color 5000s ease-in-out 0s;
   }
-
 .addButton {
     padding: 10px;
     border-radius: 15px;
@@ -99,4 +98,52 @@
     border: 1px solid white;
     color: white;
     cursor: pointer;
+}
+@media(max-width: 1150px){
+    .inputKinopoisk>input{
+        width:550px;
+        padding: 24px;
+        border-radius: 25px;
+        font-size: 29px;
+        background-color: #302E31;
+        outline: none;
+        border: 1px solid white;
+        caret-color: white;
+        color: white;
+    }
+    .addKinopoiskButton{
+        padding: 24px;
+        width:300px;
+        border-radius: 25px;
+        font-size: 29px;
+        background-color: #2C2C2E;
+        outline: none;
+        border: 1px solid white;
+        color: white;
+        cursor: pointer;
+    }
+}
+@media(max-width: 900px){
+    .inputKinopoisk>input{
+        width:400px;
+        padding: 15px;
+        border-radius: 25px;
+        font-size: 23px;
+        background-color: #302E31;
+        outline: none;
+        border: 1px solid white;
+        caret-color: white;
+        color: white;
+    }
+    .addKinopoiskButton{
+        padding: 10px;
+        width:200px;
+        border-radius: 25px;
+        font-size: 22px;
+        background-color: #2C2C2E;
+        outline: none;
+        border: 1px solid white;
+        color: white;
+        cursor: pointer;
+    }
 }

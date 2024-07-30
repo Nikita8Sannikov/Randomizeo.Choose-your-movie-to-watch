@@ -150,8 +150,9 @@ function App() {
   movieRefs.current = []
 
   function arrangeCards(y = 0) {
-    const cardsPerRow = 5
-    const cardWidth = 350 // ширина карточки + расстояние между карточками
+    const cardsPerRow = window.innerWidth < 1650 ? 3 : 5
+    console.log(window.innerWidth);
+    const cardWidth = window.innerWidth < 900 ? 300 : 350 // ширина карточки + расстояние между карточками
     const cardHeight = 650 // высота карточки
     let maxOffsetY = 0
 

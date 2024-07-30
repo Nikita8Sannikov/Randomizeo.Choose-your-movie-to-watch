@@ -108,3 +108,24 @@
     color: white;
     cursor: pointer;
 }
+@media(max-width: 1030px){
+    
+}
+@media(max-width: 900px){
+    .card {
+        width: 24vh;
+        margin: 10px;
+        border: 1px solid #eee;
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgb(68 68 68 / 20%);
+        padding: 15px;
+        transform-origin: bottom center;
+        transition: transform 0.3s;
+        /* position: absolute; */
+        color: white;
+    }
+}

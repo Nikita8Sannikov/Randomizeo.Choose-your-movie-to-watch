@@ -29,7 +29,6 @@
     display: flex;
     justify-content: center; 
     margin-top: 113px;
-    
 }
 .button{
     outline: none;
@@ -82,4 +81,21 @@
     inset 0px 0px 14.55px 0px rgba(255, 255, 255, 0.4)
 
     ;
+}
+@media(max-width: 1150px){
+  .outputSection>h3{
+    font-size: 55px;
+    color: white;
+}
+.mainButton{
+  display: flex;
+  justify-content: center; 
+  margin-top: 50px;
+}
+}
+@media(max-width: 800px){
+  .outputSection>h3{
+    font-size: 40px;
+    color: white;
+}
 }

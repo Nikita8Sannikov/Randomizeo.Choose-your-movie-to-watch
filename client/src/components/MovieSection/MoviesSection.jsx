@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useRef } from "react"
 import Card, { StyledButton } from "../Card/Card"
 import styles from "./MovieSection.module.css"
 import { ModalContext } from "../Modal/ModalContext"
@@ -29,6 +29,7 @@ export default function MoviesSection({
 }) {
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext);
   const location = useLocation()
+  const containerRef = useRef(null);
 
   const handleFocus = () => {
     if (searchTerm) {
@@ -47,10 +48,41 @@ export default function MoviesSection({
   useEffect(() => {
     const y = location.pathname === "/" ? 100 : 200
     arrangeCards(y)
+
+    const handleResize = () => {
+      arrangeCards(y);
+    }
+
+    const resizeObserver = new ResizeObserver(handleResize)
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current)
+    }
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  
   }, [
     movies,
     location.pathname,
   ])
+
+  // useEffect(() => {
+  //   const y = location.pathname === "/" ? 100 : 200
+  //   arrangeCards(y)
+
+  //   const handleResize = () => {
+  //     arrangeCards(y);
+  //   };
+
+  //   window.addEventListener('resize', handleResize);
+
+  //   // Удаляем обработчик события при размонтировании компонента
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, [arrangeCards,movies, location.pathname])
+
 
   const { showDetails, showViewedConfirmation, setMovies } = useContext(ModalContext)
 
@@ -92,7 +124,7 @@ export default function MoviesSection({
           />
         </>
       )}
-      <div className={styles.filmContainer} id="films">
+      <div className={styles.filmContainer} id="films" ref={containerRef} >
         {movies.map((movie, index) => (
           <Card
             key={movie.id}
