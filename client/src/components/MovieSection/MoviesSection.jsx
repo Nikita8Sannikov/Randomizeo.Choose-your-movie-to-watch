@@ -8,6 +8,7 @@ import Filter from "../Filter/Filter"
 import ResultSection from "../ResultSection/ResultSection"
 import AddFilmOption from "../AddFilm/AddFilmOption"
 import { MoviesFilterContext } from "../Filter/MoviesFilterContext"
+import useResizeObserver from "../../../hooks/useResizeObserver"
 
 export default function MoviesSection({
   movies,
@@ -29,7 +30,7 @@ export default function MoviesSection({
 }) {
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext);
   const location = useLocation()
-  const containerRef = useRef(null);
+  // const containerRef = useRef(null);
 
   const handleFocus = () => {
     if (searchTerm) {
@@ -44,28 +45,46 @@ export default function MoviesSection({
   // useEffect(() => {
   //   setContext('movies')
   // }, [setContext])
-  
-  useEffect(() => {
+
+  // const handleResize = () => {
+  //   const y = location.pathname === "/" ? 100 : 200
+  //   arrangeCards(y);
+  // }
+
+  const containerRef = useResizeObserver(()=> {
     const y = location.pathname === "/" ? 100 : 200
     arrangeCards(y)
+  })
 
-    const handleResize = () => {
-      arrangeCards(y);
-    }
-
-    const resizeObserver = new ResizeObserver(handleResize)
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current)
-    }
-
-    return () => {
-      resizeObserver.disconnect()
-    }
-  
+    useEffect(() => {
+    const y = location.pathname === "/" ? 100 : 200
+    arrangeCards(y)
   }, [
     movies,
     location.pathname,
   ])
+
+  // useEffect(() => {
+  //   const y = location.pathname === "/" ? 100 : 200
+  //   arrangeCards(y)
+
+  //   const handleResize = () => {
+  //     arrangeCards(y);
+  //   }
+
+  //   const resizeObserver = new ResizeObserver(handleResize)
+  //   if (containerRef.current) {
+  //     resizeObserver.observe(containerRef.current)
+  //   }
+
+  //   return () => {
+  //     resizeObserver.disconnect()
+  //   }
+  
+  // }, [
+  //   movies,
+  //   location.pathname,
+  // ])
 
   // useEffect(() => {
   //   const y = location.pathname === "/" ? 100 : 200
@@ -88,7 +107,7 @@ export default function MoviesSection({
 
   const movieSectionContent = (movie) => (
     <>
-      <StyledButton onClick={() => showDetails(movie)} e>
+      <StyledButton onClick={() => showDetails(movie)} >
         Подробнее
       </StyledButton>
       <StyledButton
