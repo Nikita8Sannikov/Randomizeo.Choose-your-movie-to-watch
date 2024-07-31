@@ -115,7 +115,7 @@ function App() {
     }
     try {
       await addWatchedMovieToApi(newWatchedMovie)
-      const updatedWatchedMovies = [...watchedMovies, newWatchedMovie]
+      const updatedWatchedMovies = [newWatchedMovie, ...watchedMovies]
       console.log("Updated Watched Movies:", updatedWatchedMovies)
       setWatchedMovies(updatedWatchedMovies)
     } catch (error) {
