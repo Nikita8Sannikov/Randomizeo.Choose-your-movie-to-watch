@@ -14,7 +14,7 @@ const AddKinopoisk = ({ setOptionsShow, addMovie, onFocus }) => {
 
   const AddFilmClick = useCallback(() => {
     if (kinopoisk) {
-      const KINOPOISK_id = kinopoisk.split("/").splice(-2, 1)[0]
+      const KINOPOISK_id = kinopoisk.split("/").splice(4, 1)[0]
       if (KINOPOISK_id) {
         setKinoId(KINOPOISK_id)
         setKinopoisk("")
