@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { useState, useRef, useEffect } from "react"
 import MoviesSection from "./components/MovieSection/MoviesSection"
 import WatchedSection from "./components/WatchedSection/WathcedSection"
@@ -40,8 +40,6 @@ function App() {
   ])
   const [watchedMovies, setWatchedMovies] = useState([])
   const [optionsShow, setOptionsShow] = useState(false)
-  const [kinopoisk, setKinopoisk] = useState("")
-  const [kinoId, setKinoId] = useState(null)
   const [randomMovie, setRandomMovie] = useState(null)
   const [outputText, setOutputText] = useState("")
 
@@ -53,7 +51,8 @@ function App() {
   async function fetchMovies() {
     try {
       const fetchedMovies = await getMoviesFromApi()
-      setMovies(fetchedMovies)
+      const reverseFetched = fetchedMovies.reverse()
+      setMovies(reverseFetched)
     } catch (error) {
       console.error("Error loading movies:", error)
     }
@@ -61,7 +60,8 @@ function App() {
   async function fetchWatchedMovies() {
     try {
       const fetchedWatchedMovies = await getWatchedMoviesFromApi()
-      setWatchedMovies(fetchedWatchedMovies)
+      const reverseWatchedFetched = fetchedWatchedMovies.reverse()
+      setWatchedMovies(reverseWatchedFetched)
     } catch (error) {
       console.error("Error loading movies:", error)
     }
@@ -72,7 +72,7 @@ function App() {
     fetchWatchedMovies()
   }, [])
 
-  async function addMovie(
+  const addMovie = useCallback( async function addMovie(
     title,
     img,
     shortDescription = "",
@@ -100,7 +100,7 @@ function App() {
     } catch (error) {
       console.error("Error adding movie to the API:", error)
     }
-  }
+  }, [movies])
 
   async function addToWatchedMovies(movie) {
     const newWatchedMovie = {
@@ -151,7 +151,7 @@ function App() {
 
   function arrangeCards(y = 0) {
     const cardsPerRow = window.innerWidth < 1650 ? 3 : 5
-    console.log(window.innerWidth);
+    // console.log(window.innerWidth);
     const cardWidth = window.innerWidth < 900 ? 300 : 350 // ширина карточки + расстояние между карточками
     const cardHeight = 650 // высота карточки
     let maxOffsetY = 0
@@ -185,59 +185,6 @@ function App() {
     }
   }
 
-  //Блок добавления фильма по ссылке с кинопоиска
-
-  const options = {
-    method: "GET",
-    headers: {
-      "X-API-KEY": import.meta.env.VITE_API_KEY,
-    },
-  }
-
-  const handleAddFilm = (id) => {
-    setKinoId(id)
-  }
-
-  useEffect(() => {
-    if (kinoId) {
-      const urlWithParams = `${import.meta.env.VITE_API_URL}/${kinoId}`
-      console.log('newUrl',urlWithParams)
-      
-      fetch(urlWithParams, options)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
-          }
-          return response.json()
-        })
-        .then((data) => {
-          console.log(data)
-          console.log(data.name)
-          console.log(data.shortDescription)
-          console.log(data.description)
-          console.log(data.year)
-          console.log(data.poster.previewUrl)
-          console.log(data.genres.map((genre) => genre.name).join(", "))
-          console.log(data.rating.kp)
-
-          addMovie(
-            data.name,
-            data.poster.previewUrl,
-            data.shortDescription,
-            data.description,
-            data.year,
-            data.genres.map((genre) => genre.name).join(", "),
-            data.rating.kp.toFixed(2)
-          )
-          // allMovies.push( {id:getNextId(allMovies), title: data.name, img: data.poster.previewUrl, shortDescription: data.shortDescription, description: data.description, year: data.year, genres: data.genres.map(genre => genre.name).join(', '), rating: data.rating.kp.toFixed(2)})
-        })
-        .catch((error) => {
-          console.error("Ошибка запроса:", error)
-        })
-      setKinoId(null)
-    }
-  }, [kinoId])
-
   return (
     <Router>
       <MoviesFilterProvider>
@@ -265,9 +212,6 @@ function App() {
                         movieRefs={movieRefs}
                         optionsShow={optionsShow}
                         setOptionsShow={setOptionsShow}
-                        kinopoisk={kinopoisk}
-                        setKinopoisk={setKinopoisk}
-                        handleAddFilm={handleAddFilm}
                         addMovie={addMovie}
                         arrangeCards={arrangeCards}
                         randomMovie={randomMovie}

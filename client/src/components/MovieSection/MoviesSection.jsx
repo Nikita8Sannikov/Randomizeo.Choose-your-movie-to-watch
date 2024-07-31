@@ -127,8 +127,8 @@ export default function MoviesSection({
             setOptionsShow={setOptionsShow}
             kinopoisk={kinopoisk}
             setKinopoisk={setKinopoisk}
-            handleAddFilm={handleAddFilm}
             onFocus={handleFocus}
+            addMovie={addMovie}
           />
           <Filter movies={movies} searchFilm={searchTerm} setSearchFilm={setSearchTerm} />
           {optionsShow && (
