@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react"
-import Card, { StyledButton } from "../Card/Card"
-import styles from "./MovieSection.module.css"
-import { ModalContext } from "../Modal/ModalContext"
 import { useLocation } from "react-router-dom"
+import styles from "./MovieSection.module.css"
+import Card, { StyledButton } from "../Card/Card"
 import AddKinopoisk from "../AddFilm/AddKinopoisk"
 import Filter from "../Filter/Filter"
 import ResultSection from "../ResultSection/ResultSection"
 import AddFilmOption from "../AddFilm/AddFilmOption"
+import { ModalContext } from "../Modal/ModalContext"
 import { MoviesFilterContext } from "../Filter/MoviesFilterContext"
 import useResizeObserver from "../../../hooks/useResizeObserver"
 
@@ -15,102 +15,38 @@ export default function MoviesSection({
   movieRefs,
   kinopoisk,
   setKinopoisk,
-  handleAddFilm,
-  searchFilm,
   addMovie,
   arrangeCards,
-  onFocus,
-  randomMovie,
-  setRandomMovie,
-  outputText,
-  setOutputText,
-  setSearchFilm
 }) {
   const [optionsShow, setOptionsShow] = useState(false)
   const [randomMovie, setRandomMovie] = useState(null)
   const [outputText, setOutputText] = useState("")
-  const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext);
+  const { showDetails, showViewedConfirmation, setMovies } = useContext(ModalContext)
+  const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext)
   const location = useLocation()
-  // const containerRef = useRef(null);
-
-  const handleFocus = () => {
-    if (searchTerm) {
-      setSearchTerm("");
-    }
-    if (randomMovie && outputText) {
-      setRandomMovie(null);
-      setOutputText("");
-    }
-   }
-
-  // useEffect(() => {
-  //   setContext('movies')
-  // }, [setContext])
-
-  // const handleResize = () => {
-  //   const y = location.pathname === "/" ? 100 : 200
-  //   arrangeCards(y);
-  // }
-
-  const containerRef = useResizeObserver(()=> {
+  const containerRef = useResizeObserver(() => {
     const y = location.pathname === "/" ? 100 : 200
     arrangeCards(y)
   })
 
-    useEffect(() => {
+  const handleFocus = () => {
+    if (searchTerm) {
+      setSearchTerm("")
+    }
+    if (randomMovie && outputText) {
+      setRandomMovie(null)
+      setOutputText("")
+    }
+  }
+
+  useEffect(() => {
     const y = location.pathname === "/" ? 100 : 200
     arrangeCards(y)
-  }, [
-    movies,
-    location.pathname,
-  ])
-
-  // useEffect(() => {
-  //   const y = location.pathname === "/" ? 100 : 200
-  //   arrangeCards(y)
-
-  //   const handleResize = () => {
-  //     arrangeCards(y);
-  //   }
-
-  //   const resizeObserver = new ResizeObserver(handleResize)
-  //   if (containerRef.current) {
-  //     resizeObserver.observe(containerRef.current)
-  //   }
-
-  //   return () => {
-  //     resizeObserver.disconnect()
-  //   }
-  
-  // }, [
-  //   movies,
-  //   location.pathname,
-  // ])
-
-  // useEffect(() => {
-  //   const y = location.pathname === "/" ? 100 : 200
-  //   arrangeCards(y)
-
-  //   const handleResize = () => {
-  //     arrangeCards(y);
-  //   };
-
-  //   window.addEventListener('resize', handleResize);
-
-  //   // Удаляем обработчик события при размонтировании компонента
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, [arrangeCards,movies, location.pathname])
-
-
-  const { showDetails, showViewedConfirmation, setMovies } = useContext(ModalContext)
+  }, [movies, location.pathname])
 
   const movieSectionContent = (movie) => (
     <>
-      <StyledButton onClick={() => showDetails(movie)} >
-        Подробнее
-      </StyledButton>
+      <StyledButton onClick={() => showDetails(movie)}>Подробнее</StyledButton>
       <StyledButton
         onClick={() => showViewedConfirmation(movie, movies, setMovies)}
       >
@@ -130,20 +66,22 @@ export default function MoviesSection({
             onFocus={handleFocus}
             addMovie={addMovie}
           />
-          <Filter movies={movies} searchFilm={searchTerm} setSearchFilm={setSearchTerm} />
-          {optionsShow && (
-            <AddFilmOption addMovie={addMovie} />
-          )}
+          <Filter
+            movies={movies}
+            searchFilm={searchTerm}
+            setSearchFilm={setSearchTerm}
+          />
+          {optionsShow && <AddFilmOption addMovie={addMovie} />}
           <ResultSection
-           movies={movies}
-           randomMovie={randomMovie}
-           setRandomMovie={setRandomMovie}
-           outputText={outputText}
-           setOutputText={setOutputText}
+            movies={movies}
+            randomMovie={randomMovie}
+            setRandomMovie={setRandomMovie}
+            outputText={outputText}
+            setOutputText={setOutputText}
           />
         </>
       )}
-      <div className={styles.filmContainer} id="films" ref={containerRef} >
+      <div className={styles.filmContainer} id="films" ref={containerRef}>
         {movies.map((movie, index) => (
           <Card
             key={movie.id}
