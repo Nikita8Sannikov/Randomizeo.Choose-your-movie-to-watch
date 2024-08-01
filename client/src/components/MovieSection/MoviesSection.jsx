@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Card, { StyledButton } from "../Card/Card"
 import styles from "./MovieSection.module.css"
 import { ModalContext } from "../Modal/ModalContext"
@@ -13,8 +13,6 @@ import useResizeObserver from "../../../hooks/useResizeObserver"
 export default function MoviesSection({
   movies,
   movieRefs,
-  optionsShow,
-  setOptionsShow,
   kinopoisk,
   setKinopoisk,
   handleAddFilm,
@@ -28,6 +26,7 @@ export default function MoviesSection({
   setOutputText,
   setSearchFilm
 }) {
+  const [optionsShow, setOptionsShow] = useState(false)
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext);
   const location = useLocation()
   // const containerRef = useRef(null);
@@ -123,7 +122,6 @@ export default function MoviesSection({
       {location.pathname === "/" && (
         <>
           <AddKinopoisk
-            optionsShow={optionsShow}
             setOptionsShow={setOptionsShow}
             kinopoisk={kinopoisk}
             setKinopoisk={setKinopoisk}
@@ -132,7 +130,7 @@ export default function MoviesSection({
           />
           <Filter movies={movies} searchFilm={searchTerm} setSearchFilm={setSearchTerm} />
           {optionsShow && (
-            <AddFilmOption addMovie={addMovie} optionsShow={optionsShow} />
+            <AddFilmOption addMovie={addMovie} />
           )}
           <ResultSection
            movies={movies}

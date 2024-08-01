@@ -39,7 +39,6 @@ function App() {
     // },
   ])
   const [watchedMovies, setWatchedMovies] = useState([])
-  const [optionsShow, setOptionsShow] = useState(false)
   const [randomMovie, setRandomMovie] = useState(null)
   const [outputText, setOutputText] = useState("")
 
@@ -210,8 +209,8 @@ function App() {
                       <MoviesSection
                         movies={movies}
                         movieRefs={movieRefs}
-                        optionsShow={optionsShow}
-                        setOptionsShow={setOptionsShow}
+                        // optionsShow={optionsShow}
+                        // setOptionsShow={setOptionsShow}
                         addMovie={addMovie}
                         arrangeCards={arrangeCards}
                         randomMovie={randomMovie}

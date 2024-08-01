@@ -4,7 +4,7 @@ import Input from "../Input"
 import Button from "../Button"
 import styles from "./AddFilmSection.module.css"
 
-export default function AddFilmOption({addMovie, movies, optionsShow }) {
+export default function AddFilmOption({ addMovie }) {
   const [filmName, setFilmName] = useState("")
   const [filmUrl, setFilmUrl] = useState("")
 
