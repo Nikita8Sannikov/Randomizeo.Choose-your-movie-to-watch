@@ -27,6 +27,8 @@ export default function MoviesSection({
   setSearchFilm
 }) {
   const [optionsShow, setOptionsShow] = useState(false)
+  const [randomMovie, setRandomMovie] = useState(null)
+  const [outputText, setOutputText] = useState("")
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext);
   const location = useLocation()
   // const containerRef = useRef(null);
