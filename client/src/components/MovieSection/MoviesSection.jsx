@@ -9,14 +9,13 @@ import AddFilmOption from "../AddFilm/AddFilmOption"
 import { ModalContext } from "../Modal/ModalContext"
 import { MoviesFilterContext } from "../Filter/MoviesFilterContext"
 import useResizeObserver from "../../../hooks/useResizeObserver"
+import { useArrangeCards } from "../../../hooks/useArrangeCards"
 
 export default function MoviesSection({
   movies,
-  movieRefs,
   kinopoisk,
   setKinopoisk,
   addMovie,
-  arrangeCards,
 }) {
   const [optionsShow, setOptionsShow] = useState(false)
   const [randomMovie, setRandomMovie] = useState(null)
@@ -24,6 +23,7 @@ export default function MoviesSection({
   const { showDetails, showViewedConfirmation, setMovies } = useContext(ModalContext)
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext)
   const location = useLocation()
+  const {arrangeCards, movieRefs} = useArrangeCards()
   const containerRef = useResizeObserver(() => {
     const y = location.pathname === "/" ? 100 : 200
     arrangeCards(y)

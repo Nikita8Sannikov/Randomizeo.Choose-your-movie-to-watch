@@ -6,8 +6,9 @@ import { useLocation } from "react-router-dom"
 import Filter from "../Filter/Filter"
 import { WatchedFilterContext  } from "../Filter/WatchedFilterContext"
 import useResizeObserver from "../../../hooks/useResizeObserver"
+import { useArrangeCards } from "../../../hooks/useArrangeCards"
 
-const WathcedSection = ({ movies, movieRefs, arrangeCards, searchFilm, setSearchFilm  }) => {
+const WathcedSection = ({ movies }) => {
   const {
     showDetails,
     showWatchedDeleteConfirmation,
@@ -15,7 +16,7 @@ const WathcedSection = ({ movies, movieRefs, arrangeCards, searchFilm, setSearch
     setWatchedMovies,
   } = useContext(ModalContext)
 const { searchTerm, setSearchTerm } = useContext(WatchedFilterContext);
-
+const {arrangeCards, movieRefs} = useArrangeCards()
 // useEffect(() => {
 //   setContext('watched')
 // }, [setContext])
