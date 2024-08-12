@@ -19,6 +19,7 @@ router.post("/add", async (req, res) => {
       year,
       genres,
       rating,
+      movieLength,
     } = req.body
     const newMovie = new Movie({
       id,
@@ -29,6 +30,7 @@ router.post("/add", async (req, res) => {
       year,
       genres,
       rating,
+      movieLength,
     })
     await newMovie.save()
     res.status(201).json(newMovie)

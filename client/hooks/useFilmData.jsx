@@ -28,6 +28,7 @@ export default function useFilmData(kinoId) {
         posterUrl: data.poster.previewUrl,
         genres: data.genres.map((genre) => genre.name).join(", "),
         rating: data.rating.kp.toFixed(2),
+        movieLength: data.movieLength!=null ? `${Math.trunc(data.movieLength/60)}ч.${data.movieLength % 60}м.`: ''
       })
     } catch (error) {
       console.error("Ошибка запроса:", error)

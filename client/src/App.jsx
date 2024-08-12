@@ -55,7 +55,8 @@ function App() {
     description = "",
     year = "",
     genres = "",
-    rating = ""
+    rating = "",
+    movieLength = "",
   ) {
     const newMovie = {
       id: getNextId(movies),
@@ -66,6 +67,7 @@ function App() {
       year,
       genres,
       rating,
+      movieLength,
     }
 
     try {
@@ -88,6 +90,7 @@ function App() {
       year: movie.year,
       genres: movie.genres,
       rating: movie.rating,
+      movieLength: movie.movieLength
     }
     try {
       await addWatchedMovieToApi(newWatchedMovie)

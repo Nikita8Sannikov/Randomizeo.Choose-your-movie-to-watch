@@ -15,6 +15,7 @@ router.post("/add", async (req, res) => {
       year,
       genres,
       rating,
+      movieLength,
     } = req.body
     const newWatchedMovie= new WatchedMovie({
       id,
@@ -25,6 +26,7 @@ router.post("/add", async (req, res) => {
       year,
       genres,
       rating,
+      movieLength,
     })
     await newWatchedMovie.save()
     res.status(201).json(newWatchedMovie)

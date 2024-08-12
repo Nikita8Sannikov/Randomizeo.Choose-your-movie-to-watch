@@ -15,6 +15,8 @@ export default function Card({movie, cardRef, styleType, buttons }) {
           {movie.shortDescription ||'Описание по кнопке ниже ↓'} 
           <br></br>
           <i>{movie.genres||''}</i>
+          <br></br>
+          <i>{movie.movieLength||''}</i>
           </>
           </p>
         </div>

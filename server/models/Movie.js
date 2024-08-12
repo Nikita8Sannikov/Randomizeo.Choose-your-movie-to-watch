@@ -11,6 +11,7 @@ const movieSchema = new Schema({
     year: Number, // Год выпуска фильма
     genres: String, // Жанры фильма
     rating: String, // Рейтинг фильма
+    movieLength: String, //Продолжительность фильма
   })
 
 export default model('Movie', movieSchema)
