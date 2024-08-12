@@ -30,6 +30,7 @@ export default function useFilmData(kinoId) {
         rating: data.rating.kp.toFixed(2),
         movieLength: data.movieLength!=null ? `${Math.trunc(data.movieLength/60)}ч.${data.movieLength % 60}м.`: '',
         kinopoiskId: data.id,
+        isSeries: data.isSeries,
       })
     } catch (error) {
       console.error("Ошибка запроса:", error)

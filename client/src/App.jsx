@@ -58,6 +58,7 @@ function App() {
     rating = "",
     movieLength = "",
     kinopoiskId = "",
+    isSeries = false,
   ) {
     const newMovie = {
       id: getNextId(movies),
@@ -70,6 +71,7 @@ function App() {
       rating,
       movieLength,
       kinopoiskId,
+      isSeries,
     }
 
     try {
@@ -93,7 +95,8 @@ function App() {
       genres: movie.genres,
       rating: movie.rating,
       movieLength: movie.movieLength,
-      kinopoiskId: movie.kinopoiskId
+      kinopoiskId: movie.kinopoiskId,
+      isSeries: movie.isSeries,
     }
     try {
       await addWatchedMovieToApi(newWatchedMovie)

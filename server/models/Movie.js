@@ -13,6 +13,7 @@ const movieSchema = new Schema({
     rating: String, // Рейтинг фильма
     movieLength: String, //Продолжительность фильма
     kinopoiskId: Number, //Оригинальный id с Кинопоиска
+    isSeries: Boolean, //Флаг сериал это или нет
   })
 
 export default model('Movie', movieSchema)
