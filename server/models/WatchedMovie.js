@@ -13,6 +13,7 @@ const watchedMovieSchema = new Schema({
     genres: String, // Жанры фильма
     rating: String, // Рейтинг фильма
     movieLength: String, //Продолжительность фильма
+    kinopoiskId: Number, //Оригинальный id с Кинопоиска
   })
 
 export default model('WatchedMovie', watchedMovieSchema)

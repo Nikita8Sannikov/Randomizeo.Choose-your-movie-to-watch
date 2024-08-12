@@ -32,7 +32,8 @@ const AddKinopoisk = ({ setOptionsShow, addMovie, onFocus }) => {
         filmData.year,
         filmData.genres,
         filmData.rating,
-        filmData.movieLength
+        filmData.movieLength,
+        filmData.kinopoiskId
       )
       setKinoId(null)
       resetFilmData()

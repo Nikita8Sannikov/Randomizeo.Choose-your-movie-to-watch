@@ -12,6 +12,7 @@ const movieSchema = new Schema({
     genres: String, // Жанры фильма
     rating: String, // Рейтинг фильма
     movieLength: String, //Продолжительность фильма
+    kinopoiskId: Number, //Оригинальный id с Кинопоиска
   })
 
 export default model('Movie', movieSchema)
