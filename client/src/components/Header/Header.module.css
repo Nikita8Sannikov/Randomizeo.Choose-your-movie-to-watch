@@ -51,6 +51,12 @@
 }
 .navigationSection{
     margin-left: 80px;
+    display: flex;
+    align-items: center;
+}
+.buttonSection{
+    display: flex;
+    align-items: center;
 }
 .navButton{
     outline: none;
@@ -62,6 +68,69 @@
     cursor: pointer;
     /* border: 1px solid #2C2C2E; */
     border: none;
+}
+@media(max-width: 1420px){
+    .header{
+        /* width: 100%; */
+        display: flex;
+        margin: 47px 42px;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        /* margin: 0 20px; */
+    }
+    .searchArea>input{
+        font-size: 20px;
+        border-radius: 25px;
+        background-color: #302E31;
+        color: white;
+        outline: none;
+        border: 1px solid white;
+        caret-color: white;
+        padding: 18px 48px;
+        width: 360px;
+    }
+    .navigationSection{
+        margin-left: 50px;
+        display: flex;
+        align-items: center;
+    }
+    .searchArea{
+        position: relative;
+        /* margin-left: 50px; */
+    }
+}
+@media(max-width: 1300px){
+    .header{
+        /* width: 100%; */
+        display: flex;
+        margin: 47px 42px;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        /* margin: 0 20px; */
+    }
+    .searchArea>input{
+        font-size: 20px;
+        border-radius: 25px;
+        background-color: #302E31;
+        color: white;
+        outline: none;
+        border: 1px solid white;
+        caret-color: white;
+        padding: 18px 48px;
+        width: 360px;
+    }
+    .navigationSection{
+        margin-left: 30px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    .searchArea{
+        position: relative;
+        /* margin-left: 50px; */
+    }
 }
 @media(max-width: 1150px){
     .header{
@@ -85,13 +154,15 @@
     }
     .navigationSection{
         margin-left: 25px;
+        display: flex;
+        align-items: center;
     }
     .searchArea{
         position: relative;
         /* margin-left: 50px; */
     }
 }
-@media(max-width: 950px){
+@media(max-width: 1030px){
     .siteName>h1{
         font-size: 33px;
         color: white;
@@ -113,10 +184,13 @@
         border: 1px solid white;
         caret-color: white;
         padding: 18px 48px;
-        width: 235px;
+        /* width: 235px; */
+        width: 360px;
     }
     .navigationSection{
         margin-left: 25px;
+        display: flex;
+        align-items: center;
     }
     .searchArea{
         position: relative;
@@ -127,7 +201,8 @@
     }
     .navButton{
         outline: none;
-        font-size: 20px;
+        /* font-size: 20px; */
+        font-size: 23px;
         border-radius: 25px;
         padding: 5px;
         background-color: rgb(68 68 68 / 0%);
