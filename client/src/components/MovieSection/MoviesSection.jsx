@@ -20,12 +20,12 @@ export default function MoviesSection({
   const [optionsShow, setOptionsShow] = useState(false)
   const [randomMovie, setRandomMovie] = useState(null)
   const [outputText, setOutputText] = useState("")
-  const { showDetails, showViewedConfirmation, setMovies } = useContext(ModalContext)
+  const { showDetails, showViewedConfirmation, showSeriesViewedConfirmation, setMovies, setSeries } = useContext(ModalContext)
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext)
   const location = useLocation()
   const {arrangeCards, movieRefs} = useArrangeCards()
   const containerRef = useResizeObserver(() => {
-    const y = location.pathname === "/" ? 100 : 200
+    const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
     arrangeCards(y)
   })
 
@@ -40,7 +40,7 @@ export default function MoviesSection({
   }
 
   useEffect(() => {
-    const y = location.pathname === "/" ? 100 : 200
+    const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
     arrangeCards(y)
   }, [movies, location.pathname])
 
@@ -48,7 +48,10 @@ export default function MoviesSection({
     <>
       <StyledButton onClick={() => showDetails(movie)}>Подробнее</StyledButton>
       <StyledButton
-        onClick={() => showViewedConfirmation(movie, movies, setMovies)}
+        onClick={() =>
+          location.pathname === "/series"
+           ? showSeriesViewedConfirmation(movie, movies, setSeries)
+           :  showViewedConfirmation(movie, movies, setMovies)}
       >
         <span className="fa-regular fa-eye view-icon"></span>
       </StyledButton>
@@ -57,7 +60,7 @@ export default function MoviesSection({
 
   return (
     <>
-      {location.pathname === "/" && (
+      {(location.pathname === "/" || location.pathname === "/series") && (
         <>
           <AddKinopoisk
             setOptionsShow={setOptionsShow}

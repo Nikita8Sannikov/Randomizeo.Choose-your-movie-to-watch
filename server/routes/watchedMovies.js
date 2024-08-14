@@ -43,12 +43,21 @@ router.post("/add", async (req, res) => {
 // Роут для получения всех фильмов
 router.get("/", async (req, res) => {
   try {
-    const movies = await WatchedMovie.find()
+    const movies = await WatchedMovie.find({ isSeries: false })
     res.json(movies)
   } catch (error) {
     res.status(500).json({ message: "Server error" })
   }
 })
+// // Роут для получения всех сериалов
+// router.get("/series", async (req, res) => {
+//   try {
+//     const series = await WatchedMovie.find({ isSeries: true })
+//     res.json(series)
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error" })
+//   }
+// })
 
 // Роут для удаления фильма
 router.delete("/delete/:id", async (req, res) => {

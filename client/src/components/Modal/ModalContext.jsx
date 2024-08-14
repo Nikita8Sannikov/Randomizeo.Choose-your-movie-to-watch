@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import {StyledButton} from "./Modal"
 export const ModalContext = React.createContext()
 
-export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies, watchedMovies, setWatchedMovies, deleteMovie, deleteWatchedMovie }) => {
+export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies, watchedMovies, setWatchedMovies, deleteMovie, deleteWatchedMovie, series, setSeries,
+  watchedSeries, setWatchedSeries }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalContent, setModalContent] = useState(null)
     const [modalTitle, setModalTitle] = useState(null)
@@ -70,12 +71,12 @@ export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies,
         }
       }
     
-
       return (
         <ModalContext.Provider value={{ isModalClosing, isModalOpen,modalTitle, modalContent, modalButtons, openModal, closeModal,
          showDetails, showViewedConfirmation: (movie)=>showViewedConfirmation(movie, movies, setMovies),
-          showDeleteConfirmation,
-          showWatchedDeleteConfirmation: (movie) => showDeleteConfirmation(movie, watchedMovies, setWatchedMovies, true) }}>
+         showSeriesViewedConfirmation: (movie)=>showViewedConfirmation(movie, series, setSeries),
+          showWatchedDeleteConfirmation: (movie) => showDeleteConfirmation(movie, watchedMovies, setWatchedMovies, true), 
+          showWatchedSeriesDeleteConfirmation: (movie) => showDeleteConfirmation(movie, watchedSeries, setWatchedSeries, true) }}>
           {children}
         </ModalContext.Provider>
       )

@@ -47,12 +47,24 @@ router.post("/add", async (req, res) => {
 // Роут для получения всех фильмов
 router.get("/", async (req, res) => {
   try {
-    const movies = await Movie.find()
+    const movies = await Movie.find( 
+      { isSeries: false }
+    )
     res.json(movies)
   } catch (error) {
     res.status(500).json({ message: "Server error" })
   }
 })
+// // Роут для получения всех сериалов
+// router.get("/", async (req, res) => {
+//     try {
+//       const series = await Movie.find({ isSeries: true })
+//       res.json(series)
+//     } catch (error) {
+//       res.status(500).json({ message: "Server error" })
+//     }
+//   })
+
 
 // // Роут для получения просмотренных фильмов
 // router.get("/watched", async (req, res) => {

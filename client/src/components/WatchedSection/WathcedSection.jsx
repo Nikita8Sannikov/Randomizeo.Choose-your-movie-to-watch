@@ -12,8 +12,9 @@ const WathcedSection = ({ movies }) => {
   const {
     showDetails,
     showWatchedDeleteConfirmation,
-    watchedMovies,
     setWatchedMovies,
+    showWatchedSeriesDeleteConfirmation,
+    setWatchedSeries,
   } = useContext(ModalContext)
 const { searchTerm, setSearchTerm } = useContext(WatchedFilterContext);
 const {arrangeCards, movieRefs} = useArrangeCards()
@@ -24,12 +25,12 @@ const {arrangeCards, movieRefs} = useArrangeCards()
   const location = useLocation()
 
   const containerRef = useResizeObserver(()=> {
-    const y = location.pathname === "/" ? 100 : 200
+    const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
     arrangeCards(y)
   })
 
   useEffect(() => {
-    const y = location.pathname === "/" ? 100 : 200
+    const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
     arrangeCards(y)
   }, [movies, location.pathname])
 
@@ -38,7 +39,9 @@ const {arrangeCards, movieRefs} = useArrangeCards()
       <StyledButton onClick={() => showDetails(movie)}>Подробнее</StyledButton>
       <StyledButton
         onClick={() =>
-          showWatchedDeleteConfirmation(movie, watchedMovies, setWatchedMovies)
+           location.pathname === "/watched/series"
+           ? showWatchedSeriesDeleteConfirmation(movie, movies, setWatchedSeries)
+           : showWatchedDeleteConfirmation(movie, movies, setWatchedMovies)
         }
       >
         <span className="fa-regular fa-trash-can trash-icon"></span>

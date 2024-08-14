@@ -9,15 +9,23 @@ import { MoviesFilterProvider } from "./components/Filter/MoviesFilterContext"
 import { WatchedFilterProvider } from "./components/Filter/WatchedFilterContext"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { addMovie as addMovieToApi } from "./api"
+import { addSeries as addSeriesToApi } from "./api"
 import { addWatchedMovie as addWatchedMovieToApi } from "./api"
+import { addWatchedSeries as addWatchedSeriesToApi } from "./api"
 import { getMovies as getMoviesFromApi } from "./api"
+import { getSeries as getSeriesFromApi } from "./api"
 import { getWatchedMovies as getWatchedMoviesFromApi } from "./api"
+import { getWatchedSeries as getWatchedSeriesFromApi } from "./api"
 import { deleteMovie as deleteMoviesFromApi } from "./api"
 import { deleteWatchedMovie as deleteWatchedMoviesFromApi } from "./api"
 
 function App() {
   const [movies, setMovies] = useState([])
   const [watchedMovies, setWatchedMovies] = useState([])
+  const [series, setSeries] = useState([])
+  const [watchedSeries, setWatchedSeries] = useState([])
+  const allMoviesAndSeries = [...movies, ...series]
+  const allWatchedMoviesAndSeries = [...watchedMovies, ...watchedSeries]
 
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
@@ -42,13 +50,31 @@ function App() {
       console.error("Error loading movies:", error)
     }
   }
+  async function fetchSeries() {
+    try {
+      const fetchedSeries = await getSeriesFromApi()
+      setSeries(fetchedSeries.reverse())
+    } catch (error) {
+      console.error("Error loading series:", error)
+    }
+  }
+  async function fetchWatchedSeries() {
+    try {
+      const fetchedWatchedSeries = await getWatchedSeriesFromApi()
+      setWatchedSeries(fetchedWatchedSeries.reverse())
+    } catch (error) {
+      console.error("Error loading watched series:", error)
+    }
+  }
 
   useEffect(() => {
     fetchMovies()
     fetchWatchedMovies()
+    fetchSeries()
+    fetchWatchedSeries() 
   }, [])
 
-  const addMovie = useCallback( async function addMovie(
+  const addMovieOrSeries  = useCallback( async function addMovie(
     title,
     img,
     shortDescription = "",
@@ -60,8 +86,8 @@ function App() {
     kinopoiskId = "",
     isSeries = false,
   ) {
-    const newMovie = {
-      id: getNextId(movies),
+    const newItem = {
+      id: getNextId(allMoviesAndSeries),
       title,
       img,
       shortDescription,
@@ -75,18 +101,23 @@ function App() {
     }
 
     try {
-      await addMovieToApi(newMovie)
-      const updatedMovies = [newMovie, ...movies]
-      console.log("Updated Movies:", updatedMovies)
-      setMovies(updatedMovies)
+      if (isSeries) {
+        await addSeriesToApi(newItem)
+        const updatedSeries = [newItem, ...series]
+        setSeries(updatedSeries)
+      } else {
+        await addMovieToApi(newItem)
+        const updatedMovies = [newItem, ...movies]
+        setMovies(updatedMovies)
+      }
     } catch (error) {
-      console.error("Error adding movie to the API:", error)
+      console.error(`Error adding ${isSeries ? "series" : "movie"} to the API:`, error)
     }
-  }, [movies])
+  }, [movies, series])
 
   async function addToWatchedMovies(movie) {
-    const newWatchedMovie = {
-      id: getNextId(watchedMovies),
+    const newItem = {
+      id: getNextId(allWatchedMoviesAndSeries),
       title: movie.title,
       img: movie.img,
       shortDescription: movie.shortDescription,
@@ -99,12 +130,19 @@ function App() {
       isSeries: movie.isSeries,
     }
     try {
-      await addWatchedMovieToApi(newWatchedMovie)
-      const updatedWatchedMovies = [newWatchedMovie, ...watchedMovies]
+      if (movie.isSeries) {
+        await addWatchedSeriesToApi(newItem)
+        const updatedWatchedSeries = [newItem, ...watchedSeries]
+        console.log("Updated Watched Series:", updatedWatchedSeries)
+        setWatchedSeries(updatedWatchedSeries)
+      } else {
+      await addWatchedMovieToApi(newItem)
+      const updatedWatchedMovies = [newItem, ...watchedMovies]
       console.log("Updated Watched Movies:", updatedWatchedMovies)
       setWatchedMovies(updatedWatchedMovies)
+      }
     } catch (error) {
-      console.error("Error adding watched movie to the API:", error)
+      console.error(`Error adding ${movie.isSeries ? "watched series" : "watched movie"}to the API:`, error)
     }
   }
 
@@ -141,6 +179,10 @@ function App() {
             setMovies={setMovies}
             watchedMovies={watchedMovies}
             setWatchedMovies={setWatchedMovies}
+            series={series}
+            setSeries={setSeries}
+            watchedSeries={watchedSeries}
+            setWatchedSeries={setWatchedSeries}
             deleteMovie={deleteMovie}
             deleteWatchedMovie={deleteWatchedMovie}
           >
@@ -154,7 +196,16 @@ function App() {
                     element={
                       <MoviesSection
                         movies={movies}
-                        addMovie={addMovie}
+                        addMovie={addMovieOrSeries}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/series"
+                    element={
+                      <MoviesSection
+                        movies={series}
+                        addMovie={addMovieOrSeries}
                       />
                     }
                   />
@@ -163,6 +214,14 @@ function App() {
                     element={
                       <WatchedSection
                         movies={watchedMovies}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/watched/series"
+                    element={
+                      <WatchedSection 
+                        movies={watchedSeries}
                       />
                     }
                   />
