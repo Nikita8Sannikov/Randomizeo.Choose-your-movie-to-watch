@@ -8,6 +8,9 @@
     border: 1px solid #ccc;
     cursor: pointer;
   } */
+  .dropdownLabel {
+    display: flex;
+  }
   
   .dropdownMenu {
     position: absolute;
