@@ -10,7 +10,7 @@ const TabsSection = () => {
   const watchedOptions = ["Просмотренные фильмы", "Просмотренные сериалы"]
   const navigate = useNavigate()
   const handleSelect = (option) => {
-    console.log("Selected option:", option)
+    // console.log("Selected option:", option)
 
     if (option === "Фильмы") {
       navigate("/")

@@ -14,7 +14,7 @@ const Header = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const isWatchedPage = location.pathname === "/watched"
+  const isWatchedPage = location.pathname === "/watched" || location.pathname === "/watched/series"
 
   const { searchTerm, setSearchTerm } = useContext(
     isWatchedPage ? WatchedFilterContext : MoviesFilterContext

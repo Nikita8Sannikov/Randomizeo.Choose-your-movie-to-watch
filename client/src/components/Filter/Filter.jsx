@@ -10,9 +10,11 @@ const Filter = ({ movies, watchedMovies }) => {
   const { showDetails, showViewedConfirmation } = useContext(ModalContext)
   const { searchTerm: moviesSearchTerm } = useContext(MoviesFilterContext)
   const { searchTerm: watchedSearchTerm } = useContext(WatchedFilterContext)
-  const location = useLocation()
+  const location = useLocation()  
   const searchTerm =
-    location.pathname === "/" ? moviesSearchTerm : watchedSearchTerm
+    (location.pathname === "/" || location.pathname === "/series") 
+    ? moviesSearchTerm 
+    : watchedSearchTerm
 
   function filter(val, filmList) {
     const trimmedVal = val.trim().toLowerCase()
@@ -34,9 +36,9 @@ const Filter = ({ movies, watchedMovies }) => {
   )
 
   const filteredMovies = useMemo(() => {
-    if (location.pathname === "/") {
+    if (location.pathname === "/" || location.pathname === "/series" ) {
       return filter(searchTerm, movies)
-    } else if (location.pathname === "/watched") {
+    } else if (location.pathname === "/watched" || location.pathname === "/watched/series") {
       return filter(searchTerm, watchedMovies)
     }
     return []
