@@ -1,40 +1,40 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body {
-  font-family: 'Manrope', sans-serif;
-  background: linear-gradient(0deg, #151616 -103%, #000000 13%);
+  font-family: "Manrope", sans-serif;
+  background: linear-gradient(0deg, #151616 -103%, #000000 4%);
   /* color: white; */
   /* max-width: 1900px; */
   margin: auto;
 }
-main{
+main {
   padding: 20px;
   position: relative;
   z-index: 1;
 }
-.content{
+.content {
   margin-top: 107px;
-  }
+}
 
-.view-icon{
-    pointer-events: none;
-}
-.trash-icon{
-    pointer-events: none;
-}
-.star-icon{
-    background: linear-gradient(45deg,#afaf16 , white);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.bars-icon{
+.view-icon {
   pointer-events: none;
 }
-@media(max-width: 770px){
-  .content{
+.trash-icon {
+  pointer-events: none;
+}
+.star-icon {
+  background: linear-gradient(45deg, #afaf16, white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.bars-icon {
+  pointer-events: none;
+}
+@media (max-width: 770px) {
+  .content {
     margin-top: 70px;
-    }
+  }
 }

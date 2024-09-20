@@ -18,6 +18,9 @@ import { getWatchedMovies as getWatchedMoviesFromApi } from "./api"
 import { getWatchedSeries as getWatchedSeriesFromApi } from "./api"
 import { deleteMovie as deleteMoviesFromApi } from "./api"
 import { deleteWatchedMovie as deleteWatchedMoviesFromApi } from "./api"
+import LeftUpShadow from "./components/Gradients/LeftUpShadow"
+import RightUpShadow from "./components/Gradients/RightUpShadow"
+import DownShadow from "./components/Gradients/DownShadow"
 
 function App() {
   const [movies, setMovies] = useState([])
@@ -71,49 +74,55 @@ function App() {
     fetchMovies()
     fetchWatchedMovies()
     fetchSeries()
-    fetchWatchedSeries() 
+    fetchWatchedSeries()
   }, [])
 
-  const addMovieOrSeries  = useCallback( async function addMovie(
-    title,
-    img,
-    shortDescription = "",
-    description = "",
-    year = "",
-    genres = "",
-    rating = "",
-    movieLength = "",
-    kinopoiskId = "",
-    isSeries = false,
-  ) {
-    const newItem = {
-      id: getNextId(allMoviesAndSeries),
+  const addMovieOrSeries = useCallback(
+    async function addMovie(
       title,
       img,
-      shortDescription,
-      description,
-      year,
-      genres,
-      rating,
-      movieLength,
-      kinopoiskId,
-      isSeries,
-    }
-
-    try {
-      if (isSeries) {
-        await addSeriesToApi(newItem)
-        const updatedSeries = [newItem, ...series]
-        setSeries(updatedSeries)
-      } else {
-        await addMovieToApi(newItem)
-        const updatedMovies = [newItem, ...movies]
-        setMovies(updatedMovies)
+      shortDescription = "",
+      description = "",
+      year = "",
+      genres = "",
+      rating = "",
+      movieLength = "",
+      kinopoiskId = "",
+      isSeries = false
+    ) {
+      const newItem = {
+        id: getNextId(allMoviesAndSeries),
+        title,
+        img,
+        shortDescription,
+        description,
+        year,
+        genres,
+        rating,
+        movieLength,
+        kinopoiskId,
+        isSeries,
       }
-    } catch (error) {
-      console.error(`Error adding ${isSeries ? "series" : "movie"} to the API:`, error)
-    }
-  }, [movies, series])
+
+      try {
+        if (isSeries) {
+          await addSeriesToApi(newItem)
+          const updatedSeries = [newItem, ...series]
+          setSeries(updatedSeries)
+        } else {
+          await addMovieToApi(newItem)
+          const updatedMovies = [newItem, ...movies]
+          setMovies(updatedMovies)
+        }
+      } catch (error) {
+        console.error(
+          `Error adding ${isSeries ? "series" : "movie"} to the API:`,
+          error
+        )
+      }
+    },
+    [movies, series]
+  )
 
   async function addToWatchedMovies(movie) {
     const newItem = {
@@ -136,13 +145,18 @@ function App() {
         console.log("Updated Watched Series:", updatedWatchedSeries)
         setWatchedSeries(updatedWatchedSeries)
       } else {
-      await addWatchedMovieToApi(newItem)
-      const updatedWatchedMovies = [newItem, ...watchedMovies]
-      console.log("Updated Watched Movies:", updatedWatchedMovies)
-      setWatchedMovies(updatedWatchedMovies)
+        await addWatchedMovieToApi(newItem)
+        const updatedWatchedMovies = [newItem, ...watchedMovies]
+        console.log("Updated Watched Movies:", updatedWatchedMovies)
+        setWatchedMovies(updatedWatchedMovies)
       }
     } catch (error) {
-      console.error(`Error adding ${movie.isSeries ? "watched series" : "watched movie"}to the API:`, error)
+      console.error(
+        `Error adding ${
+          movie.isSeries ? "watched series" : "watched movie"
+        }to the API:`,
+        error
+      )
     }
   }
 
@@ -186,6 +200,9 @@ function App() {
             deleteMovie={deleteMovie}
             deleteWatchedMovie={deleteWatchedMovie}
           >
+            <LeftUpShadow />
+            <RightUpShadow />
+            <DownShadow />
             <main>
               <Header />
               <Modal />
@@ -211,19 +228,11 @@ function App() {
                   />
                   <Route
                     path="/watched"
-                    element={
-                      <WatchedSection
-                        movies={watchedMovies}
-                      />
-                    }
+                    element={<WatchedSection movies={watchedMovies} />}
                   />
                   <Route
                     path="/watched/series"
-                    element={
-                      <WatchedSection 
-                        movies={watchedSeries}
-                      />
-                    }
+                    element={<WatchedSection movies={watchedSeries} />}
                   />
                 </Routes>
               </div>

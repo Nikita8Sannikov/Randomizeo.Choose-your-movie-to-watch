@@ -45,7 +45,7 @@ const Dropdown = ({ options, onSelect, label, className }) => {
     >
       <div className={styles.dropdownLabel}>
         <Button className={className}>{label}</Button>
-        <span className="fa-solid fa-square-caret-down"></span>
+        {/* <span className="fa-solid fa-square-caret-down"></span> */}
       </div>
       {isOpen && (
         <ul
