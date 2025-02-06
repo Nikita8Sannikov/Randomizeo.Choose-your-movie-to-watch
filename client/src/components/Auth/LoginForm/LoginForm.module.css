@@ -1,0 +1,89 @@
+.loginFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* background-color: #f0f2f5; */
+  /* background: linear-gradient(0deg, #151616 -103%, #000000 4%); */
+}
+
+.loginForm {
+  width: 100%;
+  max-width: 400px;
+  /* padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+  margin: 10px;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(68 68 68 / 20%);
+  padding: 15px;
+  transform-origin: bottom center;
+  transition: transform 0.3s;
+  color: white;
+}
+
+.formTitle {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  /* color: #333; */
+  /* text-align: center; */
+  word-wrap: break-word;
+  font-family: Manrope;
+  /* font-size: 20px; */
+  font-weight: 700;
+  text-align: center;
+}
+
+.serverResponse {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.serverResponse.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.serverResponse.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.cardContent {
+  display: block;
+}
+
+.inputAction {
+  display: block;
+}
+
+.toggleAction {
+  margin-top: 1rem;
+}
+
+.toggleAction span {
+  color: #C45EF1;
+  border-bottom: 1px dotted #C45EF1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.passwordField {
+  position: relative;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  cursor: pointer;
+}

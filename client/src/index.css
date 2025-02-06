@@ -38,3 +38,12 @@ main {
     margin-top: 70px;
   }
 }
+.appContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* background-color: #f0f2f5; */
+  /* background: linear-gradient(0deg, #151616 -103%, #000000 4%); */
+}
+
