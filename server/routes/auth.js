@@ -104,6 +104,8 @@ router.post(
 					email: user.email,
 					name: user.name,
 					avatar: user.avatar,
+					films: user.films,
+					watched: user.watched
 				});
 		} catch (e) {
 			res.status(500).json({ message: "Smth wrong, try again" });
