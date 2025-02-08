@@ -1,12 +1,5 @@
-import React, { useCallback } from "react"
+import { useCallback } from "react"
 import { useState, useRef, useEffect } from "react"
-import MoviesSection from "./components/MovieSection/MoviesSection"
-import WatchedSection from "./components/WatchedSection/WathcedSection"
-import Header from "./components/Header/Header"
-import Modal from "./components/Modal/Modal"
-import { ModalProvider } from "./components/Modal/ModalContext"
-import { MoviesFilterProvider } from "./components/Filter/MoviesFilterContext"
-import { WatchedFilterProvider } from "./components/Filter/WatchedFilterContext"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { addMovie as addMovieToApi } from "./api"
 import { addSeries as addSeriesToApi } from "./api"
@@ -18,26 +11,33 @@ import { getWatchedMovies as getWatchedMoviesFromApi } from "./api"
 import { getWatchedSeries as getWatchedSeriesFromApi } from "./api"
 import { deleteMovie as deleteMoviesFromApi } from "./api"
 import { deleteWatchedMovie as deleteWatchedMoviesFromApi } from "./api"
-import LeftUpShadow from "./components/Gradients/LeftUpShadow"
-import RightUpShadow from "./components/Gradients/RightUpShadow"
-import DownShadow from "./components/Gradients/DownShadow"
+import { useDispatch, useSelector } from "react-redux"
+import { remind } from "./store/reducers/auth/authSlice"
+import useRoutes from "../hooks/useRoutes"
 
 function App() {
+  const dispatch = useDispatch()
+  const userId = useSelector((state) => state.auth.user?._id);
+
   const [movies, setMovies] = useState([])
   const [watchedMovies, setWatchedMovies] = useState([])
   const [series, setSeries] = useState([])
   const [watchedSeries, setWatchedSeries] = useState([])
   const allMoviesAndSeries = [...movies, ...series]
   const allWatchedMoviesAndSeries = [...watchedMovies, ...watchedSeries]
-
+  // console.log(userId);
+  // const userfilms = useSelector((state) => state.auth.user.films);
+  // console.log(userfilms);
+  
   function getNextId(movies) {
     const maxId = movies.reduce((max, movie) => Math.max(max, movie.id), 0)
     return maxId + 1
   }
 
   async function fetchMovies() {
+    if (!userId) return; 
     try {
-      const fetchedMovies = await getMoviesFromApi()
+      const fetchedMovies = await getMoviesFromApi(userId)
       const reverseFetched = fetchedMovies.reverse()
       setMovies(reverseFetched)
     } catch (error) {
@@ -54,8 +54,9 @@ function App() {
     }
   }
   async function fetchSeries() {
+    if (!userId) return; 
     try {
-      const fetchedSeries = await getSeriesFromApi()
+      const fetchedSeries = await getSeriesFromApi(userId)
       setSeries(fetchedSeries.reverse())
     } catch (error) {
       console.error("Error loading series:", error)
@@ -75,7 +76,11 @@ function App() {
     fetchWatchedMovies()
     fetchSeries()
     fetchWatchedSeries()
-  }, [])
+  }, [userId])
+
+  useEffect(() => {
+		dispatch(remind());
+	}, [dispatch]);
 
   const addMovieOrSeries = useCallback(
     async function addMovie(
@@ -91,7 +96,7 @@ function App() {
       isSeries = false
     ) {
       const newItem = {
-        id: getNextId(allMoviesAndSeries),
+        // id: getNextId(allMoviesAndSeries),
         title,
         img,
         shortDescription,
@@ -106,11 +111,11 @@ function App() {
 
       try {
         if (isSeries) {
-          await addSeriesToApi(newItem)
+          await addSeriesToApi(newItem, userId)
           const updatedSeries = [newItem, ...series]
           setSeries(updatedSeries)
         } else {
-          await addMovieToApi(newItem)
+          await addMovieToApi(newItem, userId)
           const updatedMovies = [newItem, ...movies]
           setMovies(updatedMovies)
         }
@@ -122,11 +127,11 @@ function App() {
       }
     },
     [movies, series]
-  )
+  ) 
 
   async function addToWatchedMovies(movie) {
     const newItem = {
-      id: getNextId(allWatchedMoviesAndSeries),
+      // id: getNextId(allWatchedMoviesAndSeries),
       title: movie.title,
       img: movie.img,
       shortDescription: movie.shortDescription,
@@ -162,7 +167,11 @@ function App() {
 
   async function deleteMovie(movie, list, setList) {
     try {
-      await deleteMoviesFromApi(movie.id)
+      await deleteMoviesFromApi(movie._id, userId)
+      console.log(movie);
+      console.log(movie._id);
+      
+      
       removeMovieFromList(movie, list, setList)
     } catch (error) {
       console.error("Error deleting movies:", error)
@@ -181,67 +190,28 @@ function App() {
   const removeMovieFromList = (movie, list, setList) => {
     setList(list.filter((m) => m.id !== movie.id))
   }
+ 
+  const props = {
+    movies,
+    setMovies,
+    watchedMovies,
+    setWatchedMovies,
+    series,
+    setSeries,
+    watchedSeries,
+    setWatchedSeries,
+    deleteMovie,
+    deleteWatchedMovie,
+    addMovieOrSeries,
+    addToWatchedMovies,
+    removeMovieFromList
+  };
 
-  return (
+  return(
     <Router>
-      <MoviesFilterProvider>
-        <WatchedFilterProvider>
-          <ModalProvider
-            addToWatchedMovies={addToWatchedMovies}
-            removeMovieFromList={removeMovieFromList}
-            movies={movies}
-            setMovies={setMovies}
-            watchedMovies={watchedMovies}
-            setWatchedMovies={setWatchedMovies}
-            series={series}
-            setSeries={setSeries}
-            watchedSeries={watchedSeries}
-            setWatchedSeries={setWatchedSeries}
-            deleteMovie={deleteMovie}
-            deleteWatchedMovie={deleteWatchedMovie}
-          >
-            <LeftUpShadow />
-            <RightUpShadow />
-            <DownShadow />
-            <main>
-              <Header />
-              <Modal />
-              <div className="content">
-                <Routes>
-                  <Route
-                    path="/"
-                    element={
-                      <MoviesSection
-                        movies={movies}
-                        addMovie={addMovieOrSeries}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/series"
-                    element={
-                      <MoviesSection
-                        movies={series}
-                        addMovie={addMovieOrSeries}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/watched"
-                    element={<WatchedSection movies={watchedMovies} />}
-                  />
-                  <Route
-                    path="/watched/series"
-                    element={<WatchedSection movies={watchedSeries} />}
-                  />
-                </Routes>
-              </div>
-            </main>
-          </ModalProvider>
-        </WatchedFilterProvider>
-      </MoviesFilterProvider>
+       {useRoutes(props)}
     </Router>
-  )
+  ) 
 }
 
 export default App

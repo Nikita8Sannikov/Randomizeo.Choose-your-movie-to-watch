@@ -1,7 +1,7 @@
 // фильмы с главной
-export const addMovie = async (movie) => {
+export const addMovie = async (movie, userId) => {
   try {
-    const response = await fetch("/api/movies/add", {
+    const response = await fetch(`/api/movies/add?userId=${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,9 +21,9 @@ export const addMovie = async (movie) => {
   }
 }
 
-export const getMovies = async () => {
+export const getMovies = async (userId) => {
   try {
-    const response = await fetch("/api/movies", {
+    const response = await fetch(`/api/movies?userId=${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -42,9 +42,11 @@ export const getMovies = async () => {
   }
 }
 
-export const deleteMovie = async (id) => {
+export const deleteMovie = async (_id, userId) => {
   try {
-    const response = await fetch(`/api/movies/delete/${id}`, {
+    console.log('id from api:', _id);
+    
+    const response = await fetch(`/api/movies/delete/${_id}?userId=${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -115,9 +117,9 @@ export const deleteWatchedMovie = async (id) => {
 }
 
 // Добавляем функции для сериалов
-export const addSeries = async (movie) => {
+export const addSeries = async (movie, userId) => {
   try {
-    const response = await fetch("/api/movies/series/add", {
+    const response = await fetch(`/api/movies/series/add?userId=${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,9 +139,9 @@ export const addSeries = async (movie) => {
   }
 }
 
-export const getSeries = async () => {
+export const getSeries = async (userId) => {
   try {
-    const response = await fetch("/api/movies/series", {
+    const response = await fetch(`/api/movies/series?userId=${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
