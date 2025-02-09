@@ -87,7 +87,7 @@ export default function MoviesSection({
       <div className={styles.filmContainer} id="films" ref={containerRef}>
         {movies.map((movie, index) => (
           <Card
-            key={movie.id}
+            key={movie._id ? movie._id.toString() : index}
             movie={movie}
             cardRef={(el) => (movieRefs.current[index] = el)}
             styleType="movieSection"

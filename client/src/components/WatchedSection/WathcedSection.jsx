@@ -55,7 +55,7 @@ const {arrangeCards, movieRefs} = useArrangeCards()
     <div className={styles.filmContainer} ref={containerRef} id="watched-films">
       {movies.map((movie, index) => (
         <Card
-          key={movie.id}
+          key={movie._id ? movie._id.toString() : index}
           movie={movie}
           cardRef={(el) => (movieRefs.current[index] = el)}
           styleType="watchedSection"
