@@ -29,12 +29,13 @@ export const getMovies = async (userId) => {
         "Content-Type": "application/json",
       },
     })
-
+  
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
     const data = await response.json()
+    
     return data
   } catch (error) {
     console.error("Error getting movies:", error)
@@ -57,6 +58,7 @@ export const deleteMovie = async (_id, userId) => {
     }
 
     const data = await response.json()
+
     return data
   } catch (error) {
     console.error("Error deleting movie:", error)
@@ -65,9 +67,9 @@ export const deleteMovie = async (_id, userId) => {
 }
 
 // фильмы со страницы просмотренных
-export const getWatchedMovies = async () => {
+export const getWatchedMovies = async (userId) => {
   try {
-    const response = await fetch("/api/watched-movies",{
+    const response = await fetch(`/api/watched-movies?userId=${userId}`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -85,25 +87,32 @@ export const getWatchedMovies = async () => {
   }
 }
 
-export const addWatchedMovie = async (movie) => {
+export const addWatchedMovie = async (movie, userId) => {
   try {
-    const response = await fetch("/api/watched-movies/add", {
+    const response = await fetch(`/api/watched-movies/add?userId=${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(movie),
     })
-    return await response.json()
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data
   } catch (error) {
     console.error("Error adding watched movie:", error)
     throw error
   }
 }
 
-export const deleteWatchedMovie = async (id) => {
+export const deleteWatchedMovie = async (_id, userId) => {
   try {
-    const response = await fetch(`/api/watched-movies/delete/${id}`, {
+    console.log('id watched from api:', _id);
+    const response = await fetch(`/api/watched-movies/delete/${_id}?userId=${userId}`, {
       method: "DELETE",
     })
     if (!response.ok) {
@@ -132,6 +141,7 @@ export const addSeries = async (movie, userId) => {
     }
 
     const data = await response.json()
+    
     return data
   } catch (error) {
     console.error("Error adding series:", error)
@@ -160,9 +170,9 @@ export const getSeries = async (userId) => {
   }
 }
 
-export const getWatchedSeries = async () => {
+export const getWatchedSeries = async (userId) => {
   try {
-    const response = await fetch("/api/watched-movies/series", {
+    const response = await fetch(`/api/watched-movies/series?userId=${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -181,9 +191,9 @@ export const getWatchedSeries = async () => {
   }
 }
 
-export const addWatchedSeries = async (movie) => {
+export const addWatchedSeries = async (movie, userId) => {
   try {
-    const response = await fetch("/api/watched-movies/series/add", {
+    const response = await fetch(`/api/watched-movies/series/add?userId=${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
