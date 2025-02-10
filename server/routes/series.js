@@ -1,6 +1,6 @@
 import { Router } from "express"
 import Movie from "../models/Movie.js"
-import User from "../models/User.js"
+import UserMovies from "../models/UserMovies.js"
 
 console.log("Series routes file loaded");
 const router = Router()
@@ -27,39 +27,48 @@ router.post("/add", async (req, res) => {
     } = req.body
     
     // Проверка, существует ли сериал с таким kinopoiskId
-        const existingSeries = await Movie.findOne({ kinopoiskId });
-        if (existingSeries) {
-          const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { $addToSet: { films: existingSeries._id } },
-            { new: true, upsert: false },
-          );
-          return res.status(200).json({ message: "Movie already exists in BD", user: updatedUser });
+        let series = await Movie.findOne({ kinopoiskId });
+        if (!series) {
+           series = new Movie({
+            // id,
+            title,
+            img,
+            shortDescription,
+            description,
+            year,
+            genres,
+            rating,
+            movieLength,
+            kinopoiskId,
+            isSeries,
+          })
+
+          await series.save()
         }
+       // Создаем запись в UserMovies, если ее еще нет
+         const userMovie = await UserMovies.findOne({
+                userId,
+                movieId:  series._id ,
+              });
+              console.log(userMovie);
     
-    const newSeries = new Movie({
-      // id,
-      title,
-      img,
-      shortDescription,
-      description,
-      year,
-      genres,
-      rating,
-      movieLength,
-      kinopoiskId,
-      isSeries,
-    })
-    await newSeries.save()
+    if (!userMovie) {
+        const newEntry = await UserMovies.create({
+          userId,
+          movieId: series._id,
+          isWatched: false,
+          isSeries: series.isSeries,
+          inMainList: true,
+        });
+            console.log('User updated:', newEntry);
+          }
+    
+    
+   
 
-     const updatedUser = await User.findByIdAndUpdate(
-              userId,
-              { $addToSet: { films: newSeries._id } },
-              { new: true, upsert: false },
-            );
-            console.log('User updated:', updatedUser);
+   
 
-    res.status(201).json(newSeries)
+    res.status(201).json(series)
   } catch (error) {
     console.error('Error adding movie:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -74,7 +83,20 @@ router.get("/", async (req, res) => {
         return res.status(400).json({ error: "User ID is required" });
       }
       // const series = await Movie.find({ isSeries: true })
-      
+
+const series = await UserMovies.find({
+      userId,
+      isWatched: false,
+      isSeries: true,
+      inMainList: true
+    }).populate("movieId").lean(); // Подгружаем инфу о сериале
+
+    const modifiedSeries = series.map(({ movieId, ...rest }) => ({
+      ...rest,
+      ...movieId,
+    }))
+
+      /**
       // Находим юзера по userId и получаем список его фильмов
        const user = await User.findById(userId).select("films");
       
@@ -84,9 +106,10 @@ router.get("/", async (req, res) => {
 
           // Достаём сериалы по ID, которые есть у юзера
               const series = await Movie.find({ _id: { $in: user.films }, isSeries: true });
-
-      res.json(series)
+**/
+      res.json(modifiedSeries)
     } catch (error) {
+      console.error("Ошибка в /movies:", error);
       res.status(500).json({ message: "Server error" })
     }
   })
