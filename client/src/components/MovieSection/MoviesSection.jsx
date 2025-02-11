@@ -16,6 +16,8 @@ export default function MoviesSection({
   kinopoisk,
   setKinopoisk,
   addMovie,
+  setMoviesForAdd,
+  setSeriesForAdd
 }) {
   const [optionsShow, setOptionsShow] = useState(false)
   const [randomMovie, setRandomMovie] = useState(null)
@@ -68,6 +70,8 @@ export default function MoviesSection({
             setKinopoisk={setKinopoisk}
             onFocus={handleFocus}
             addMovie={addMovie}
+            setMovies={setMoviesForAdd}
+            setSeries={setSeriesForAdd}
           />
           <Filter
             movies={movies}

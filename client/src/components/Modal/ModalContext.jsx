@@ -1,14 +1,25 @@
 import React, { useState } from "react"
+import { useSelector } from "react-redux"
+
+import { deleteMovie as deleteMoviesFromApi } from "../../api"
+import { deleteWatchedMovie as deleteWatchedMoviesFromApi } from "../../api"
+import { addWatchedMovie as addWatchedMovieToApi } from "../../api"
+import { addWatchedSeries as addWatchedSeriesToApi } from "../../api"
+
+import { deleteMovie, addToWatchedMovies } from "../../utils/utils"
+
 import {StyledButton} from "./Modal"
+
 export const ModalContext = React.createContext()
 
-export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies, watchedMovies, setWatchedMovies, deleteMovie, deleteWatchedMovie, series, setSeries,
+export const ModalProvider = ({ children, movies, setMovies, watchedMovies, setWatchedMovies, series, setSeries,
   watchedSeries, setWatchedSeries }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalContent, setModalContent] = useState(null)
     const [modalTitle, setModalTitle] = useState(null)
     const [isModalClosing,  setIsModalClosing] = useState(false)
     const [modalButtons, setModalButtons] = useState(null)
+    const userId = useSelector((state) => state.auth.user?._id);
 
     const openModal = ( title, content, buttons) => {
         setModalContent(content)
@@ -27,7 +38,7 @@ export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies,
 
       const showDetails = (movie) => {
         openModal( movie.title,
-            <p>{ movie.description }</p> ,
+            <p>{ movie.description ? movie.description : 'Описание пока не добавлено' }</p> ,
           <StyledButton onClick={closeModal}>Ок</StyledButton>
         )
       }
@@ -51,7 +62,7 @@ export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies,
         )
       }
       const confirmViewed =  (movie, list, setList) => {
-        addToWatchedMovies(movie)
+        addToWatchedMovies(movie, addWatchedSeriesToApi, addWatchedMovieToApi, setWatchedSeries, setWatchedMovies, userId)
         closeModal()
         showDeleteConfirmation(movie, list, setList)
       }
@@ -59,9 +70,9 @@ export const ModalProvider = ({ children, addToWatchedMovies, movies, setMovies,
       const confirmDelete = async (movie, list, setList, isWatched) => {
         try{
           if(!isWatched){
-            await deleteMovie(movie, list, setList)
+            await deleteMovie(movie, list, setList, deleteMoviesFromApi, userId)
           }else{
-            await deleteWatchedMovie(movie, list, setList)
+            await deleteMovie(movie, list, setList, deleteWatchedMoviesFromApi, userId)
           }
          
         //  removeMovieFromList(movie, list, setList)

@@ -1,16 +1,24 @@
-import React, { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+
+import { addMovie as addMovieToApi } from "../../api"
+import { addSeries as addSeriesToApi } from "../../api"
+
 import Input from "../Input"
 import Button from "../Button"
-import styles from "./AddFilmSection.module.css"
 import useFilmData from "../../../hooks/useFilmData"
+import { addMovieOrSeries } from "../../utils/utils"
 
-const AddKinopoisk = ({ setOptionsShow, addMovie, onFocus }) => {
+import styles from "./AddFilmSection.module.css"
+
+const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries }) => {
   const addKinopoisk = useCallback((event) => {
     setKinopoisk(event.target.value)
   }, [])
   const [kinoId, setKinoId] = useState(null)
   const [kinopoisk, setKinopoisk] = useState("")
   const { filmData, resetFilmData } = useFilmData(kinoId)
+  const userId = useSelector((state) => state.auth.user?._id);
 
   const AddFilmClick = useCallback(() => {
     if (kinopoisk) {
@@ -24,7 +32,7 @@ const AddKinopoisk = ({ setOptionsShow, addMovie, onFocus }) => {
 
   useEffect(() => {
     if (filmData && kinoId) {
-      addMovie(
+      addMovieOrSeries(
         filmData.name,
         filmData.posterUrl,
         filmData.shortDescription,
@@ -34,12 +42,21 @@ const AddKinopoisk = ({ setOptionsShow, addMovie, onFocus }) => {
         filmData.rating,
         filmData.movieLength,
         filmData.kinopoiskId,
-        filmData.isSeries
+        filmData.isSeries,
+        addSeriesToApi,
+        addMovieToApi,
+        setSeries,
+        setMovies,
+        userId
       )
       setKinoId(null)
       resetFilmData()
     }
-  }, [filmData, kinoId, addMovie, resetFilmData])
+  }, [filmData, kinoId,
+    //  addMovie,
+      resetFilmData, setSeries,
+      setMovies,
+      userId])
 
   return (
     <div className={styles.addFilm}>
