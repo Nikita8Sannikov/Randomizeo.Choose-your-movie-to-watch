@@ -1,16 +1,16 @@
 import { useSelector } from "react-redux";
-import LeftUpShadow from "../src/components/Gradients/LeftUpShadow";
-import RightUpShadow from "../src/components/Gradients/RightUpShadow";
-import DownShadow from "../src/components/Gradients/DownShadow";
+import LeftUpShadow from "../Gradients/LeftUpShadow";
+import RightUpShadow from "../Gradients/RightUpShadow";
+import DownShadow from "../Gradients/DownShadow";
 import { Navigate, Route, Routes } from "react-router-dom";
-import LoginForm from "../src/components/Auth/LoginForm/LoginForm";
-import { MoviesFilterProvider } from "../src/components/Filter/MoviesFilterContext";
-import { WatchedFilterProvider } from "../src/components/Filter/WatchedFilterContext";
-import { ModalProvider } from "../src/components/Modal/ModalContext";
-import Header from "../src/components/Header/Header";
-import Modal from "../src/components/Modal/Modal";
-import MoviesSection from "../src/components/MovieSection/MoviesSection";
-import WatchedSection from "../src/components/WatchedSection/WathcedSection";
+import LoginForm from "../Auth/LoginForm/LoginForm";
+import { MoviesFilterProvider } from "../Filter/MoviesFilterContext";
+import { WatchedFilterProvider } from "../Filter/WatchedFilterContext";
+import { ModalProvider } from "../Modal/ModalContext";
+import Header from "../Header/Header";
+import Modal from "../Modal/Modal";
+import MoviesSection from "../MovieSection/MoviesSection";
+import WatchedSection from "../WatchedSection/WathcedSection";
 
 const UserNotAuthRouter = () => (
       <>
@@ -58,6 +58,7 @@ const UserNotAuthRouter = () => (
                         <MoviesSection
                           movies={props.movies}
                           addMovie={props.addMovieOrSeries}
+                          setMoviesForAdd={props.setMovies}
                         />
                       }
                     />
@@ -67,6 +68,7 @@ const UserNotAuthRouter = () => (
                         <MoviesSection
                           movies={props.series}
                           addMovie={props.addMovieOrSeries}
+                          setSeriesForAdd={props.setSeries}
                         />
                       }
                     />
@@ -92,10 +94,10 @@ const UserNotAuthRouter = () => (
         </MoviesFilterProvider>
     )
     
-const useRoutes = (props) => {
+const AppRoutes = (props) => {
     const isAuth = useSelector((state) => state.auth.isAuth)
 
-    return  isAuth ? UserAuthRouter(props) : UserNotAuthRouter()
+    return  isAuth ? <UserAuthRouter{...props}/> : <UserNotAuthRouter/>
 };
 
-export default useRoutes;
+export default AppRoutes;
