@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     user: null,
-    // token: null,
     error: null,
     isAuth: false,
     status: "idle",
@@ -62,30 +61,22 @@ export const register = createAsyncThunk(
     }
 )
 
-// export const remind = createAsyncThunk(
-//     "auth/remind",
-//     async () => {
-//         const token = localStorage.getItem("token")
-//         if (!token) {
-//             throw new Error("No token found");
-//         }
+export const remind = createAsyncThunk(
+    "auth/remind",
+    async () => {
 
-
-//         const response = await fetch("/api/auth/me", {
-//             method: "GET",
-//             headers: {
-//                 Authorization: `Bearer ${token}`,
-//             },
-
-//         })
-//         if (!response.ok) {
-//             throw new Error(`Ошибка: ${response.status}`);
-//         }
-//         const json = await response.json()
-//         console.log(json);
-//         return json
-//     }
-// )
+        const response = await fetch("/api/auth/me", {
+            method: "GET",
+            credentials: "include",
+        })
+        if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status}`);
+        }
+        const json = await response.json()
+        // console.log(json);
+        return json
+    }
+)
 
 const authSlice = createSlice({
     name: 'auth',
@@ -102,49 +93,46 @@ const authSlice = createSlice({
                 state.user = action.payload
                 state.status = "succeeded"
                 state.isAuth = true
-                // state.token = action.payload.token || ''
-                // localStorage.setItem("token", action.payload.token || '')
             })
             .addCase(signIn.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message || "failed"
             })
-            // .addCase(signOut.fulfilled, (state) => {
-            //     state.user = null
-            //     state.exists = false
-            //     state.token = null
-            //     state.error = null
-            //     localStorage.removeItem("token")
-            // })
-            // .addCase(signOut.rejected, (state, action) => {
-            //     state.status = 'failed'
-            //     state.error = action.error.message || "failed"
-            // })
+            .addCase(signOut.fulfilled, (state) => {
+                state.user = null
+                state.isAuth = false
+                state.token = null
+                state.error = null
+            })
+            .addCase(signOut.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.error.message || "failed"
+            })
             .addCase(register.fulfilled, (state, action) => {
                 state.user = action.payload
                 state.status = "succeeded"
-                state.exists = false
+                state.isAuth = false
 
             })
             .addCase(register.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message || "failed"
             })
-            // .addCase(remind.pending, (state) => {
-            //     state.status = "loading"
-            //     state.error = null
-            // })
-            // .addCase(remind.fulfilled, (state, action) => {
-            //     state.user = action.payload
-            //     state.status = "succeeded"
-            //     state.exists = true
-            // })
-            // .addCase(remind.rejected, (state, action) => {
-            //     state.status = 'failed'
-            //     state.exists = false
-            //     localStorage.removeItem('token')
-            //     state.error = action.error.message || "failed"
-            // })
+            .addCase(remind.pending, (state) => {
+                state.status = "loading"
+                state.error = null
+            })
+            .addCase(remind.fulfilled, (state, action) => {
+                state.user = action.payload
+                state.status = "succeeded"
+                state.isAuth = true
+            })
+            .addCase(remind.rejected, (state, action) => {
+                state.status = 'failed'
+                state.isAuth = false
+                state.user = null;
+                state.error = action.error.message || "failed"
+            })
     }
 })
 
