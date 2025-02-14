@@ -2,25 +2,31 @@
 export default function Input({
   labelFor,
   description,
+  type="text",
   id,
+  name,
   placeholder,
   value,
   onChange,
-  onFocus
+  onFocus,
+  inputClassName,
+  labelClassName,
+  children
 }) {
-
-
   return (
     <>
-      <label htmlFor={labelFor}>{description}</label>
+      <label htmlFor={labelFor} className={labelClassName}>{description}</label>
       <input
-        type="text"
+        className={inputClassName}
+        type={type}
         id={id}
+        name={name}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
         onFocus={onFocus}
       />
+      {children}
     </>
   )
 }

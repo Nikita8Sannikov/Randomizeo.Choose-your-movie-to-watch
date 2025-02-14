@@ -87,3 +87,23 @@
   top: 50%;
   cursor: pointer;
 }
+
+.loginButton {
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: rgb(68 68 68 / 0%);
+  outline: none;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+}
+
+.loginButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.loginButton:hover:not(:disabled) {
+  background-color: #C45EF1;
+}

@@ -25,10 +25,22 @@
   border: 1px solid white;
   caret-color: white;
 }
-
 .input:focus {
-  border-color: #007bff;
+  background-color: #302E31;
 }
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+  }  
+.inputKinopoisk>input:-moz-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+/* .input:focus {
+  border-color: #007bff;
+} */
 
 .inputError {
   border-color: #ff4d4f;
