@@ -3,7 +3,7 @@
   top: -450px;
   width: 1611px;
   height: 1262px;
-  background-image: url("../../../svg/Ellipse\ 4.svg");
+  background-image: url("/svg/Ellipse\ 4.svg");
 }
 .righUpShadow {
   /* position: absolute; */
@@ -11,7 +11,7 @@
   right: -60px;
   height: 1262px;
   width: 1276px;
-  background-image: url("../../../svg/Ellipse\ 3.svg");
+  background-image: url("/svg/Ellipse\ 3.svg");
 }
 .downShadow {
   /* position: absolute; */
@@ -19,7 +19,7 @@
   height: 1025px;
   top: 500px;
   left: 750px;
-  background-image: url("../../../svg/Ellipse\ 1.svg");
+  background-image: url("/svg/Ellipse\ 1.svg");
 }
 .leftUpShadow,
 .righUpShadow,

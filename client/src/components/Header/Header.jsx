@@ -27,7 +27,7 @@ const Header = () => {
     <nav className={styles.header}>
       <div className={styles.logoSection}>
         <div className={styles.logo} onClick={() => navigate("/")}>
-          <img src="../../svg/logo.svg" alt="logo" />
+          <img src="/svg/logo.svg" alt="logo" />
         </div>
 
         <div className={styles.siteName} onClick={() => navigate("/")}>
