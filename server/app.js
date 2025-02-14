@@ -1,12 +1,12 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
-import config from 'config'
 import movieRoutes from './routes/movie.js'
 import watchedMovieRoutes from './routes/watchedMovies.js'
 import seriesRoutes from './routes/series.js'
 import watchedSeriesRoutes from './routes/watchedSeries.js'
 import authRoutes from './routes/auth.js'
+import finalConfig from './config/index.js'
 
 const app = express()
 
@@ -25,13 +25,13 @@ app.use('/api/watched-movies/series', watchedSeriesRoutes);
 // Использование роутов для обработки запросов по пути /api/auth
 app.use("/api/auth", authRoutes);
 
-const PORT = config.get('port') || 5000
+const PORT = finalConfig.port || 5000
 
 async function start() {
     try{
-        await mongoose.connect(config.get('mongoUri'), {
+        await mongoose.connect(finalConfig.mongoUri, {
         })
-        app.listen(5000, () => console.log(`App has been started on port ${PORT}...`))
+        app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
     }catch (e) {
         console.log('Server Error', e.message)
         process.exit(1)
