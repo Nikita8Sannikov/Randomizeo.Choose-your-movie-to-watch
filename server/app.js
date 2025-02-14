@@ -7,9 +7,11 @@ import seriesRoutes from './routes/series.js'
 import watchedSeriesRoutes from './routes/watchedSeries.js'
 import authRoutes from './routes/auth.js'
 import finalConfig from './config/index.js'
+import cors from "cors";
 
 const app = express()
 
+app.use(cors()); // Включает CORS для всех запросов
 app.use(express.json()); // Миддлвар для обработки JSON-тел запросов
 app.use(express.urlencoded({ extended: true })); // Миддлвар для обработки URL-кодированных запросов
 app.use(cookieParser()); //Мидлвар cookie-parser разбирает cookies и делает их доступными через req.cookies
@@ -31,6 +33,7 @@ async function start() {
     try{
         await mongoose.connect(finalConfig.mongoUri, {
         })
+        console.log("Connected to MongoDB!");
         app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
     }catch (e) {
         console.log('Server Error', e.message)
