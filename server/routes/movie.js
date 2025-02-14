@@ -109,8 +109,6 @@ router.post("/add", async (req, res) => {
 
 // Роут для получения всех фильмов
 router.get("/", async (req, res) => {
-  res.send("✅ Server is running!");
-  
   try {
     const { userId } = req.query;
     if (!userId) {

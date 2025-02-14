@@ -11,7 +11,18 @@ import cors from "cors";
 
 const app = express()
 
-app.use(cors()); // Включает CORS для всех запросов
+// Разрешаем запросы с других доменов (CORS)
+const allowedOrigins = ["https://randomizeo-choose-your-movie-to-watch.vercel.app", "http://localhost:5173"];
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true
+})); // Включает CORS для всех запросов
 app.use(express.json()); // Миддлвар для обработки JSON-тел запросов
 app.use(express.urlencoded({ extended: true })); // Миддлвар для обработки URL-кодированных запросов
 app.use(cookieParser()); //Мидлвар cookie-parser разбирает cookies и делает их доступными через req.cookies
@@ -33,11 +44,13 @@ async function start() {
     try{
         await mongoose.connect(finalConfig.mongoUri, {
         })
+        console.log("NODE_ENV:", process.env.NODE_ENV);
+        console.log("Config:", finalConfig);
         console.log("Connected to MongoDB!");
         console.log("process.env.PORT:", process.env.PORT);
         console.log("finalConfig.port:", finalConfig.port);
         console.log("Using PORT:", PORT);
-        
+
         app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
     }catch (e) {
         console.log('Server Error', e.message)
