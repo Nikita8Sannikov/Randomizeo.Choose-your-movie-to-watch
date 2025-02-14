@@ -16,7 +16,8 @@ export const signIn = createAsyncThunk(
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: "include"
         })
         if (!response.ok) {
             throw new Error(`Ошибка: ${response.status}`);
@@ -32,6 +33,7 @@ export const signOut = createAsyncThunk(
     async () => {
         const response = await fetch(`${SERVER_API_URL}/api/auth/logout`, {
             method: "POST",
+            credentials: "include"
         })
         if (!response.ok) {
             throw new Error(`Ошибка: ${response.status}`);
@@ -50,7 +52,8 @@ export const register = createAsyncThunk(
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: "include"
 
         })
         if (!response.ok) {
@@ -68,7 +71,7 @@ export const remind = createAsyncThunk(
 
         const response = await fetch(`${SERVER_API_URL}/api/auth/me`, {
             method: "GET",
-            credentials: "include",
+            credentials: "include"
         })
         if (!response.ok) {
             throw new Error(`Ошибка: ${response.status}`);
