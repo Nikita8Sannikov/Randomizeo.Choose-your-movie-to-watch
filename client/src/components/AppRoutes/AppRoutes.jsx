@@ -59,6 +59,7 @@ const UserNotAuthRouter = () => (
                           movies={props.movies}
                           addMovie={props.addMovieOrSeries}
                           setMoviesForAdd={props.setMovies}
+                          setSeriesForAdd={props.setSeries}
                         />
                       }
                     />
@@ -68,6 +69,7 @@ const UserNotAuthRouter = () => (
                         <MoviesSection
                           movies={props.series}
                           addMovie={props.addMovieOrSeries}
+                          setMoviesForAdd={props.setMovies}
                           setSeriesForAdd={props.setSeries}
                         />
                       }
