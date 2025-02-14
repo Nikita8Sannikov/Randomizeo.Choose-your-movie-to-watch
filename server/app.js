@@ -25,7 +25,7 @@ app.use('/api/watched-movies/series', watchedSeriesRoutes);
 // Использование роутов для обработки запросов по пути /api/auth
 app.use("/api/auth", authRoutes);
 
-const PORT = finalConfig.port || 5000
+const PORT = process.env.PORT || finalConfig.port || 5000
 
 async function start() {
     try{
