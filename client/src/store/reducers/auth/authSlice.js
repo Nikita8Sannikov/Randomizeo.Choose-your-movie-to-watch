@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL;
 
 const initialState = {
     user: null,
@@ -10,7 +11,7 @@ const initialState = {
 export const signIn = createAsyncThunk(
     "auth/signIn",
     async (data) => {
-        const response = await fetch("/api/auth/login", {
+        const response = await fetch(`${SERVER_API_URL}/api/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -29,7 +30,7 @@ export const signIn = createAsyncThunk(
 export const signOut = createAsyncThunk(
     "auth/signOut",
     async () => {
-        const response = await fetch("/api/auth/logout", {
+        const response = await fetch(`${SERVER_API_URL}/api/auth/logout`, {
             method: "POST",
         })
         if (!response.ok) {
@@ -44,7 +45,7 @@ export const signOut = createAsyncThunk(
 export const register = createAsyncThunk(
     "auth/register",
     async (data) => {
-        const response = await fetch("/api/auth/register", {
+        const response = await fetch(`${SERVER_API_URL}/api/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -65,7 +66,7 @@ export const remind = createAsyncThunk(
     "auth/remind",
     async () => {
 
-        const response = await fetch("/api/auth/me", {
+        const response = await fetch(`${SERVER_API_URL}/api/auth/me`, {
             method: "GET",
             credentials: "include",
         })
