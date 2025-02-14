@@ -1,20 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
-import InputField from '../InputField/InputField'
-import Button from '../AuthButton/Button'
+import { useEffect, useState } from 'react'
 import { useDispatch } from "react-redux";
+
+import InputField from '../AuthInput/AuthInput'
+import Button from '../../Button';
 import { signIn, register } from "../../../store/reducers/auth/authSlice";
 
 import styles from "./LoginForm.module.css"
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-    const formDataRef = useRef({
-        name: "",
-        email: "",
-        password: "",
-      })
-    const [formErrors, setFormErrors] = useState({ name: "", email: "",
-      password: ""})
+    const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+    const [formErrors, setFormErrors] = useState({ name: "", email: "", password: ""})
     const [loading, setLoading] = useState(false)
     const [isRegistering, setIsRegistering] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
@@ -24,11 +20,11 @@ const LoginForm = () => {
       }
 
       useEffect(() => {
-        formDataRef.current = {
-          name: "",
-          email: "",
-          password: "",
-        };
+        if (isRegistering) {
+          setFormData({ name: "", email: "", password: "" }); 
+        } else {
+          setFormData(prev => ({ name: "", email: prev.email, password: prev.password })); 
+        }
         setFormErrors({})
       }, [isRegistering])
 
@@ -40,21 +36,20 @@ const LoginForm = () => {
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
     
-        if (!formDataRef.current.name) {
+        if( !formData.name) {
           errors.name = "Никнейм обязателен"
-          // Добавить проверку ников на маты
+          // Добавить проверку ников на нецензурную лексику
         // } else if (!emailRegex.test(formDataRef.current.name)) {
         //   errors.email = "Некорректный формат email"
         }
-        if (!formDataRef.current.email) {
+        if (!formData.email) {
           errors.email = "Email обязателен"
-        } else if (!emailRegex.test(formDataRef.current.email)) {
+        } else if (!emailRegex.test(formData.email)) {
           errors.email = "Некорректный формат email"
         }
-    
-        if (!formDataRef.current.password) {
+        if (!formData.password) {
           errors.password = "Пароль обязателен"
-        } else if (formDataRef.current.password.length < 6) {
+        } else if (formData.password.length < 6) {
           errors.password = "Пароль должен содержать минимум 6 символов"
         }
     
@@ -62,10 +57,10 @@ const LoginForm = () => {
       }
 
       const handleChange = (e) => {
-        formDataRef.current={
-          ...formDataRef.current,
+        setFormData({
+          ...formData,
           [e.target.name]: e.target.value,
-        }
+        })
         setFormErrors({
           ...formErrors,
           [e.target.name]: "",
@@ -86,20 +81,51 @@ const LoginForm = () => {
       }
     
       const authHandlers = {
-        onLogin: () =>
-          dispatch(signIn({ email: formDataRef.current.email, password: formDataRef.current.password })),
-        onReg: () =>
-          dispatch(
+        onLogin: async () => {
+          setLoading(true);
+
+          try{
+           await dispatch(signIn({ email: formData.email, password: formData.password })).unwrap();
+          } catch (error) {
+            console.error("Ошибка входа:", error);
+            setFormErrors({ name: "", email: "Неверный email или пароль", password: ""});
+          } finally {
+            setLoading(false);
+          }
+        },
+         
+        onReg: async () =>{
+          setLoading(true);
+
+          const errors = validate();
+          if (Object.values(errors).some(error => error)) { 
+            setFormErrors(errors);
+            setLoading(false);
+            return;
+          }
+          try {
+         await dispatch(
             register({
-              email: formDataRef.current.email,
-              password: formDataRef.current.password,
-              name: formDataRef.current.name,
-            })),
+              email: formData.email,
+              password: formData.password,
+              name: formData.name
+            })).unwrap();
+
+            setIsRegistering(false);
+            setFormData({ email: formData.email, password: formData.password, name: "" });
+            setFormErrors({});
+          } catch (error) {
+            console.error("Ошибка регистрации:", error);
+            setFormErrors({ name: "", email: "Пользователь с таким email уже зарегистрирован", password: ""});
+          }finally {
+            setLoading(false);
+          }
+        }
       };
 
   return (
     <div className={styles.loginFormContainer}>
-      <form className={styles.loginForm} onSubmit={handleSubmit}>
+      <form className={styles.loginForm} onSubmit={handleSubmit} >
         <h2 className={styles.formTitle}>
         {isRegistering ? "Регистрация" : "Вход в систему"}
         </h2>
@@ -110,10 +136,11 @@ const LoginForm = () => {
           label="Никнейм"
           type="name"
           name="name"
-          value={formDataRef.current.name}
+          value={formData.name}
           onChange={handleChange}
           placeholder="Введите ваш никнейм"
           error={formErrors.name}
+          iswrapper
         />
         </div>
             )}
@@ -122,10 +149,11 @@ const LoginForm = () => {
             label="Email"
             type="email"
             name="email"
-            value={formDataRef.current.email}
+            value={formData.email}
             onChange={handleChange}
             placeholder="Введите ваш email"
             error={formErrors.email}
+            iswrapper
           />
         </div>
         <div className={styles.passwordField}>
@@ -133,10 +161,11 @@ const LoginForm = () => {
             label="Пароль"
             type={showPassword ? "text" : "password"}
             name="password"
-            value={formDataRef.current.password}
+            value={formData.password}
             onChange={handleChange}
             placeholder="Введите ваш пароль"
             error={formErrors.password}
+            iswrapper
           />
           <span
             className={styles.passwordToggle}
@@ -147,7 +176,7 @@ const LoginForm = () => {
         </div>
         </div>
         <div className={styles.inputAction}>
-          <Button type="submit" disabled={loading} onClick={isRegistering ? authHandlers.onReg : authHandlers.onLogin}>
+          <Button className={styles.loginButton} type="submit" disabled={loading} onclick={isRegistering ? authHandlers.onReg : authHandlers.onLogin}>
              {loading ? "Загрузка..." : isRegistering ? "Регистрация" : "Войти"}
           </Button>
           </div>
