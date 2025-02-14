@@ -1,12 +1,15 @@
-import React from "react"
-import TabsSection from "./TabsSection"
-import Input from "../Input"
-import styles from "./Header.module.css"
-import Button from "../Button"
 import { useContext } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
+
+import TabsSection from "./TabsSection"
+import LogoutSection from "./LogoutSection"
+import Input from "../Input"
+import Button from "../Button"
+
 import { MoviesFilterContext } from "../Filter/MoviesFilterContext"
 import { WatchedFilterContext } from "../Filter/WatchedFilterContext"
+
+import styles from "./Header.module.css"
 
 const Header = () => {
 
@@ -33,18 +36,17 @@ const Header = () => {
 
         <TabsSection />
       </div>
-
       <div className={styles.searchArea}>
         <Input
           placeholder="Найти фильм"
           labelFor="text"
-          className="search"
           value={searchTerm}
           onChange={searchFilmChange}
         />
         <Button className={styles.searchIcon}>
           <span className="fa-solid fa-magnifying-glass fa-2xl fa-flip  search-icon"></span>
         </Button>
+      <LogoutSection/>
       </div>
     </nav>
   )
