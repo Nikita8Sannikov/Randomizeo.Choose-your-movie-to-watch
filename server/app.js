@@ -27,13 +27,17 @@ app.use('/api/watched-movies/series', watchedSeriesRoutes);
 // Использование роутов для обработки запросов по пути /api/auth
 app.use("/api/auth", authRoutes);
 
-const PORT = process.env.PORT || finalConfig.port || 5000
+const PORT = process.env.PORT || 5000
 
 async function start() {
     try{
         await mongoose.connect(finalConfig.mongoUri, {
         })
         console.log("Connected to MongoDB!");
+        console.log("process.env.PORT:", process.env.PORT);
+        console.log("finalConfig.port:", finalConfig.port);
+        console.log("Using PORT:", PORT);
+        
         app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
     }catch (e) {
         console.log('Server Error', e.message)
