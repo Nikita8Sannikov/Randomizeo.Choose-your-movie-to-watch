@@ -52,7 +52,7 @@ const Filter = ({ movies, watchedMovies }) => {
         ) : (
           filteredMovies.map((movie) => (
             <Card
-              key={movie.id}
+              key={movie._id}
               movie={movie}
               styleType="filter"
               buttons={filterContent(movie)}

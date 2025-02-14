@@ -25,7 +25,7 @@ export default function Card({movie, cardRef, styleType, buttons }) {
           <h5 className={styles.cardTitle}>{movie.title} {(movie.year || '') && `(${movie.year})`}</h5>
           <p className={styles.cardText}>
           <i className="fa-solid fa-star star-icon"></i>
-          {movie.rating || ''}
+          {movie.rating == 0  ? 'Рейтинг пока не добавлен' : movie.rating}
           </p>
           <div className={styles.buttonSection}>
              {buttons}
