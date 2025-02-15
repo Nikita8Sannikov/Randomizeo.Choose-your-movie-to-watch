@@ -20,6 +20,8 @@
   top: 500px;
   left: 750px;
   background-image: url("/svg/Ellipse\ 1.svg");
+  left: 50%;
+  transform: translate(-50%);
 }
 .leftUpShadow,
 .righUpShadow,

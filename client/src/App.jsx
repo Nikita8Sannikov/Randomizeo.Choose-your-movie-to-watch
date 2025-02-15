@@ -7,6 +7,7 @@ import { getSeries as getSeriesFromApi } from "./api"
 import { getWatchedMovies as getWatchedMoviesFromApi } from "./api"
 import { getWatchedSeries as getWatchedSeriesFromApi } from "./api"
 
+import CookiesWarning from "./components/CookieWarning/CookiesWarning"
 import AppRoutes from "./components/AppRoutes/AppRoutes"
 import { remind } from "./store/reducers/auth/authSlice"
 import {fetchFilms} from "./utils/utils"
@@ -47,9 +48,12 @@ function App() {
 	}, [dispatch]);
  
   return(
+    <div>
+    <CookiesWarning /> 
     <Router>
        <AppRoutes {...props} />
     </Router>
+    </div>
   ) 
 }
 
