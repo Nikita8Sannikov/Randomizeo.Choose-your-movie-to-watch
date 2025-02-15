@@ -97,6 +97,7 @@ router.post(
 				sameSite: "none",
 				secure: true,
 				maxAge: 3600000,
+				partitioned: true, // позволяет браузеру сохранять third-party cookies (куки с другого домена) в изолированном контексте.
 			});
 				res.status(200).json({
 					_id: user.id,

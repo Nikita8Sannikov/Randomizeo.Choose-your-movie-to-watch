@@ -53,8 +53,6 @@ export const register = createAsyncThunk(
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-            credentials: "include"
-
         })
         if (!response.ok) {
             throw new Error(`Ошибка: ${response.status}`);
