@@ -146,4 +146,7 @@
         color: white;
         cursor: pointer;
     }
+    .barsBtn{
+        font-size: 12px;
+    }
 }

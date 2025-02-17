@@ -15,6 +15,11 @@ main {
   position: relative;
   z-index: 1;
 }
+@media(max-width: 1000px){
+  main{
+    padding: 0;
+  }
+}
 .content {
   margin-top: 107px;
 }
