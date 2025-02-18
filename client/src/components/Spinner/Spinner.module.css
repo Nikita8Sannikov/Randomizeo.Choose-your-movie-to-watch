@@ -1,0 +1,104 @@
+@-moz-keyframes timerLoader {
+	0% {
+		-moz-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-moz-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@-webkit-keyframes timerLoader {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes timerLoader {
+	0% {
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+/* :not(:required) hides this rule from IE9 and below */
+.timerLoader:not(:required) {
+	border: 6px solid #c8d;
+	-moz-border-radius: 24px;
+	-webkit-border-radius: 24px;
+	border-radius: 36px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	text-indent: -9999px;
+	width: 100px;
+	height: 100px;
+}
+.timerLoader:not(:required)::before {
+	-moz-animation: timerLoader 1250ms infinite linear;
+	-webkit-animation: timerLoader 1250ms infinite linear;
+	animation: timerLoader 1250ms infinite linear;
+	-moz-transform-origin: 3px 3px;
+	-ms-transform-origin: 3px 3px;
+	-webkit-transform-origin: 3px 3px;
+	transform-origin: 3px 3px;
+	background: #c8d;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	content: "";
+	display: block;
+	position: absolute;
+	width: 6px;
+	height: 38.2px;
+	left: 45px;
+	top: 45px;
+}
+.timerLoader:not(:required)::after {
+	-moz-animation: timerLoader 15000ms infinite linear;
+	-webkit-animation: timerLoader 15000ms infinite linear;
+	animation: timerLoader 15000ms infinite linear;
+	-moz-transform-origin: 3px 3px;
+	-ms-transform-origin: 3px 3px;
+	-webkit-transform-origin: 3px 3px;
+	transform-origin: 3px 3px;
+	background: #c8d;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	content: "";
+	display: block;
+	position: absolute;
+	width: 6px;
+	height: 30px;
+	left: 45px;
+	top: 45px;
+}
+
+.timerContainer {
+	display: flex;
+	justify-content: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.fullScreenContainer {
+	width: 100vw;
+	height: 100vh;
+}

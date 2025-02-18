@@ -1,16 +1,23 @@
 import { useSelector } from "react-redux";
-import LeftUpShadow from "../Gradients/LeftUpShadow";
-import RightUpShadow from "../Gradients/RightUpShadow";
-import DownShadow from "../Gradients/DownShadow";
 import { Navigate, Route, Routes } from "react-router-dom";
-import LoginForm from "../Auth/LoginForm/LoginForm";
+// import { lazy, Suspense } from "react";
+
 import { MoviesFilterProvider } from "../Filter/MoviesFilterContext";
 import { WatchedFilterProvider } from "../Filter/WatchedFilterContext";
 import { ModalProvider } from "../Modal/ModalContext";
+
+import LeftUpShadow from "../Gradients/LeftUpShadow";
+import RightUpShadow from "../Gradients/RightUpShadow";
+import DownShadow from "../Gradients/DownShadow";
+import LoginForm from "../Auth/LoginForm/LoginForm";
 import Header from "../Header/Header";
 import Modal from "../Modal/Modal";
+import Spinner from "../Spinner/Spinner";
 import MoviesSection from "../MovieSection/MoviesSection";
 import WatchedSection from "../WatchedSection/WathcedSection";
+
+// const MoviesSection = lazy(() => import("../MovieSection/MoviesSection"));
+// const WatchedSection = lazy(() => import("../WatchedSection/WathcedSection"));
 
 const UserNotAuthRouter = () => (
       <>
@@ -50,7 +57,7 @@ const UserNotAuthRouter = () => (
                 <Header />
                 <Modal />
                 <div className="content">
-                  
+                {/* <Suspense fallback={<div>Загрузка...</div>}> */}
                   <Routes>
                     <Route
                       path="/"
@@ -89,6 +96,7 @@ const UserNotAuthRouter = () => (
                       }
                     />
                   </Routes>
+                {/* </Suspense> */}
                 </div>
               </main>
             </ModalProvider>
@@ -97,9 +105,23 @@ const UserNotAuthRouter = () => (
     )
     
 const AppRoutes = (props) => {
+    const status = useSelector((state) => state.auth.status);
     const isAuth = useSelector((state) => state.auth.isAuth)
 
-    return  isAuth ? <UserAuthRouter{...props}/> : <UserNotAuthRouter/>
+    return (
+      <>
+        <LeftUpShadow />
+        <RightUpShadow />
+        <DownShadow />
+
+        { status === 'loading'
+          ? <Spinner/> 
+          :
+          isAuth 
+          ? <UserAuthRouter{...props}/> 
+          : <UserNotAuthRouter/> }
+      </>
+    ) 
 };
 
 export default AppRoutes;
