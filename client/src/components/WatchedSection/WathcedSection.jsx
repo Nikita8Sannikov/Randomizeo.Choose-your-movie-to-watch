@@ -1,14 +1,22 @@
-import React, { useContext, useEffect } from "react"
-import Card, { StyledButton } from "../Card/Card"
-import { ModalContext } from "../Modal/ModalContext"
-import styles from "./WatchedSection.module.css"
+import { useContext, useEffect } from "react"
+import { useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
-import Filter from "../Filter/Filter"
-import { WatchedFilterContext  } from "../Filter/WatchedFilterContext"
+
 import useResizeObserver from "../../../hooks/useResizeObserver"
 import { useArrangeCards } from "../../../hooks/useArrangeCards"
+import { WatchedFilterContext  } from "../Filter/WatchedFilterContext"
+import { ModalContext } from "../Modal/ModalContext"
 
-const WathcedSection = ({ movies }) => {
+import Card, { StyledButton } from "../Card/Card"
+import Filter from "../Filter/Filter"
+import { fetchFilms } from "../../utils/utils"
+
+import { getWatchedMovies as getWatchedMoviesFromApi } from "../../api"
+import { getWatchedSeries as getWatchedSeriesFromApi } from "../../api"
+
+import styles from "./WatchedSection.module.css"
+
+const WathcedSection = ({ movies, setMovies, setSeries }) => {
   const {
     showDetails,
     showWatchedDeleteConfirmation,
@@ -16,23 +24,30 @@ const WathcedSection = ({ movies }) => {
     showWatchedSeriesDeleteConfirmation,
     setWatchedSeries,
   } = useContext(ModalContext)
-const { searchTerm, setSearchTerm } = useContext(WatchedFilterContext);
-const {arrangeCards, movieRefs} = useArrangeCards()
-// useEffect(() => {
-//   setContext('watched')
-// }, [setContext])
-
+  const { searchTerm, setSearchTerm } = useContext(WatchedFilterContext);
+  const {arrangeCards, movieRefs} = useArrangeCards()
   const location = useLocation()
-
+  const userId = useSelector((state) => state.auth.user?._id);
+  
   const containerRef = useResizeObserver(()=> {
-    const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
+    const y = location.pathname === "/watched" || location.pathname === "/watched/series" ? 100 : 200
     arrangeCards(y)
   })
 
   useEffect(() => {
-    const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
+    const y = location.pathname === "/watched" || location.pathname === "/watched/series" ? 100 : 200
     arrangeCards(y)
   }, [movies, location.pathname])
+
+  useEffect(() => {
+    if (!userId) return; 
+    if (location.pathname === "/watched") {
+      fetchFilms(userId, getWatchedMoviesFromApi, setMovies);
+    } 
+    if (location.pathname === "/watched/series") {
+      fetchFilms(userId, getWatchedSeriesFromApi, setSeries);
+    }
+  }, [userId, location.pathname])
 
   const watchedSectionContent = (movie) => (
     <>

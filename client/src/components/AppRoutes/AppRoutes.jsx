@@ -50,9 +50,9 @@ const UserNotAuthRouter = () => (
             <ModalProvider
               {...props}
             >
-              <LeftUpShadow />
+              {/* <LeftUpShadow />
               <RightUpShadow />
-              <DownShadow />
+              <DownShadow /> */}
               <main>
                 <Header />
                 <Modal />
@@ -83,11 +83,17 @@ const UserNotAuthRouter = () => (
                     />
                     <Route
                       path="/watched"
-                      element={<WatchedSection movies={props.watchedMovies} />}
+                      element={<WatchedSection
+                         movies={props.watchedMovies}
+                         setMovies={props.setWatchedMovies}
+                         />}
                     />
                     <Route
                       path="/watched/series"
-                      element={<WatchedSection movies={props.watchedSeries} />}
+                      element={<WatchedSection
+                         movies={props.watchedSeries}
+                         setSeries={props.setWatchedSeries}
+                         />}
                     />
                     <Route
                       path="*"

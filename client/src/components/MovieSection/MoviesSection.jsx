@@ -1,15 +1,23 @@
-import React, { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
-import styles from "./MovieSection.module.css"
+
+import useResizeObserver from "../../../hooks/useResizeObserver"
+import { useArrangeCards } from "../../../hooks/useArrangeCards"
+import { MoviesFilterContext } from "../Filter/MoviesFilterContext"
+import { ModalContext } from "../Modal/ModalContext"
+
+import { getMovies as getMoviesFromApi } from "../../api"
+import { getSeries as getSeriesFromApi } from "../../api"
+
 import Card, { StyledButton } from "../Card/Card"
 import AddKinopoisk from "../AddFilm/AddKinopoisk"
 import Filter from "../Filter/Filter"
 import ResultSection from "../ResultSection/ResultSection"
 import AddFilmOption from "../AddFilm/AddFilmOption"
-import { ModalContext } from "../Modal/ModalContext"
-import { MoviesFilterContext } from "../Filter/MoviesFilterContext"
-import useResizeObserver from "../../../hooks/useResizeObserver"
-import { useArrangeCards } from "../../../hooks/useArrangeCards"
+import { fetchFilms } from "../../utils/utils"
+
+import styles from "./MovieSection.module.css"
 
 export default function MoviesSection({
   movies,
@@ -19,6 +27,7 @@ export default function MoviesSection({
   setMoviesForAdd,
   setSeriesForAdd
 }) {
+  const userId = useSelector((state) => state.auth.user?._id);
   const [optionsShow, setOptionsShow] = useState(false)
   const [randomMovie, setRandomMovie] = useState(null)
   const [outputText, setOutputText] = useState("")
@@ -26,6 +35,7 @@ export default function MoviesSection({
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext)
   const location = useLocation()
   const {arrangeCards, movieRefs} = useArrangeCards()
+  
   const containerRef = useResizeObserver(() => {
     const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
     arrangeCards(y)
@@ -45,6 +55,16 @@ export default function MoviesSection({
     const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
     arrangeCards(y)
   }, [movies, location.pathname])
+
+    useEffect(() => {
+      if (!userId) return; 
+      if (location.pathname === "/") {
+        fetchFilms(userId, getMoviesFromApi, setMoviesForAdd);
+      } 
+      if (location.pathname === "/series") {
+        fetchFilms(userId, getSeriesFromApi, setSeriesForAdd);
+      }
+    }, [userId, location.pathname])
 
   const movieSectionContent = (movie) => (
     <>
