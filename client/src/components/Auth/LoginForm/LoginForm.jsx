@@ -30,13 +30,10 @@ const LoginForm = () => {
 
       const validate = () => {
         const errors = {
-            name: "",
-            email: "",
-            password: ""
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
     
-        if( !formData.name) {
+        if( isRegistering && !formData.name) {
           errors.name = "Никнейм обязателен"
           // Добавить проверку ников на нецензурную лексику
         // } else if (!emailRegex.test(formDataRef.current.name)) {
@@ -77,13 +74,24 @@ const LoginForm = () => {
         }
     
         setFormErrors({})
-         
+
+        if (isRegistering) {
+          await authHandlers.onReg();
+        } else {
+          await authHandlers.onLogin();
+        }
       }
     
       const authHandlers = {
         onLogin: async () => {
           setLoading(true);
 
+          const errors = validate();
+          if (Object.values(errors).some(error => error)) { 
+            setFormErrors(errors);
+            setLoading(false);
+            return;
+          }
           try{
            await dispatch(signIn({ email: formData.email, password: formData.password })).unwrap();
           } catch (error) {
@@ -176,7 +184,9 @@ const LoginForm = () => {
         </div>
         </div>
         <div className={styles.inputAction}>
-          <Button className={styles.loginButton} type="submit" disabled={loading} onclick={isRegistering ? authHandlers.onReg : authHandlers.onLogin}>
+          <Button className={styles.loginButton} type="submit" disabled={loading}
+          //  onclick={isRegistering ? authHandlers.onReg : authHandlers.onLogin}
+           > 
              {loading ? "Загрузка..." : isRegistering ? "Регистрация" : "Войти"}
           </Button>
           </div>
