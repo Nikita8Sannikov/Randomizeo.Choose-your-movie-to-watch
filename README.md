@@ -1,23 +1,72 @@
-# Randomizeo
+# 🎬 Randomizeo – выбери свой фильм  
 
 ## Description
 
-An application for randomly selecting movies from your added list, with the ability to add movies to a watch list.
+Знакома ситуация, когда хочется посмотреть фильм, но сложно определиться?
+<br/>
+Randomizeo решает эту проблему!
+<br/>
+Формируй свою коллекцию и выбирай случайный фильм для просмотра на вечер.
+<br/>
+Проект создан для тех, кто ценит своё время и хочет избавиться от мучительного выбора.
 ![image](https://github.com/user-attachments/assets/aa9f2fd6-885e-439d-aaf6-726273d55028)
 
-## Installation and launch
+## 🔥 **Ключевые особенности**  
 
-#### 1. Clone the repository
-git clone https://github.com/Nikita8Sannikov/Randomizeo.Choose-your-movie-to-watch
-#### 2. Go to the project directory
-cd movieToWach-react
-#### 3. Install dependencies
-npm install
-#### 4. Run the project
-npm start
+✅ **Выбор случайного фильма** – один клик, и ты знаешь, что смотреть.
 
-## Technologies Used
-- React
-- Express
-- MongoDB
-- Vite
+✅ **Поиск по названию**  – быстро найди нужное кино.
+
+✅ **Отображение списка фильмов**. 
+
+✅ **Поддержка нескольких пользователей** (у каждого сохраняются избранные фильмы).
+
+✅ **Лёгкий и удобный интерфейc** – без лишних элементов, только нужный функционал.
+
+## 🛠 **Технологии**  
+
+### **Frontend:**  
+- ⚛ **React (JavaScript)**  
+- ⚡ **Vite** – для сборки и быстрой разработки  
+
+### **Backend:**  
+- 🟢 **Node.js + Express**  
+- 🍃 **MongoDB**  
+- 🔐 **JWT + cookies для авторизации**  
+- 🌍 **API Кинопоиска для информации о фильмах**  
+
+### 🔄 **Решение по БД:**
+✅  Принято решение организовать структуру базы данных таким образом, чтобы в будущем можно было легко перейти на SQL-базу (например, PostgreSQL).
+
+### 🟢 **Развёртывание:**
+- Vercel (Frontend)
+- Render (Backend)
+
+## 🚀 **Где посмотреть?**  
+Готовая версия доступна онлайн:  
+👉 [Randomizeo – выбери свой фильм](https://randomizeo-choose-your-movie-to-watch.vercel.app/)  
+
+---
+## 🛠 **Как запустить локально?**  
+1. Клонируй репозиторий:  
+   ```bash
+   git clone https://github.com/Nikita8Sannikov/Randomizeo.Choose-your-movie-to-watch.git
+   cd Randomizeo.Choose-your-movie-to-watch
+   ```
+2. Установи зависимости:  
+   ```bash
+   npm install
+   ```
+3. 🔴 **Важно:** Для работы проекта требуются API-ключи и конфигурация базы данных.  
+   - Файл **.env** отсутствует в репозитории.  
+   - Без него сервер не запустится.  
+4. Если хочешь просто посмотреть, **используй деплой** по ссылке выше.  
+
+## 🔮 **Планы на будущее**  
+✨ **Фильтрация фильмов** по жанрам, годам и рейтингу (для более точного подбора).
+
+✨ **TypeScript** (для строгой типизации и повышения надёжности кода).
+
+✨ **Toast-уведомления** – мгновенные подсказки для удобства пользователя.
+
+✨ **Интернационализация**.  
