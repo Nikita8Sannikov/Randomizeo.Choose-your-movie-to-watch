@@ -2,8 +2,10 @@ import { Router } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
+
 import User from "../models/User.js";
 import finalConfig from "../config/index.js";
+
 const router = Router();
 const jwtSecret = finalConfig.jwtSecret;
 
@@ -103,9 +105,6 @@ router.post(
 					_id: user.id,
 					email: user.email,
 					name: user.name,
-					avatar: user.avatar,
-					films: user.films,
-					watched: user.watched
 				});
 		} catch (e) {
 			res.status(500).json({ message: "Smth wrong, try again" });
