@@ -137,11 +137,16 @@ router.get("/me", async (req, res) => {
 		const decoded = jwt.verify(token, jwtSecret);
 		const userId = decoded.userId;
 
-		const user = await User.findById(userId);
+		/**Вместо деструктуризации ниже используем метод select который исключит поле password.
+		Запрос выполняется на уровне базы данных, поэтому Mongoose даже не получает пароль из MongoDB.**/
+		const user = await User.findById(userId).select("-password");
 
 		if (!user) {
 			return res.status(404).json({ message: "User not found" });
 		}
+
+	//Mongoose представляет схемы MongoDB. Единственные свойства, которые реализуют объекты Mongoose, это те, которые предоставляются API mongoose. Они не представляют собой реальные объекты JavaScript. Чтобы получить реальный объект JavaScript, нужно вызвать toObject()
+		// const {password, ...userWithoutPassword} = user.toObject();
 
 		res.status(200).json(user);
 	} catch (e) {
