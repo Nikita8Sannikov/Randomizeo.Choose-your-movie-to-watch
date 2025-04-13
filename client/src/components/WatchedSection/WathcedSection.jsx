@@ -30,12 +30,12 @@ const WathcedSection = ({ movies, setMovies, setSeries }) => {
   const userId = useSelector((state) => state.auth.user?._id);
   
   const containerRef = useResizeObserver(()=> {
-    const y = location.pathname === "/watched" || location.pathname === "/watched/series" ? 100 : 200
+    const y = location.pathname === "/watched" || location.pathname === "/watched/series" ? 300 : 200
     arrangeCards(y)
   })
 
   useEffect(() => {
-    const y = location.pathname === "/watched" || location.pathname === "/watched/series" ? 100 : 200
+    const y = location.pathname === "/watched" || location.pathname === "/watched/series" ? 300 : 200
     arrangeCards(y)
   }, [movies, location.pathname])
 
