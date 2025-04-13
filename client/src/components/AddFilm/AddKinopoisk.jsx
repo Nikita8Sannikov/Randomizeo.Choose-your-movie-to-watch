@@ -70,12 +70,12 @@ const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries }) => {
             onChange={addKinopoisk}
             onFocus={onFocus}
           />
-          <Button
+          {/* <Button
             className={styles.barsBtn}
             onclick={() => setOptionsShow((prev) => !prev)}
           >
             <span className="fa-solid fa-bars fa-3x bars-icon"></span>
-          </Button>
+          </Button> */}
         </div>
         <Button className={styles.addKinopoiskButton} onclick={AddFilmClick}>
           Добавить фильм

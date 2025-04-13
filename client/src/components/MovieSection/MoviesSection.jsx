@@ -98,7 +98,7 @@ export default function MoviesSection({
             searchFilm={searchTerm}
             setSearchFilm={setSearchTerm}
           />
-          {optionsShow && <AddFilmOption addMovie={addMovie} />}
+          {/* {optionsShow && <AddFilmOption addMovie={addMovie} />} */}
           <ResultSection
             movies={movies}
             randomMovie={randomMovie}
