@@ -1,0 +1,13 @@
+name: Keep Render Alive
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render server
+        run: |
+          URL="https://randomizeo-choose-your-movie-to-watch.onrender.com"
+          curl -s -o /dev/null -w "HTTP Status: %{http_code}\n" $URL
