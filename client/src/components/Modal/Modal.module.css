@@ -41,7 +41,7 @@
     transition: background .2s ease-in;
 }
 .modalWindow {
-    width: 600px;
+    width: 60vw;
     border-radius: 25px;
     border: 1px solid white;
     background:  rgb(68 68 68 / 50%);
