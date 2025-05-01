@@ -16,6 +16,8 @@ import Spinner from "../Spinner/Spinner";
 import MoviesSection from "../MovieSection/MoviesSection";
 import WatchedSection from "../WatchedSection/WathcedSection";
 
+import styles from "./AppRoutes.module.css";
+
 // const MoviesSection = lazy(() => import("../MovieSection/MoviesSection"));
 // const WatchedSection = lazy(() => import("../WatchedSection/WathcedSection"));
 
@@ -115,7 +117,7 @@ const AppRoutes = (props) => {
     const isAuth = useSelector((state) => state.auth.isAuth)
 
     return (
-      <>
+      <div className={styles.appWrapper}>
         <LeftUpShadow />
         <RightUpShadow />
         <DownShadow />
@@ -126,8 +128,7 @@ const AppRoutes = (props) => {
           isAuth 
           ? <UserAuthRouter{...props}/> 
           : <UserNotAuthRouter/> }
-      </>
+      </div>
     ) 
 };
-
 export default AppRoutes;

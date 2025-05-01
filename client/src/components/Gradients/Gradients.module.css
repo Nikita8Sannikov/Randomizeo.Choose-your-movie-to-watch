@@ -1,22 +1,28 @@
 .leftUpShadow {
   /* position: absolute; */
   top: -450px;
-  width: 1611px;
-  height: 1262px;
+  /* width: 1611px; */
+  width: 100rem;
+  /* height: 1262px; */
+  height: 78rem;
   background-image: url("/svg/Ellipse\ 4.svg");
 }
 .righUpShadow {
   /* position: absolute; */
   top: -110px;
   right: -60px;
-  height: 1262px;
-  width: 1276px;
+  /* height: 1262px; */
+  height: 78rem;
+  /* width: 1276px; */
+  width: 80rem;
   background-image: url("/svg/Ellipse\ 3.svg");
 }
 .downShadow {
   /* position: absolute; */
-  width: 1025px;
-  height: 1025px;
+  /* width: 1025px; */
+  width: 64rem;
+  /* height: 1025px; */
+  height: 64rem;
   top: 500px;
   left: 750px;
   background-image: url("/svg/Ellipse\ 1.svg");
@@ -26,9 +32,11 @@
 .leftUpShadow,
 .righUpShadow,
 .downShadow {
-  position: fixed;
+  /* position: fixed; */
+  position: absolute;
   z-index: -1;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  pointer-events: none;
 }
