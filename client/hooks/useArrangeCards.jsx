@@ -6,10 +6,10 @@ export const useArrangeCards = () => {
         //расположение карточек фильмов
     const  arrangeCards = (y = 0) => {
         const viewportWidth = window.visualViewport?.width || window.innerWidth;
-        const cardsPerRow = viewportWidth > 2300 ? 7 : viewportWidth > 1540 ? 5 : viewportWidth > 1024 ? 3 : viewportWidth > 550 ? 3 : viewportWidth > 425 ? 3 : 1
+        const cardsPerRow = viewportWidth > 2300 ? 7 : viewportWidth > 1540 ? 5 : viewportWidth > 1024 ? 3 : viewportWidth > 550 ? 3 : viewportWidth > 430 ? 3 : 1
         // console.log(window.innerWidth);
         const cardWidth = viewportWidth > 900 ? 350 : viewportWidth > 800 ? 300 :  viewportWidth > 550 ? 250 : 180 // ширина карточки + расстояние между карточками
-        const cardHeight = viewportWidth > 900 ? 550 :  viewportWidth > 550 ? 600 :  viewportWidth > 425 ? 350 : 600 // высота карточки
+        const cardHeight = viewportWidth > 900 ? 550 :  viewportWidth > 550 ? 600 :  viewportWidth > 430 ? 350 : 600 // высота карточки
         let maxOffsetY = 0
     
         // console.log('Total cards:', movieRefs.current);

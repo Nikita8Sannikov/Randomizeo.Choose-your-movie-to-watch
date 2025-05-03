@@ -99,3 +99,8 @@
     color: white;
 }
 }
+@media(max-width: 465px){
+  .outputSection>h3{
+    font-size: 30px;
+}
+}
