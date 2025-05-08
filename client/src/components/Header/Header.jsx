@@ -1,6 +1,7 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 
+import BurgerModal from "../BurgerModal/BurgerModal"
 import TabsSection from "./TabsSection"
 import LogoutSection from "./LogoutSection"
 import Input from "../Input"
@@ -12,6 +13,11 @@ import { WatchedFilterContext } from "../Filter/WatchedFilterContext"
 import styles from "./Header.module.css"
 
 const Header = () => {
+  const [openBurgerModal, setOpenBurgerModal] = useState(false)
+  const [searchShow, setSearchShow] = useState(false)
+  
+  const toggleBurgerModal = () => setOpenBurgerModal((prev) => !prev)
+  const closeBurgerModal = () => setOpenBurgerModal(false)
 
   const searchFilmChange = (event) => setSearchTerm(event.target.value)
   const navigate = useNavigate()
@@ -23,9 +29,24 @@ const Header = () => {
     isWatchedPage ? WatchedFilterContext : MoviesFilterContext
   )
 
+  const handleSearchIconClick = () => {
+    if (window.innerWidth <= 768) {
+      setSearchShow((prev) => !prev);
+    }
+  };
+
   return (
+    <>
     <nav className={styles.header}>
       <div className={styles.logoSection}>
+      <Button
+          className={styles.burger}
+          onclick={() => toggleBurgerModal()}
+        >
+          <span className="fa-solid fa-bars fa-2x bars-icon"></span>
+        </Button>
+        
+
         <div className={styles.logo} onClick={() => navigate("/")}>
           <img src="/svg/logo.svg" alt="logo" />
         </div>
@@ -43,12 +64,24 @@ const Header = () => {
           value={searchTerm}
           onChange={searchFilmChange}
         />
-        <Button className={styles.searchIcon}>
+        <Button className={styles.searchIcon} onclick={handleSearchIconClick}>
           <span className="fa-solid fa-magnifying-glass fa-2xl fa-flip  search-icon"></span>
         </Button>
       <LogoutSection/>
       </div>
     </nav>
+    { searchShow &&
+    <div className={styles.searchAreaMobile}>
+        <Input
+          placeholder="Найти фильм"
+          labelFor="text"
+          value={searchTerm}
+          onChange={searchFilmChange}
+        />
+      </div>
+}
+    { <BurgerModal isOpen={openBurgerModal} onClose={closeBurgerModal}/> }
+    </>
   )
 }
 
