@@ -17,7 +17,7 @@ export default function useFilmData(kinoId) {
     try {
       const res = await fetch(urlWithParams, options)
       if (!res.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${res.status}`)
       }
       const data = await res.json()
       setFilmData({
