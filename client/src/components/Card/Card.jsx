@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./Card.module.css";
 import Button from "../Button";
 
+const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL || "";
+
 export default function Card({ movie, cardRef, styleType, buttons }) {
   const className = `${styles.card} ${styles[styleType]}`;
 
@@ -10,9 +12,12 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
     e.target.dataset.retried = "1";
 
     try {
-      const res = await fetch(`/api/movies/refresh-poster/${movie._id}`, {
-        method: "POST",
-      });
+      const res = await fetch(
+        `${SERVER_API_URL}/api/movies/refresh-poster/${movie._id}`,
+        {
+          method: "POST",
+        }
+      );
 
       if (!res.ok) return;
 

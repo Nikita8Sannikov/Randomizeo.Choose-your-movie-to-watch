@@ -1,13 +1,15 @@
 import React from "react";
 import { useState, useCallback, useEffect } from "react";
 
+const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL || "";
+
 export default function useFilmData(kinoId) {
   const [filmData, setFilmData] = useState(null);
 
   const getFilmData = useCallback(async () => {
     if (!kinoId) return;
 
-    const urlWithParams = `/api/kinopoisk/movie/${kinoId}`;
+    const urlWithParams = `${SERVER_API_URL}/api/kinopoisk/movie/${kinoId}`;
 
     try {
       const res = await fetch(urlWithParams);
