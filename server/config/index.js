@@ -12,9 +12,10 @@ const defaults = JSON.parse(fs.readFileSync(defaultsPath, "utf8"));
 
 // Объединяем конфиги
 const finalConfig = {
-    port: config.get("port") || defaults.port,
-    mongoUri: process.env.MONGO_URI,
-    jwtSecret: process.env.JWT_SECRET,
+  port: config.get("port") || defaults.port,
+  mongoUri: process.env.MONGO_URI,
+  jwtSecret: process.env.JWT_SECRET,
+  kinopoiskApiKey: process.env.KINOPOISK_API_KEY,
 };
 
 export default finalConfig;

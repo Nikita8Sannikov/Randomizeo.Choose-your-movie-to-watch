@@ -1,38 +1,63 @@
-import React from "react"
-import styles from "./Card.module.css"
-import Button from "../Button"
+import React from "react";
+import styles from "./Card.module.css";
+import Button from "../Button";
 
-export default function Card({movie, cardRef, styleType, buttons }) {
-  const className = `${styles.card} ${styles[styleType]}`
-    return(
-        <div className={className} ref={cardRef}>
-        <div className={styles.imgWrapper}>
-        
-        <img src={movie.img} alt={movie.title} className={styles.cardImg} />
+export default function Card({ movie, cardRef, styleType, buttons }) {
+  const className = `${styles.card} ${styles[styleType]}`;
+
+  const handleImageError = async (e) => {
+    if (e.target.dataset.retried) return;
+    e.target.dataset.retried = "1";
+
+    try {
+      const res = await fetch(`/api/movies/refresh-poster/${movie._id}`, {
+        method: "POST",
+      });
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      if (data.img) {
+        e.target.src = data.img;
+      }
+    } catch (error) {
+      console.error("Не удалось обновить постер", error);
+    }
+  };
+
+  return (
+    <div className={className} ref={cardRef}>
+      <div className={styles.imgWrapper}>
+        <img
+          src={movie.img}
+          alt={movie.title}
+          className={styles.cardImg}
+          onError={handleImageError}
+        />
         <div className={styles.descriptionLayer}>
-        <p className={styles.cardText}>
-          <>
-          {movie.shortDescription ||'Описание по кнопке ниже ↓'} 
-          <br></br>
-          <i>{movie.genres||''}</i>
-          <br></br>
-          <i>{movie.movieLength||''}</i>
-          </>
-          </p>
-        </div>
-        </div>
-        <div className={styles.cardBody}>
-          <h5 className={styles.cardTitle}>{movie.title} {(movie.year || '') && `(${movie.year})`}</h5>
           <p className={styles.cardText}>
-          <i className="fa-solid fa-star star-icon"></i>
-          {movie.rating == 0  ? 'Рейтинг пока не добавлен' : movie.rating}
+            <>
+              {movie.shortDescription || "Описание по кнопке ниже ↓"}
+              <br />
+              <i>{movie.genres || ""}</i>
+              <br />
+              <i>{movie.movieLength || ""}</i>
+            </>
           </p>
-          <div className={styles.buttonSection}>
-             {buttons}
-             </div>
         </div>
       </div>
-    )
+      <div className={styles.cardBody}>
+        <h5 className={styles.cardTitle}>
+          {movie.title} {(movie.year || "") && `(${movie.year})`}
+        </h5>
+        <p className={styles.cardText}>
+          <i className="fa-solid fa-star star-icon"></i>
+          {movie.rating == 0 ? "Рейтинг пока не добавлен" : movie.rating}
+        </p>
+        <div className={styles.buttonSection}>{buttons}</div>
+      </div>
+    </div>
+  );
 }
 
 export const StyledButton = ({ onClick, children }) => (

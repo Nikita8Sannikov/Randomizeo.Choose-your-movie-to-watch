@@ -148,6 +148,48 @@ router.get("/", async (req, res) => {
   }
 })
 
+// Роут для обновления постера фильма по kinopoiskId (ленивая перезагрузка)
+router.post("/refresh-poster/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const movie = await Movie.findById(id);
+
+    if (!movie) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    if (!movie.kinopoiskId) {
+      return res.status(400).json({ error: "Movie has no kinopoiskId" });
+    }
+
+    const kpResponse = await fetch(
+      `http://localhost:5000/api/kinopoisk/movie/${movie.kinopoiskId}`
+    );
+
+    if (!kpResponse.ok) {
+      return res
+        .status(kpResponse.status)
+        .json({ error: "Kinopoisk API error" });
+    }
+
+    const data = await kpResponse.json();
+    const newPosterUrl = data?.poster?.previewUrl;
+
+    if (!newPosterUrl) {
+      return res.status(400).json({ error: "No poster in Kinopoisk data" });
+    }
+
+    movie.img = newPosterUrl;
+    await movie.save();
+
+    res.json({ img: newPosterUrl });
+  } catch (error) {
+    console.error("Error in /refresh-poster:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+
 // Роут для удаления фильма
 router.delete("/delete/:_id", async (req, res) => {
   try {
