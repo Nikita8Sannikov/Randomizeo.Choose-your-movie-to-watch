@@ -146,6 +146,9 @@ router.get("/", async (req, res) => {
 router.post("/refresh-poster/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    if (!Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid movie ID" });
+    }
 
     const movie = await Movie.findById(id);
 
@@ -189,7 +192,9 @@ router.delete("/delete/:_id", async (req, res) => {
   try {
     const userId = req.userId;
     const { _id } = req.params;
-    // console.log('Before update - userId:', userId);
+    if (!Types.ObjectId.isValid(_id)) {
+      return res.status(400).json({ error: "Invalid movie ID" });
+    }
     // console.log('Before update - movieId:', _id);
     // console.log('Before update - objectId:', objectId);
 

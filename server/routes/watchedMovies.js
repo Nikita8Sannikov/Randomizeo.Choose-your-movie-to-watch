@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { Types } from "mongoose"
 import Movie  from "../models/Movie.js"
 import UserMovies from "../models/UserMovies.js"
 
@@ -108,6 +109,9 @@ router.delete("/delete/:_id", async (req, res) => {
   try {
     const userId = req.userId;
     const { _id } = req.params;
+    if (!Types.ObjectId.isValid(_id)) {
+      return res.status(400).json({ error: "Invalid movie ID" });
+    }
     //  const userMovie = await UserMovies.findOneAndDelete({
     //       userId,
     //       movieId: _id ,

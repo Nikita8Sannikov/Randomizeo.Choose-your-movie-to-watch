@@ -81,6 +81,9 @@ router.get("/movie/:id", async (req, res) => {
   if (!id) {
     return res.status(400).json({ error: "Movie ID is required" });
   }
+  if (!/^\d+$/.test(id)) {
+    return res.status(400).json({ error: "Invalid Kinopoisk ID format" });
+  }
 
   try {
     const response = await fetch(

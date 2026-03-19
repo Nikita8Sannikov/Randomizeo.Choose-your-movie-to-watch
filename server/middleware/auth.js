@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { Types } from "mongoose";
 import finalConfig from "../config/index.js";
 
 const jwtSecret = finalConfig.jwtSecret;
@@ -15,6 +16,9 @@ export const authMiddleware = (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, jwtSecret);
+    if (!Types.ObjectId.isValid(decoded.userId)) {
+      return res.status(401).json({ message: "Invalid token payload" });
+    }
     req.userId = decoded.userId;
     next();
   } catch (e) {
