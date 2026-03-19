@@ -8,10 +8,7 @@ const router = Router()
 // Роут для добавления нового сериала
 router.post("/add", async (req, res) => {
   try {
-    const { userId } = req.query;
-    if (!userId) {
-      return res.status(400).json({ error: "User ID is required" });
-    }
+    const userId = req.userId;
 
     const {
       // id,
@@ -78,10 +75,7 @@ router.get("/", async (req, res) => {
     //   res.status(500).json({ message: "Server error" })
     // }
     try {
-      const { userId } = req.query;
-      if (!userId) {
-        return res.status(400).json({ error: "User ID is required" });
-      }
+      const userId = req.userId;
  const series = await UserMovies.find({
       userId,
       isWatched: true,

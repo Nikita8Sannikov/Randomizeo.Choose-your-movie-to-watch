@@ -3,6 +3,7 @@ export const fetchApi = async(url, method = "GET", body) => {
     try{
         const options = {
           method,
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },

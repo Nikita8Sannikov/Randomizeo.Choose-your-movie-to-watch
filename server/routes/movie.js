@@ -12,10 +12,7 @@ const router = Router()
 // Роут для добавления нового фильма
 router.post("/add", async (req, res) => {
   try {
-    const { userId } = req.query;
-    if (!userId) {
-      return res.status(400).json({ error: "User ID is required" });
-    }
+    const userId = req.userId;
     const {
       // id,
       title,
@@ -110,10 +107,7 @@ router.post("/add", async (req, res) => {
 // Роут для получения всех фильмов
 router.get("/", async (req, res) => {
   try {
-    const { userId } = req.query;
-    if (!userId) {
-      return res.status(400).json({ error: "User ID is required" });
-    }
+    const userId = req.userId;
     // const movies = await Movie.find( 
     //   { isSeries: false }
     // )
@@ -193,15 +187,8 @@ router.post("/refresh-poster/:id", async (req, res) => {
 // Роут для удаления фильма
 router.delete("/delete/:_id", async (req, res) => {
   try {
-    const { userId } = req.query;
-    const { _id } = req.params
-    // const objectId = mongoose.Types.ObjectId(_id);
-    // if (!mongoose.Types.ObjectId.isValid(_id)) {
-    //   return res.status(400).json({ error: "Invalid movie ID" });
-    // }
-    if (!userId) {
-      return res.status(400).json({ error: "User ID is required" });
-    }
+    const userId = req.userId;
+    const { _id } = req.params;
     // console.log('Before update - userId:', userId);
     // console.log('Before update - movieId:', _id);
     // console.log('Before update - objectId:', objectId);

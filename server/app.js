@@ -9,6 +9,7 @@ import seriesRoutes from "./routes/series.js";
 import watchedSeriesRoutes from "./routes/watchedSeries.js";
 import authRoutes from "./routes/auth.js";
 import kinopoiskRoutes from "./routes/kinopoisk.js";
+import { authMiddleware } from "./middleware/auth.js";
 import finalConfig from "./config/index.js";
 
 const app = express();
@@ -47,14 +48,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));  // Миддлвар для обработки URL-кодированных запросов
 app.use(cookieParser()); //Мидлвар cookie-parser разбирает cookies и делает их доступными через req.cookies
 
-// Использование роутов для обработки запросов по пути /api/movies
-app.use("/api/movies", movieRoutes);
+// Использование роутов для обработки запросов по пути /api/movies (с проверкой JWT)
+app.use("/api/movies", authMiddleware, movieRoutes);
 // Использование роутов для обработки запросов по пути /api/watched-movies
-app.use("/api/watched-movies", watchedMovieRoutes);
+app.use("/api/watched-movies", authMiddleware, watchedMovieRoutes);
 // Использование роутов для обработки запросов по пути /api/movies/series
-app.use("/api/movies/series", seriesRoutes);
+app.use("/api/movies/series", authMiddleware, seriesRoutes);
 // Использование роутов для обработки запросов по пути /api/watched-movies/series
-app.use("/api/watched-movies/series", watchedSeriesRoutes);
+app.use("/api/watched-movies/series", authMiddleware, watchedSeriesRoutes);
 // Использование роутов для обработки запросов по пути /api/auth
 app.use("/api/auth", authRoutes);
 // Прокси-роуты к неофициальной Kinopoisk API
