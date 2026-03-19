@@ -2,11 +2,15 @@ import { Router } from "express"
 // import WatchedMovie  from "../models/WatchedMovie.js"
 import Movie  from "../models/Movie.js"
 import UserMovies from "../models/UserMovies.js"
+import {
+  addToWatchedValidation,
+  handleValidationErrors,
+} from "../validators/movieValidators.js"
 
 const router = Router()
 
-// Роут для добавления нового сериала
-router.post("/add", async (req, res) => {
+// Роут для добавления сериала в просмотренные
+router.post("/add", addToWatchedValidation, handleValidationErrors, async (req, res) => {
   try {
     const userId = req.userId;
 

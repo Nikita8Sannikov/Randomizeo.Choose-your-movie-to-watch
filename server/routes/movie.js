@@ -3,6 +3,10 @@ import Movie from "../models/Movie.js"
 import UserMovies from "../models/UserMovies.js"
 import { Types } from "mongoose"
 import finalConfig from "../config/index.js"
+import {
+  addMovieOrSeriesValidation,
+  handleValidationErrors,
+} from "../validators/movieValidators.js"
 
 const router = Router()
 
@@ -11,7 +15,7 @@ const router = Router()
 // })
 
 // Роут для добавления нового фильма
-router.post("/add", async (req, res) => {
+router.post("/add", addMovieOrSeriesValidation, handleValidationErrors, async (req, res) => {
   try {
     const userId = req.userId;
     const {

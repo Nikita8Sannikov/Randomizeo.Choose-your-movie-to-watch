@@ -2,11 +2,15 @@ import { Router } from "express"
 import { Types } from "mongoose"
 import Movie  from "../models/Movie.js"
 import UserMovies from "../models/UserMovies.js"
+import {
+  addToWatchedValidation,
+  handleValidationErrors,
+} from "../validators/movieValidators.js"
 
 const router = Router()
 
-// Роут для добавления нового фильма
-router.post("/add", async (req, res) => {
+// Роут для добавления в просмотренные
+router.post("/add", addToWatchedValidation, handleValidationErrors, async (req, res) => {
   try {
     const userId = req.userId;
 
