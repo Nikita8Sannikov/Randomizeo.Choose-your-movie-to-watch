@@ -81,6 +81,15 @@
     inset 0px 0px 14.55px 0px rgba(255, 255, 255, 0.4)
 
     ;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    text-rendering: geometricPrecision;
+    -webkit-font-smoothing: antialiased;
+}
+.button:hover {
+    transform: translateZ(0) scale(1.015);
+    filter: brightness(1.1);
 }
 @media(max-width: 1150px){
   .outputSection>h3{

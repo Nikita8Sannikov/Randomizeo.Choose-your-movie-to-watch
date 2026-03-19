@@ -89,4 +89,8 @@
     border: 1px solid white;
     color: white;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.btn:hover {
+    background-color: #C45EF1;
 }

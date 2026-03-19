@@ -107,6 +107,10 @@
     border: 1px solid white;
     color: white;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.btn:hover {
+    background-color: rgb(68 68 68 / 50%);
 }
 @media(max-width: 1030px){
     

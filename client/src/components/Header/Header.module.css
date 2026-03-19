@@ -50,6 +50,11 @@
 
     background-color: #302E31;
     border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, filter 0.2s ease;
+}
+.searchIcon:hover {
+    filter: brightness(1.2);
 }
 .navigationSection{
     margin-left: 80px;
@@ -70,6 +75,10 @@
     cursor: pointer;
     /* border: 1px solid #2C2C2E; */
     border: none;
+    transition: background-color 0.2s ease;
+}
+.navButton:hover {
+    background-color: rgb(68 68 68 / 50%);
 }
 .logoutSection{
     display: flex;
@@ -90,6 +99,10 @@
     border: 1px solid white;
     color: white;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.logoutButton:hover {
+    background-color: #C45EF1;
 }
 .avatar{
     margin-right: 10px;
