@@ -11,7 +11,7 @@ import { addMovieOrSeries } from "../../utils/utils"
 
 import styles from "./AddFilmSection.module.css"
 
-const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries }) => {
+const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries, onMovieAdded }) => {
   const addKinopoisk = useCallback((event) => {
     setKinopoisk(event.target.value)
   }, [])
@@ -48,15 +48,13 @@ const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries }) => {
         setSeries,
         setMovies,
         userId
-      )
+      ).then((success) => {
+        if (success) onMovieAdded?.()
+      })
       setKinoId(null)
       resetFilmData()
     }
-  }, [filmData, kinoId,
-    //  addMovie,
-      resetFilmData, setSeries,
-      setMovies,
-      userId])
+  }, [filmData, kinoId, onMovieAdded, resetFilmData, setSeries, setMovies, userId])
 
   return (
     <div className={styles.addFilm}>

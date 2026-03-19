@@ -101,7 +101,7 @@ export const fetchApi = async(url, method = "GET", body) => {
             isSeries,
           }
     
-          await addItem(newItem,
+          return await addItem(newItem,
             newItem.isSeries ? addSeriesToApi : addMovieToApi,
             newItem.isSeries ? setSeries : setMovies,
             userId
@@ -118,6 +118,7 @@ export const fetchApi = async(url, method = "GET", body) => {
           ? prev
           : [addedItem, ...prev]
         })
+        return true
       }catch (error) {
         console.error(
           `Error adding ${
@@ -125,5 +126,6 @@ export const fetchApi = async(url, method = "GET", body) => {
           } to the API:`,
           error
         )
+        return false
       }
     }

@@ -10,12 +10,13 @@ import { searchKinopoisk } from "../../api"
 import { addMovieOrSeries } from "../../utils/utils"
 import useDebounce from "../../../hooks/useDebounce"
 
+import { PLACEHOLDER_POSTER_URL } from "../../constants"
 import styles from "./KinopoiskSearch.module.css"
 
 function mapKinopoiskToCard(doc) {
   return {
     title: doc.name || "",
-    img: doc.poster?.previewUrl || "",
+    img: doc.poster?.previewUrl || doc.poster?.url || PLACEHOLDER_POSTER_URL,
     shortDescription: doc.shortDescription || "",
     description: doc.description || "",
     year: doc.year || "",
@@ -39,6 +40,7 @@ export default function KinopoiskSearch({
   setMovies,
   setSeries,
   onFocus,
+  onMovieAdded,
 }) {
   const { showDetails } = useContext(ModalContext)
   const userId = useSelector((state) => state.auth.user?._id)
@@ -82,8 +84,8 @@ export default function KinopoiskSearch({
     }
   }, [debouncedQuery])
 
-  const handleAdd = (movie) => {
-    addMovieOrSeries(
+  const handleAdd = async (movie) => {
+    const success = await addMovieOrSeries(
       movie.title,
       movie.img,
       movie.shortDescription,
@@ -100,6 +102,7 @@ export default function KinopoiskSearch({
       setMovies,
       userId
     )
+    if (success) onMovieAdded?.()
   }
 
   const filterContent = (movie) => (

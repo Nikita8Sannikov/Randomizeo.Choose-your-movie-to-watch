@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useCallback } from "react"
 import { useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
 
@@ -52,6 +52,12 @@ export default function MoviesSection({
     }
   }
 
+  const scrollToAddedFilm = useCallback(() => {
+    setTimeout(() => {
+      containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    }, 100)
+  }, [containerRef])
+
   useEffect(() => {
     const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
     arrangeCards(y)
@@ -93,11 +99,13 @@ export default function MoviesSection({
             addMovie={addMovie}
             setMovies={setMoviesForAdd}
             setSeries={setSeriesForAdd}
+            onMovieAdded={scrollToAddedFilm}
           />
           <KinopoiskSearch
             setMovies={setMoviesForAdd}
             setSeries={setSeriesForAdd}
             onFocus={handleFocus}
+            onMovieAdded={scrollToAddedFilm}
           />
           <Filter
             movies={movies}
