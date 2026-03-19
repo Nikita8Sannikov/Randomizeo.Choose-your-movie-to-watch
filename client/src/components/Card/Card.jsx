@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Card.module.css";
 import Button from "../Button";
+import { PLACEHOLDER_POSTER_URL } from "../../constants";
 
 const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL || "";
 
@@ -11,30 +12,35 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
     if (e.target.dataset.retried) return;
     e.target.dataset.retried = "1";
 
-    try {
-      const res = await fetch(
-        `${SERVER_API_URL}/api/movies/refresh-poster/${movie._id}`,
-        {
-          method: "POST",
+    if (movie._id) {
+      try {
+        const res = await fetch(
+          `${SERVER_API_URL}/api/movies/refresh-poster/${movie._id}`,
+          {
+            method: "POST",
+          }
+        );
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+        if (data.img) {
+          e.target.src = data.img;
+          return;
         }
-      );
-
-      if (!res.ok) return;
-
-      const data = await res.json();
-      if (data.img) {
-        e.target.src = data.img;
+      } catch (error) {
+        console.error("Не удалось обновить постер", error);
       }
-    } catch (error) {
-      console.error("Не удалось обновить постер", error);
     }
+
+    e.target.src = PLACEHOLDER_POSTER_URL;
   };
 
   return (
     <div className={className} ref={cardRef}>
       <div className={styles.imgWrapper}>
         <img
-          src={movie.img}
+          src={movie.img || PLACEHOLDER_POSTER_URL}
           alt={movie.title}
           className={styles.cardImg}
           onError={handleImageError}
