@@ -2,6 +2,7 @@ import { Router } from "express"
 import Movie from "../models/Movie.js"
 import UserMovies from "../models/UserMovies.js"
 import { Types } from "mongoose"
+import finalConfig from "../config/index.js"
 
 const router = Router()
 
@@ -161,7 +162,11 @@ router.post("/refresh-poster/:id", async (req, res) => {
     }
 
     const kpResponse = await fetch(
-      `http://localhost:5000/api/kinopoisk/movie/${movie.kinopoiskId}`
+      `https://api.kinopoisk.dev/v1.4/movie/${movie.kinopoiskId}`,
+      {
+        method: "GET",
+        headers: { "X-API-KEY": finalConfig.kinopoiskApiKey },
+      }
     );
 
     if (!kpResponse.ok) {

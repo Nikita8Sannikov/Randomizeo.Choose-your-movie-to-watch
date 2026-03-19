@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 
 import movieRoutes from "./routes/movie.js";
 import watchedMovieRoutes from "./routes/watchedMovies.js";
@@ -11,6 +12,16 @@ import authRoutes from "./routes/auth.js";
 import kinopoiskRoutes from "./routes/kinopoisk.js";
 import { authMiddleware } from "./middleware/auth.js";
 import finalConfig from "./config/index.js";
+
+// Rate limiter для Kinopoisk API: 60 запросов в минуту на пользователя
+const kinopoiskRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 60,
+  keyGenerator: (req) => req.userId || req.ip,
+  message: { error: "Too many requests, please try again later" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 const app = express();
 
@@ -58,8 +69,8 @@ app.use("/api/movies/series", authMiddleware, seriesRoutes);
 app.use("/api/watched-movies/series", authMiddleware, watchedSeriesRoutes);
 // Использование роутов для обработки запросов по пути /api/auth
 app.use("/api/auth", authRoutes);
-// Прокси-роуты к неофициальной Kinopoisk API
-app.use("/api/kinopoisk", kinopoiskRoutes);
+// Прокси-роуты к неофициальной Kinopoisk API (auth + rate limit)
+app.use("/api/kinopoisk", authMiddleware, kinopoiskRateLimiter, kinopoiskRoutes);
 
 const PORT = process.env.PORT || 5000;
 

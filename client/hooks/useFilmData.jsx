@@ -13,7 +13,7 @@ export default function useFilmData(kinoId) {
     const urlWithParams = `${SERVER_API_URL}/api/kinopoisk/movie/${kinoId}`;
 
     try {
-      const res = await fetch(urlWithParams);
+      const res = await fetch(urlWithParams, { credentials: "include" });
 
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
