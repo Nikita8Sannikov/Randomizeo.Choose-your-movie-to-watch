@@ -12,6 +12,7 @@ import { getSeries as getSeriesFromApi } from "../../api"
 
 import Card, { StyledButton } from "../Card/Card"
 import AddKinopoisk from "../AddFilm/AddKinopoisk"
+import KinopoiskSearch from "../KinopoiskSearch/KinopoiskSearch"
 import Filter from "../Filter/Filter"
 import ResultSection from "../ResultSection/ResultSection"
 import AddFilmOption from "../AddFilm/AddFilmOption"
@@ -92,6 +93,11 @@ export default function MoviesSection({
             addMovie={addMovie}
             setMovies={setMoviesForAdd}
             setSeries={setSeriesForAdd}
+          />
+          <KinopoiskSearch
+            setMovies={setMoviesForAdd}
+            setSeries={setSeriesForAdd}
+            onFocus={handleFocus}
           />
           <Filter
             movies={movies}

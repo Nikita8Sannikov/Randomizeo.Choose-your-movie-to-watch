@@ -16,6 +16,7 @@ const finalConfig = {
   mongoUri: process.env.MONGO_URI,
   jwtSecret: process.env.JWT_SECRET,
   kinopoiskApiKey: process.env.KINOPOISK_API_KEY,
+  kinopoiskApiUrl: process.env.KINOPOISK_API_URL,
 };
 
 export default finalConfig;

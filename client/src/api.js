@@ -18,3 +18,7 @@ export const getSeries = (userId) => fetchApi(`${SERVER_API_URL}/api/movies/seri
 // Просмотренные сериалы
 export const addWatchedSeries = (movie, userId) => fetchApi(`${SERVER_API_URL}/api/watched-movies/series/add?userId=${userId}`, "POST", movie)
 export const getWatchedSeries = (userId) => fetchApi(`${SERVER_API_URL}/api/watched-movies/series?userId=${userId}`)
+
+// Поиск в API Кинопоиска
+export const searchKinopoisk = (query) =>
+  fetchApi(`${SERVER_API_URL}/api/kinopoisk/search?query=${encodeURIComponent(query)}`)
