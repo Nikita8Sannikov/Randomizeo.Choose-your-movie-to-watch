@@ -36,12 +36,11 @@ export default function MoviesSection({
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext)
   const location = useLocation()
   const navigate = useNavigate()
-  const {arrangeCards, movieRefs} = useArrangeCards()
-  
-  const containerRef = useResizeObserver(() => {
+  const containerRef = useResizeObserver((el) => {
     const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200
-    arrangeCards(y)
+    arrangeCards(y, el)
   })
+  const {arrangeCards, movieRefs} = useArrangeCards(containerRef)
 
   const handleFocus = () => {
     if (searchTerm) {

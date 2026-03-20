@@ -25,14 +25,14 @@ const WathcedSection = ({ movies, setMovies, setSeries }) => {
     setWatchedSeries,
   } = useContext(ModalContext)
   const { searchTerm, setSearchTerm } = useContext(WatchedFilterContext);
-  const {arrangeCards, movieRefs} = useArrangeCards()
   const location = useLocation()
   const userId = useSelector((state) => state.auth.user?._id);
   
-  const containerRef = useResizeObserver(()=> {
+  const containerRef = useResizeObserver((el) => {
     const y = location.pathname === "/watched" || location.pathname === "/watched/series" ? 300 : 200
-    arrangeCards(y)
+    arrangeCards(y, el)
   })
+  const {arrangeCards, movieRefs} = useArrangeCards(containerRef)
 
   useEffect(() => {
     const y = location.pathname === "/watched" || location.pathname === "/watched/series" ? 300 : 200

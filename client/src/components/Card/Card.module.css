@@ -32,7 +32,8 @@
     flex-direction: column;
     align-items: center;
     background-color: rgb(68 68 68 / 20%);
-    padding: 15px;
+    /* padding: 15px; */
+    padding: 0px;
     transform-origin: bottom center;
     transition: transform 0.3s;
     /* position: absolute; */
@@ -127,6 +128,12 @@
 @media(max-width: 1030px){
     
 }
+@media(max-width: 1040px){
+    .movieSection.card,
+    .watchedSection.card {
+        width: 250px;
+    }
+}
 @media(max-width: 1024px){
     .card {
         width: 24vh;
@@ -141,29 +148,51 @@
         padding: 15px;
         transform-origin: bottom center;
         transition: transform 0.3s;
-        /* position: absolute; */
         color: white;
-    }
-    .movieSection.card {
-        /* width: 700px; */
-        width: 250px;
     }
 }
 
-@media(max-width: 800px){
-    .movieSection.card {
-        /* width: 500px; */
+@media(max-width: 810px){
+    .movieSection.card,
+    .watchedSection.card {
+        width: 220px;
+    }
+}
+@media(max-width: 540px){
+    .movieSection.card,
+    .watchedSection.card {
         width: 200px;
     }
 }
-@media(max-width: 550px){
-    .movieSection.card {
-        width: 150px;
+@media(max-width: 484px){
+    .movieSection.card,
+    .watchedSection.card {
+        width: calc(100vw - 40px);
     }
 }
-@media(max-width: 430px){
-    .movieSection.card {
-        width: 350px;
+
+/* Адаптив кнопок для карточек MovieSection и WatchedSection (645–500px) */
+@media(max-width: 645px){
+    .movieSection.card .buttonSection,
+    .watchedSection.card .buttonSection {
+        gap: 8px;
+    }
+    .movieSection.card .btn,
+    .watchedSection.card .btn {
+        padding: 8px;
+        font-size: 16px;
+    }
+}
+@media(max-width: 500px){
+    .movieSection.card .buttonSection,
+    .watchedSection.card .buttonSection {
+        gap: 6px;
+    }
+    .movieSection.card .btn,
+    .watchedSection.card .btn {
+        padding: 6px 8px;
+        font-size: 14px;
+        border-radius: 8px;
     }
 }
 
