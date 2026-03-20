@@ -119,13 +119,25 @@ export default function KinopoiskSearch({
   return (
     <div className={styles.container}>
       <div className={styles.searchArea}>
-        <Input
-          type="text"
-          placeholder="Поиск в Кинопоиске"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onFocus={onFocus}
-        />
+        <div className={styles.inputWrapper}>
+          <Input
+            type="text"
+            placeholder="Поиск в Кинопоиске"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={onFocus}
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              className={styles.resetButton}
+              onClick={() => setSearchQuery("")}
+              aria-label="Сбросить поиск"
+            >
+              ×
+            </button>
+          )}
+        </div>
       </div>
       {loading && <p className={styles.status}>Поиск...</p>}
       {error && <p className={styles.error}>{error}</p>}
