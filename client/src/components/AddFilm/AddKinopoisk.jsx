@@ -49,7 +49,7 @@ const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries, onMovieAd
         setMovies,
         userId
       ).then((success) => {
-        if (success) onMovieAdded?.()
+        if (success) onMovieAdded?.(filmData.isSeries)
       })
       setKinoId(null)
       resetFilmData()

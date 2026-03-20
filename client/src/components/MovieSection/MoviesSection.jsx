@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useCallback } from "react"
 import { useSelector } from "react-redux"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import useResizeObserver from "../../../hooks/useResizeObserver"
 import { useArrangeCards } from "../../../hooks/useArrangeCards"
@@ -35,6 +35,7 @@ export default function MoviesSection({
   const { showDetails, showViewedConfirmation, showSeriesViewedConfirmation, setMovies, setSeries } = useContext(ModalContext)
   const { searchTerm, setSearchTerm } = useContext(MoviesFilterContext)
   const location = useLocation()
+  const navigate = useNavigate()
   const {arrangeCards, movieRefs} = useArrangeCards()
   
   const containerRef = useResizeObserver(() => {
@@ -52,11 +53,19 @@ export default function MoviesSection({
     }
   }
 
-  const scrollToAddedFilm = useCallback(() => {
+  const scrollToAddedFilm = useCallback((isSeries = false) => {
+    let needNavigate = false
+    if (isSeries && location.pathname === "/") {
+      navigate("/series")
+      needNavigate = true
+    } else if (!isSeries && location.pathname === "/series") {
+      navigate("/")
+      needNavigate = true
+    }
     setTimeout(() => {
       containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-    }, 100)
-  }, [containerRef])
+    }, needNavigate ? 150 : 100)
+  }, [containerRef, location.pathname, navigate])
 
   useEffect(() => {
     const y = location.pathname === "/" || location.pathname === "/series" ? 100 : 200

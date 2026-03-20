@@ -106,7 +106,7 @@ export default function KinopoiskSearch({
       setMovies,
       userId
     )
-    if (success) onMovieAdded?.()
+    if (success) onMovieAdded?.(movie.isSeries)
   }
 
   const filterContent = (movie) => (
