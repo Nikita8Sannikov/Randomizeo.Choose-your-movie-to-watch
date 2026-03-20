@@ -5,6 +5,7 @@ const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL;
 export const addMovie = (movie, userId) => fetchApi(`${SERVER_API_URL}/api/movies/add?userId=${userId}`, "POST", movie)
 export const getMovies = (userId) => fetchApi(`${SERVER_API_URL}/api/movies?userId=${userId}`)
 export const deleteMovie = (_id, userId) => fetchApi(`${SERVER_API_URL}/api/movies/delete/${_id}?userId=${userId}`, "DELETE")
+export const refreshPoster = (movieId) => fetchApi(`${SERVER_API_URL}/api/movies/refresh-poster/${movieId}`, "POST")
 
 // фильмы со страницы просмотренных
 export const addWatchedMovie = (movie, userId) => fetchApi(`${SERVER_API_URL}/api/watched-movies/add?userId=${userId}`, "POST", movie)

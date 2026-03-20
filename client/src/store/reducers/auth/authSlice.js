@@ -84,6 +84,12 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        forceLogout: (state) => {
+            state.user = null
+            state.isAuth = false
+            state.error = null
+            state.status = "idle"
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -138,4 +144,5 @@ const authSlice = createSlice({
     }
 })
 
+export const { forceLogout } = authSlice.actions
 export default authSlice.reducer

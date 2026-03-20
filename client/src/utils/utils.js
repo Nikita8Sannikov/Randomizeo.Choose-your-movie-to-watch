@@ -1,3 +1,6 @@
+import { store } from "../store"
+import { forceLogout } from "../store/reducers/auth/authSlice"
+
 // Вынесена логика фетча
 export const fetchApi = async(url, method = "GET", body) => {
     try{
@@ -13,6 +16,9 @@ export const fetchApi = async(url, method = "GET", body) => {
         const response = await fetch(url, options)
   
         if (!response.ok) {
+          if (response.status === 401) {
+            store.dispatch(forceLogout())
+          }
           throw new Error(`HTTP error! status: ${response.status}`)
         }
     

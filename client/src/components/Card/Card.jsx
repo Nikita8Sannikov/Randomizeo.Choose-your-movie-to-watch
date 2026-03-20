@@ -2,8 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "./Card.module.css";
 import Button from "../Button";
 import { PLACEHOLDER_POSTER_URL } from "../../constants";
+import { refreshPoster } from "../../api";
 
-const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL || "";
 const CARD_HEIGHT_TALL = 520;   /* переключаем на мелкий шрифт */
 const CARD_HEIGHT_SHORT = 480;  /* переключаем обратно (гистерезис, чтобы не дергалось) */
 
@@ -42,16 +42,7 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
 
     if (movie._id) {
       try {
-        const res = await fetch(
-          `${SERVER_API_URL}/api/movies/refresh-poster/${movie._id}`,
-          {
-            method: "POST",
-          }
-        );
-
-        if (!res.ok) return;
-
-        const data = await res.json();
+        const data = await refreshPoster(movie._id);
         if (data.img) {
           e.target.src = data.img;
           return;
