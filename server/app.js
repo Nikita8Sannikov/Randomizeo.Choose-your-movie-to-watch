@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import rateLimit from "express-rate-limit";
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
 
 import movieRoutes from "./routes/movie.js";
 import watchedMovieRoutes from "./routes/watchedMovies.js";
@@ -17,7 +17,10 @@ import finalConfig from "./config/index.js";
 const kinopoiskRateLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 60,
-  keyGenerator: (req) => req.userId || req.ip,
+  keyGenerator: (req, res) => {
+    if (req.userId) return String(req.userId);
+    return ipKeyGenerator(req.ip);
+  },
   message: { error: "Too many requests, please try again later" },
   standardHeaders: true,
   legacyHeaders: false,
