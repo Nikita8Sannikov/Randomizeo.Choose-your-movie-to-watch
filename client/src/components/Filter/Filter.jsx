@@ -21,7 +21,7 @@ const Filter = ({ movies, watchedMovies }) => {
     if (!filmList || !trimmedVal) return []
     return filmList.filter(
       (el) => {
-        return el.title.toLowerCase().substring(0, val.length).includes(trimmedVal)
+        return el.title.toLowerCase().includes(trimmedVal)
       }
     )
   }

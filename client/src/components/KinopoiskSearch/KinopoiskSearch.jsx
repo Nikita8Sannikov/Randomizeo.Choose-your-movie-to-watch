@@ -68,7 +68,11 @@ export default function KinopoiskSearch({
       .then((data) => {
         if (cancelled) return
         const items = Array.isArray(data) ? data : []
-        setResults(items.map(mapKinopoiskToCard))
+        const qLower = q.toLowerCase()
+        const filtered = items.filter((doc) =>
+          (doc.name || "").toLowerCase().includes(qLower)
+        )
+        setResults(filtered.map(mapKinopoiskToCard))
       })
       .catch((err) => {
         if (cancelled) return
