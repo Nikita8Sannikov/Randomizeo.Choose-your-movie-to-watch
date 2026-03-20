@@ -91,7 +91,7 @@ export default function MoviesSection({
     <>
       {(location.pathname === "/" || location.pathname === "/series") && (
         <>
-          <AddKinopoisk
+          {/* <AddKinopoisk
             setOptionsShow={setOptionsShow}
             kinopoisk={kinopoisk}
             setKinopoisk={setKinopoisk}
@@ -100,7 +100,7 @@ export default function MoviesSection({
             setMovies={setMoviesForAdd}
             setSeries={setSeriesForAdd}
             onMovieAdded={scrollToAddedFilm}
-          />
+          /> */}
           <KinopoiskSearch
             setMovies={setMoviesForAdd}
             setSeries={setSeriesForAdd}

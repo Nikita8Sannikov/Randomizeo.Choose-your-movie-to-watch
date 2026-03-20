@@ -13,11 +13,11 @@
 }
 
 .searchArea input {
-  font-size: 20px;
+  font-size: 29px;
   border-radius: 25px;
-  padding: 18px 48px;
+  padding: 24px 48px 24px 24px;
   width: 100%;
-  max-width: 450px;
+  max-width: 780px;
   background-color: #302e31;
   color: white;
   outline: none;
@@ -52,4 +52,40 @@
 
 .error {
   color: #ff6b6b;
+}
+
+@media(max-width: 1150px){
+  .container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media(max-width: 900px){
+  .container {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+}
+
+@media(max-width: 660px){
+  .container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .results {
+    gap: 15px;
+    margin-top: 15px;
+  }
+}
+
+@media(max-width: 460px){
+  .container {
+    margin-top: 10px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .results {
+    gap: 10px;
+  }
 }
