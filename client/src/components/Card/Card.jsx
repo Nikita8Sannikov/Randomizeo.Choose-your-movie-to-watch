@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styles from "./Card.module.css";
 import Button from "../Button";
 import { PLACEHOLDER_POSTER_URL } from "../../constants";
 
 const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL || "";
+const CARD_HEIGHT_TALL = 520;   /* переключаем на мелкий шрифт */
+const CARD_HEIGHT_SHORT = 480;  /* переключаем обратно (гистерезис, чтобы не дергалось) */
 
 export default function Card({ movie, cardRef, styleType, buttons }) {
-  const className = `${styles.card} ${styles[styleType]}`;
+  const containerRef = useRef(null);
+  const [isCardTall, setIsCardTall] = useState(false);
+  const isCardTallRef = useRef(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const checkHeight = () => {
+      const h = el.offsetHeight;
+      const currentlyTall = isCardTallRef.current;
+      if (!currentlyTall && h > CARD_HEIGHT_TALL) {
+        isCardTallRef.current = true;
+        setIsCardTall(true);
+      } else if (currentlyTall && h < CARD_HEIGHT_SHORT) {
+        isCardTallRef.current = false;
+        setIsCardTall(false);
+      }
+    };
+
+    checkHeight();
+    const observer = new ResizeObserver(checkHeight);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const className = `${styles.card} ${styles[styleType]}${isCardTall ? ` ${styles.cardTall}` : ""}`;
 
   const handleImageError = async (e) => {
     if (e.target.dataset.retried) return;
@@ -36,8 +64,16 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
     e.target.src = PLACEHOLDER_POSTER_URL;
   };
 
+  const setRef = (el) => {
+    containerRef.current = el;
+    if (cardRef) {
+      if (typeof cardRef === "function") cardRef(el);
+      else cardRef.current = el;
+    }
+  };
+
   return (
-    <div className={className} ref={cardRef}>
+    <div className={className} ref={setRef}>
       <div className={styles.imgWrapper}>
         <img
           src={movie.img || PLACEHOLDER_POSTER_URL}
