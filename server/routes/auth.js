@@ -2,6 +2,7 @@ import { Router } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
+import { rateLimit } from "express-rate-limit";
 
 import User from "../models/User.js";
 import finalConfig from "../config/index.js";
@@ -9,14 +10,29 @@ import finalConfig from "../config/index.js";
 const router = Router();
 const jwtSecret = finalConfig.jwtSecret;
 
+const authRateLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000,
+	max: 10,
+	message: { message: "Too many attempts, try again later" },
+	standardHeaders: true,
+	legacyHeaders: false,
+});
+
 // /api/auth/register
 router.post(
 	"/register",
+	authRateLimiter,
 	[
-		check("email", "Invalid email").isEmail(),
+		check("email", "Invalid email").normalizeEmail().isEmail(),
 		check("password", "Password must be at least 6 characters").isLength({
 			min: 6,
 		}),
+		check("name", "Name is required").trim().notEmpty(),
+		check("name", "Name must be 2–50 characters").trim().isLength({
+			min: 2,
+			max: 50,
+		}),
+		check("name").trim().escape(),
 	],
 	async (req, res) => {
 		try {
@@ -30,9 +46,11 @@ router.post(
 			}
 
 			const { email, password, name } = req.body;
-			console.log(email, password, name);
 
-			const candidate = await User.findOne({ email });
+			const candidate = await User.findOne({ email }).collation({
+				locale: "en",
+				strength: 2,
+			});
 
 			if (candidate) {
 				res.status(400).json({ message: "This user already exists" });
@@ -59,9 +77,9 @@ router.post(
 // /api/auth/login
 router.post(
 	"/login",
+	authRateLimiter,
 	[
-		// check("email", "Correct email required").normalizeEmail().isEmail(),
-		check("email", "Correct email required").isEmail(),
+		check("email", "Correct email required").normalizeEmail().isEmail(),
 		check("password", "Password required").exists(),
 	],
 	async (req, res) => {
@@ -76,7 +94,10 @@ router.post(
 			}
 			const { email, password } = req.body;
 
-			const user = await User.findOne({ email });
+			const user = await User.findOne({ email }).collation({
+				locale: "en",
+				strength: 2,
+			});
 
 			if (!user) {
 				res.status(404).json({ message: "User not found" });
