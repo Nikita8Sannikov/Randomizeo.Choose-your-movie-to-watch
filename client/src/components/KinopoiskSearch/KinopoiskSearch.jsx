@@ -138,7 +138,7 @@ export default function KinopoiskSearch({
               <Card
                 key={movie.kinopoiskId}
                 movie={movie}
-                styleType="filter"
+                styleType="kinopoiskSearch"
                 buttons={filterContent(movie)}
               />
             ))

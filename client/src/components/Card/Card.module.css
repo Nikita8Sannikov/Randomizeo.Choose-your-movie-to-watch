@@ -4,6 +4,10 @@
 .watchedSection.card {
     position: absolute;
 }
+/* Карточки поиска Кинопоиск с кнопками Описание + Добавить */
+.kinopoiskSearch {
+    contain: layout;
+}
 .result.card {
     width: 30vh;
     margin: 10px;
@@ -77,6 +81,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex: 1;
+    min-height: 0;
 }
 .cardText{
     padding: 0 5px 0 5px;
@@ -93,10 +99,16 @@
     font-weight: 700;
     text-align: center;
 }
+
+.cardTall .cardTitle {
+    font-size: 16px;
+}
+
 .buttonSection{
     display: flex;
     gap: 10px;
     justify-content: center;
+    margin-top: auto;
 }
 .btn{
     border-radius: 10px;
@@ -153,4 +165,39 @@
     .movieSection.card {
         width: 350px;
     }
+}
+
+/* Адаптив кнопок только для карточек KinopoiskSearch (Описание + Добавить) */
+@media(max-width: 1035px){
+  .kinopoiskSearch .buttonSection {
+    gap: 8px;
+    flex-direction: column;
+  }
+  .kinopoiskSearch .btn {
+    padding: 8px;
+    font-size: 18px;
+  }
+}
+
+@media(max-width: 660px){
+  .kinopoiskSearch .buttonSection {
+    gap: 6px;
+  }
+  .kinopoiskSearch .btn {
+    padding: 6px 10px;
+    font-size: 16px;
+  }
+}
+
+@media(max-width: 460px){
+  .kinopoiskSearch .buttonSection {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .kinopoiskSearch .btn {
+    padding: 6px 8px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
 }
