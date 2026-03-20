@@ -1,0 +1,52 @@
+.disclaimer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 48px 12px 20px;
+    background-color: rgba(48, 46, 49, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.disclaimerText {
+    margin: 0;
+    text-align: center;
+}
+
+.closeButton {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    font-size: 22px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.closeButton:hover {
+    color: white;
+    background-color: rgba(196, 94, 241, 0.3);
+}
+
+@media (max-width: 500px) {
+    .disclaimer {
+        padding: 10px 44px 10px 16px;
+        font-size: 13px;
+    }
+
+    .closeButton {
+        right: 10px;
+    }
+}
