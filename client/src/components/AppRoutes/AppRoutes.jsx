@@ -17,12 +17,14 @@ import MoviesSection from "../MovieSection/MoviesSection";
 import WatchedSection from "../WatchedSection/WathcedSection";
 
 import styles from "./AppRoutes.module.css";
+import Disclaimer from "../Disclaimer/Disclaimer";
 
 // const MoviesSection = lazy(() => import("../MovieSection/MoviesSection"));
 // const WatchedSection = lazy(() => import("../WatchedSection/WathcedSection"));
 
 const UserNotAuthRouter = () => (
       <>
+        <Disclaimer/>
         <LeftUpShadow />
         <RightUpShadow />
         <DownShadow />
