@@ -28,6 +28,12 @@
   color: white;
 }
 
+.langSwitcher {
+  margin-left: 0;
+  margin-bottom: 12px;
+  align-self: flex-end;
+}
+
 .formTitle {
   margin-bottom: 1.5rem;
   font-size: 1.5rem;

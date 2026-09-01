@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import InputField from '../AuthInput/AuthInput'
 import Button from '../../Button';
+import LanguageSwitcher from '../../LanguageSwitcher/LanguageSwitcher';
 import { signIn, register } from "../../../store/reducers/auth/authSlice";
 
 import styles from "./LoginForm.module.css"
 
 const LoginForm = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
     const [formData, setFormData] = useState({ name: "", email: "", password: "" });
     const [formErrors, setFormErrors] = useState({ name: "", email: "", password: ""})
@@ -34,20 +37,20 @@ const LoginForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
     
         if( isRegistering && !formData.name) {
-          errors.name = "Никнейм обязателен"
           // Добавить проверку ников на нецензурную лексику
         // } else if (!emailRegex.test(formDataRef.current.name)) {
         //   errors.email = "Некорректный формат email"
+          errors.name = t("auth.errors.nameRequired")
         }
         if (!formData.email) {
-          errors.email = "Email обязателен"
+          errors.email = t("auth.errors.emailRequired")
         } else if (!emailRegex.test(formData.email)) {
-          errors.email = "Некорректный формат email"
+          errors.email = t("auth.errors.emailInvalid")
         }
         if (!formData.password) {
-          errors.password = "Пароль обязателен"
+          errors.password = t("auth.errors.passwordRequired")
         } else if (formData.password.length < 6) {
-          errors.password = "Пароль должен содержать минимум 6 символов"
+          errors.password = t("auth.errors.passwordMin")
         }
     
         return errors
@@ -96,7 +99,7 @@ const LoginForm = () => {
            await dispatch(signIn({ email: formData.email, password: formData.password })).unwrap();
           } catch (error) {
             console.error("Ошибка входа:", error);
-            setFormErrors({ name: "", email: "Неверный email или пароль", password: ""});
+            setFormErrors({ name: "", email: t("auth.errors.wrongCredentials"), password: ""});
           } finally {
             setLoading(false);
           }
@@ -124,7 +127,7 @@ const LoginForm = () => {
             setFormErrors({});
           } catch (error) {
             console.error("Ошибка регистрации:", error);
-            setFormErrors({ name: "", email: "Пользователь с таким email уже зарегистрирован", password: ""});
+            setFormErrors({ name: "", email: t("auth.errors.emailTaken"), password: ""});
           }finally {
             setLoading(false);
           }
@@ -134,19 +137,20 @@ const LoginForm = () => {
   return (
     <div className={styles.loginFormContainer}>
       <form className={styles.loginForm} onSubmit={handleSubmit} >
+        <LanguageSwitcher className={styles.langSwitcher} />
         <h2 className={styles.formTitle}>
-        {isRegistering ? "Регистрация" : "Вход в систему"}
+        {isRegistering ? t("auth.registerTitle") : t("auth.loginTitle")}
         </h2>
         <div className={styles.cardContent}>
           {isRegistering && (
         <div>
         <InputField
-          label="Никнейм"
+          label={t("auth.nickname")}
           type="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="Введите ваш никнейм"
+          placeholder={t("auth.nicknamePlaceholder")}
           error={formErrors.name}
           iswrapper
         />
@@ -154,24 +158,24 @@ const LoginForm = () => {
             )}
         <div>
           <InputField
-            label="Email"
+            label={t("auth.email")}
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Введите ваш email"
+            placeholder={t("auth.emailPlaceholder")}
             error={formErrors.email}
             iswrapper
           />
         </div>
         <div className={styles.passwordField}>
           <InputField
-            label="Пароль"
+            label={t("auth.password")}
             type={showPassword ? "text" : "password"}
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Введите ваш пароль"
+            placeholder={t("auth.passwordPlaceholder")}
             error={formErrors.password}
             iswrapper
           />
@@ -185,24 +189,23 @@ const LoginForm = () => {
         </div>
         <div className={styles.inputAction}>
           <Button className={styles.loginButton} type="submit" disabled={loading}
-          //  onclick={isRegistering ? authHandlers.onReg : authHandlers.onLogin}
            > 
-             {loading ? "Загрузка..." : isRegistering ? "Регистрация" : "Войти"}
+             {loading ? t("auth.loading") : isRegistering ? t("auth.submitRegister") : t("auth.submitLogin")}
           </Button>
           </div>
         <div className={styles.toggleAction}>
           {isRegistering ? (
             <p>
-              Уже есть аккаунт?{" "}
+              {t("auth.haveAccount")}{" "}
               <span onClick={() => setIsRegistering(false)}>
-                Войти
+                {t("auth.signInLink")}
               </span>
             </p>
           ) : (
             <p>
-              Нет аккаунта?{" "}
+              {t("auth.noAccount")}{" "}
               <span  onClick={() => setIsRegistering(true)}>
-                Зарегистрироваться
+                {t("auth.signUpLink")}
               </span>
             </p>
           )}

@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styles from "./Disclaimer.module.css";
 
 const STORAGE_KEY = "disclaimerClosed";
 
 const Disclaimer = () => {
+    const { t } = useTranslation();
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
@@ -21,15 +23,13 @@ const Disclaimer = () => {
     return (
         <div className={styles.disclaimer}>
             <p className={styles.disclaimerText}>
-                Для входа можно использовать любой email — даже вымышленный, например test@mail.com
-                <br />
-                To use this service, you can enter any email - even a fake one like test@mail.com
+                {t("disclaimer.text")}
             </p>
             <button
                 type="button"
                 className={styles.closeButton}
                 onClick={handleClose}
-                aria-label="Закрыть"
+                aria-label={t("disclaimer.close")}
             >
                 ×
             </button>

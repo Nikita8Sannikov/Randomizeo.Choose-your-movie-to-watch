@@ -1,29 +1,29 @@
 import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
+import { useTranslation } from "react-i18next"
 
 import styles from "./CookiesWarning.module.css"
 
 const CookiesWarning = () => {
+    const { t } = useTranslation()
     const [cookiesBlocked, setCookiesBlocked] = useState(false)
   
     useEffect(() => {
       setCookiesBlocked(!navigator.cookieEnabled)
     }, [])
   
-    if (!cookiesBlocked) return null // Если куки включены, не рендерим ничего
+    if (!cookiesBlocked) return null
   
     return createPortal(
       <div className={styles.cookiesWarning}>
-        <h1>Ваш браузер блокирует куки. Разрешите их в настройках!</h1>
+        <h1>{t("cookies.title")}</h1>
         
-       <p>А то чуда не случится, как закроете сайт можете включить обратно, простите...</p>
+       <p>{t("cookies.hint")}</p>
         <br/>
-       <p> Настройки браузера {">"} конфиденциальность и безопасность {">"} сторонние файлы куки {">"} разрешить использование сторонних файлов куки
-       </p>
+       <p>{t("cookies.path")}</p>
       </div>,
       document.body 
     )
   }
   
   export default CookiesWarning
-  
