@@ -1,14 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styles from "./Card.module.css";
 import Button from "../Button";
-import { PLACEHOLDER_POSTER_URL } from "../../constants";
+import { getPlaceholderPosterUrl } from "../../constants";
 import { refreshPoster } from "../../api";
 
 const CARD_HEIGHT_TALL = 520;   /* переключаем на мелкий шрифт */
 const CARD_HEIGHT_SHORT = 480;  /* переключаем обратно (гистерезис, чтобы не дергалось) */
 
 export default function Card({ movie, cardRef, styleType, buttons }) {
+  const { t } = useTranslation();
   const containerRef = useRef(null);
+  const placeholderSrc = getPlaceholderPosterUrl(t("card.noPoster"));
   const [isCardTall, setIsCardTall] = useState(false);
   const isCardTallRef = useRef(false);
 
@@ -52,7 +55,7 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
       }
     }
 
-    e.target.src = PLACEHOLDER_POSTER_URL;
+    e.target.src = placeholderSrc;
   };
 
   const setRef = (el) => {
@@ -67,7 +70,7 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
     <div className={className} ref={setRef}>
       <div className={styles.imgWrapper}>
         <img
-          src={movie.img || PLACEHOLDER_POSTER_URL}
+          src={movie.img || placeholderSrc}
           alt={movie.title}
           className={styles.cardImg}
           onError={handleImageError}
@@ -75,7 +78,7 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
         <div className={styles.descriptionLayer}>
           <p className={styles.cardText}>
             <>
-              {movie.shortDescription || "Описание по кнопке ниже ↓"}
+              {movie.shortDescription || t("card.noShortDescription")}
               <br />
               <i>{movie.genres || ""}</i>
               <br />
@@ -90,7 +93,7 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
         </h5>
         <p className={styles.cardText}>
           <i className="fa-solid fa-star star-icon"></i>
-          {movie.rating == 0 ? "Рейтинг пока не добавлен" : movie.rating}
+          {movie.rating == 0 ? t("card.noRating") : movie.rating}
         </p>
         <div className={styles.buttonSection}>{buttons}</div>
       </div>

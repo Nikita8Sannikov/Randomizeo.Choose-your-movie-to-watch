@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { useTranslation } from "react-i18next"
 
 import Input from "../Input"
 import Card, { StyledButton } from "../Card/Card"
@@ -10,13 +11,21 @@ import { searchKinopoisk } from "../../api"
 import { addMovieOrSeries } from "../../utils/utils"
 import useDebounce from "../../../hooks/useDebounce"
 
-import { PLACEHOLDER_POSTER_URL } from "../../constants"
+import { getPlaceholderPosterUrl } from "../../constants"
 import styles from "./KinopoiskSearch.module.css"
 
-function mapKinopoiskToCard(doc) {
+function formatMovieLength(minutes, t) {
+  if (minutes == null) return ""
+  return t("duration.hoursMinutes", {
+    hours: Math.trunc(minutes / 60),
+    minutes: minutes % 60,
+  })
+}
+
+function mapKinopoiskToCard(doc, t) {
   return {
     title: doc.name || "",
-    img: doc.poster?.previewUrl || doc.poster?.url || PLACEHOLDER_POSTER_URL,
+    img: doc.poster?.previewUrl || doc.poster?.url || getPlaceholderPosterUrl(t("card.noPoster")),
     shortDescription: doc.shortDescription || "",
     description: doc.description || "",
     year: doc.year || "",
@@ -27,10 +36,7 @@ function mapKinopoiskToCard(doc) {
       doc.rating && typeof doc.rating.kp === "number"
         ? doc.rating.kp.toFixed(2)
         : "",
-    movieLength:
-      doc.movieLength != null
-        ? `${Math.trunc(doc.movieLength / 60)}ч.${doc.movieLength % 60}м.`
-        : "",
+    movieLength: formatMovieLength(doc.movieLength, t),
     kinopoiskId: doc.id,
     isSeries: doc.isSeries ?? false,
   }
@@ -42,13 +48,15 @@ export default function KinopoiskSearch({
   onFocus,
   onMovieAdded,
 }) {
+  const { t, i18n } = useTranslation()
   const { showDetails } = useContext(ModalContext)
   const userId = useSelector((state) => state.auth.user?._id)
 
   const [searchQuery, setSearchQuery] = useState("")
   const [results, setResults] = useState([])
+  const [docs, setDocs] = useState([])
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(false)
 
   const debouncedQuery = useDebounce(searchQuery, 400)
 
@@ -56,13 +64,14 @@ export default function KinopoiskSearch({
     const q = debouncedQuery.trim()
     if (!q) {
       setResults([])
-      setError(null)
+      setDocs([])
+      setError(false)
       return
     }
 
     let cancelled = false
     setLoading(true)
-    setError(null)
+    setError(false)
 
     searchKinopoisk(q)
       .then((data) => {
@@ -72,12 +81,13 @@ export default function KinopoiskSearch({
         const filtered = items.filter((doc) =>
           (doc.name || "").toLowerCase().includes(qLower)
         )
-        setResults(filtered.map(mapKinopoiskToCard))
+        setDocs(filtered)
       })
-      .catch((err) => {
+      .catch(() => {
         if (cancelled) return
-        setError(err?.message || "Ошибка поиска")
+        setError(true)
         setResults([])
+        setDocs([])
       })
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -87,6 +97,10 @@ export default function KinopoiskSearch({
       cancelled = true
     }
   }, [debouncedQuery])
+
+  useEffect(() => {
+    setResults(docs.map((doc) => mapKinopoiskToCard(doc, t)))
+  }, [docs, t, i18n.language])
 
   const handleAdd = async (movie) => {
     const success = await addMovieOrSeries(
@@ -111,8 +125,8 @@ export default function KinopoiskSearch({
 
   const filterContent = (movie) => (
     <>
-      <StyledButton onClick={() => showDetails(movie)}>Описание</StyledButton>
-      <StyledButton onClick={() => handleAdd(movie)}>Добавить</StyledButton>
+      <StyledButton onClick={() => showDetails(movie)}>{t("common.description")}</StyledButton>
+      <StyledButton onClick={() => handleAdd(movie)}>{t("common.add")}</StyledButton>
     </>
   )
 
@@ -122,7 +136,7 @@ export default function KinopoiskSearch({
         <div className={styles.inputWrapper}>
           <Input
             type="text"
-            placeholder="Поиск в Кинопоиске"
+            placeholder={t("kinopoisk.placeholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={onFocus}
@@ -132,19 +146,19 @@ export default function KinopoiskSearch({
               type="button"
               className={styles.resetButton}
               onClick={() => setSearchQuery("")}
-              aria-label="Сбросить поиск"
+              aria-label={t("kinopoisk.resetSearch")}
             >
               ×
             </button>
           )}
         </div>
       </div>
-      {loading && <p className={styles.status}>Поиск...</p>}
-      {error && <p className={styles.error}>{error}</p>}
+      {loading && <p className={styles.status}>{t("kinopoisk.searching")}</p>}
+      {error && <p className={styles.error}>{t("kinopoisk.searchError")}</p>}
       {debouncedQuery.trim() && !loading && !error && (
         <ul className={styles.results}>
           {results.length === 0 ? (
-            <p>Фильмы не найдены</p>
+            <p>{t("common.notFound")}</p>
           ) : (
             results.map((movie) => (
               <Card

@@ -1,10 +1,12 @@
 import React from "react"
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 import Input from "../Input"
 import Button from "../Button"
 import styles from "./AddFilmSection.module.css"
 
 export default function AddFilmOption({ addMovie }) {
+  const { t } = useTranslation()
   const [filmName, setFilmName] = useState("")
   const [filmUrl, setFilmUrl] = useState("")
 
@@ -28,14 +30,14 @@ export default function AddFilmOption({ addMovie }) {
       <div className={styles.addSection}>
       <div className={styles.addInputs}>
           <Input
-            placeholder="Введите название фильма"
+            placeholder={t("addFilm.titlePlaceholder")}
             labelFor="text1"
             id="text1"
             value={filmName}
             onChange={handleFilmNameChange}
           />
           <Input
-            placeholder="Введите URL обложки"
+            placeholder={t("addFilm.coverPlaceholder")}
             labelFor="text2"
             id="text2"
             value={filmUrl}
@@ -43,7 +45,7 @@ export default function AddFilmOption({ addMovie }) {
           />
             </div>
           <Button className={styles.addButton} onclick={handleClick}>
-            Добавить
+            {t("common.add")}
           </Button>
 
        </div>

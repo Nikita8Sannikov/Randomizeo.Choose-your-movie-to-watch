@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useCallback, useEffect } from "react";
-import { PLACEHOLDER_POSTER_URL } from "../src/constants";
+import { useTranslation } from "react-i18next";
+import { getPlaceholderPosterUrl } from "../src/constants";
 
 const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL || "";
 
 export default function useFilmData(kinoId) {
+  const { t } = useTranslation();
   const [filmData, setFilmData] = useState(null);
 
   const getFilmData = useCallback(async () => {
@@ -26,7 +28,7 @@ export default function useFilmData(kinoId) {
         shortDescription: data.shortDescription,
         description: data.description,
         year: data.year,
-        posterUrl: data.poster?.previewUrl || data.poster?.url || PLACEHOLDER_POSTER_URL,
+        posterUrl: data.poster?.previewUrl || data.poster?.url || getPlaceholderPosterUrl(t("card.noPoster")),
         genres: Array.isArray(data.genres)
           ? data.genres.map((genre) => genre.name).join(", ")
           : "",
@@ -36,7 +38,10 @@ export default function useFilmData(kinoId) {
             : "",
         movieLength:
           data.movieLength != null
-            ? `${Math.trunc(data.movieLength / 60)}ч.${data.movieLength % 60}м.`
+            ? t("duration.hoursMinutes", {
+                hours: Math.trunc(data.movieLength / 60),
+                minutes: data.movieLength % 60,
+              })
             : "",
         kinopoiskId: data.id,
         isSeries: data.isSeries,
@@ -44,7 +49,7 @@ export default function useFilmData(kinoId) {
     } catch (error) {
       console.error("Ошибка запроса:", error);
     }
-  }, [kinoId]);
+  }, [kinoId, t]);
 
   useEffect(() => {
     getFilmData();

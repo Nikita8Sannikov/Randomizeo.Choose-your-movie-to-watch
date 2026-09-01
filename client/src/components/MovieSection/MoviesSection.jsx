@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useCallback } from "react"
 import { useSelector } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 import useResizeObserver from "../../../hooks/useResizeObserver"
 import { useArrangeCards } from "../../../hooks/useArrangeCards"
@@ -28,6 +29,7 @@ export default function MoviesSection({
   setMoviesForAdd,
   setSeriesForAdd
 }) {
+  const { t } = useTranslation()
   const userId = useSelector((state) => state.auth.user?._id);
   const [optionsShow, setOptionsShow] = useState(false)
   const [randomMovie, setRandomMovie] = useState(null)
@@ -83,7 +85,7 @@ export default function MoviesSection({
 
   const movieSectionContent = (movie) => (
     <>
-      <StyledButton onClick={() => showDetails(movie)}>Подробнее</StyledButton>
+      <StyledButton onClick={() => showDetails(movie)}>{t("common.details")}</StyledButton>
       <StyledButton
         onClick={() =>
           location.pathname === "/series"

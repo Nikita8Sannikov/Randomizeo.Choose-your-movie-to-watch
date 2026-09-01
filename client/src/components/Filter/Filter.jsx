@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from "react"
+import { useTranslation } from "react-i18next"
 import Card, { StyledButton } from "../Card/Card"
 import styles from "./Filter.module.css"
 import { ModalContext } from "../Modal/ModalContext"
@@ -7,6 +8,7 @@ import { WatchedFilterContext } from "./WatchedFilterContext"
 import { useLocation } from "react-router-dom"
 
 const Filter = ({ movies, watchedMovies }) => {
+  const { t } = useTranslation()
   const { showDetails, showViewedConfirmation } = useContext(ModalContext)
   const { searchTerm: moviesSearchTerm } = useContext(MoviesFilterContext)
   const { searchTerm: watchedSearchTerm } = useContext(WatchedFilterContext)
@@ -28,7 +30,7 @@ const Filter = ({ movies, watchedMovies }) => {
 
   const filterContent = (movie) => (
     <>
-      <StyledButton onClick={() => showDetails(movie)}>Описание</StyledButton>
+      <StyledButton onClick={() => showDetails(movie)}>{t("common.description")}</StyledButton>
       <StyledButton onClick={() => showViewedConfirmation(movie)}>
         <span className="fa-regular fa-eye view-icon"></span>
       </StyledButton>
@@ -48,7 +50,7 @@ const Filter = ({ movies, watchedMovies }) => {
     <>
       <ul id={styles.filterResults}>
         {searchTerm.trim() && filteredMovies.length === 0 ? (
-          <p>Фильмы не найдены</p>
+          <p>{t("common.notFound")}</p>
         ) : (
           filteredMovies.map((movie) => (
             <Card

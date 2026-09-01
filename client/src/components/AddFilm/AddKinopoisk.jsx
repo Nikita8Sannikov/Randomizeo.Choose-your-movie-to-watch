@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { useTranslation } from "react-i18next"
 
 import { addMovie as addMovieToApi } from "../../api"
 import { addSeries as addSeriesToApi } from "../../api"
@@ -12,6 +13,7 @@ import { addMovieOrSeries } from "../../utils/utils"
 import styles from "./AddFilmSection.module.css"
 
 const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries, onMovieAdded }) => {
+  const { t } = useTranslation()
   const addKinopoisk = useCallback((event) => {
     setKinopoisk(event.target.value)
   }, [])
@@ -63,7 +65,7 @@ const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries, onMovieAd
           <Input
             type="text"
             id="text3"
-            placeholder="Введите ссылку на Кинопоиск"
+            placeholder={t("kinopoisk.linkPlaceholder")}
             value={kinopoisk}
             onChange={addKinopoisk}
             onFocus={onFocus}
@@ -76,7 +78,7 @@ const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries, onMovieAd
           </Button> */}
         </div>
         <Button className={styles.addKinopoiskButton} onclick={AddFilmClick}>
-          Добавить фильм
+          {t("kinopoisk.addMovie")}
         </Button>
       </div>
     </div>

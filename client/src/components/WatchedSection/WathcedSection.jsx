@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 import useResizeObserver from "../../../hooks/useResizeObserver"
 import { useArrangeCards } from "../../../hooks/useArrangeCards"
@@ -17,6 +18,7 @@ import { getWatchedSeries as getWatchedSeriesFromApi } from "../../api"
 import styles from "./WatchedSection.module.css"
 
 const WathcedSection = ({ movies, setMovies, setSeries }) => {
+  const { t } = useTranslation()
   const {
     showDetails,
     showWatchedDeleteConfirmation,
@@ -51,7 +53,7 @@ const WathcedSection = ({ movies, setMovies, setSeries }) => {
 
   const watchedSectionContent = (movie) => (
     <>
-      <StyledButton onClick={() => showDetails(movie)}>Подробнее</StyledButton>
+      <StyledButton onClick={() => showDetails(movie)}>{t("common.details")}</StyledButton>
       <StyledButton
         onClick={() =>
            location.pathname === "/watched/series"
