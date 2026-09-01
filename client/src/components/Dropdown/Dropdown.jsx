@@ -1,33 +1,16 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState } from "react"
 import Button from "../Button"
 import styles from "./Dropdown.module.css"
 
 const Dropdown = ({ options, onSelect, label, className }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(null)
-  // const dropdownRef = useRef(null)
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option)
     setIsOpen(false)
     if (onSelect) {
       onSelect(option)
     }
   }
-
-  // Закрываем дропдаун, если кликнули вне его
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setIsOpen(false)
-  //     }
-  //   }
-
-  //   document.addEventListener("mousedown", handleClickOutside)
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside)
-  //   }
-  // }, [])
 
   const handleMouseEnter = () => {
     setIsOpen(true)
@@ -36,16 +19,22 @@ const Dropdown = ({ options, onSelect, label, className }) => {
     setIsOpen(false)
   }
 
+  const getOptionLabel = (option) =>
+    option && typeof option === "object" ? option.label : option
+
+  const getOptionKey = (option, index) =>
+    option && typeof option === "object" && option.value != null
+      ? option.value
+      : index
+
   return (
     <div
       className={styles.dropdown}
-      // ref={dropdownRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div className={styles.dropdownLabel}>
         <Button className={className}>{label}</Button>
-        {/* <span className="fa-solid fa-square-caret-down"></span> */}
       </div>
       {isOpen && (
         <ul
@@ -54,8 +43,11 @@ const Dropdown = ({ options, onSelect, label, className }) => {
           onMouseLeave={handleMouseLeave}
         >
           {options.map((option, index) => (
-            <li key={index} onClick={() => handleOptionClick(option)}>
-              {option}
+            <li
+              key={getOptionKey(option, index)}
+              onClick={() => handleOptionClick(option)}
+            >
+              {getOptionLabel(option)}
             </li>
           ))}
         </ul>

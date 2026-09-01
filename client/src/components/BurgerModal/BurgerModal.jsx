@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import  LeftUpShadow  from '../Gradients/LeftUpShadow'
 import  RightUpShadow  from '../Gradients/RightUpShadow'
@@ -9,6 +10,7 @@ import  DownShadow  from '../Gradients/DownShadow'
 import styles from "./BurgerModal.module.css"
 
 const BurgerModal = ({isOpen, onClose}) => {
+    const { t } = useTranslation()
     const userName = useSelector((state) => state.auth.user.name)
     const navigate = useNavigate()
 
@@ -44,16 +46,16 @@ if (isOpen) {
     <ul className={`${isOpen ? styles.active : ""}`}>
         {userName}
         <li onClick={() =>  {navigate("/"); onClose()}   }>
-        {"Фильмы"}
+        {t("nav.movies")}
         </li>
         <li onClick={() => {navigate("/series"); onClose()}}>
-        {"Сериалы"}
+        {t("nav.series")}
         </li>
         <li onClick={() => {navigate("/watched"); onClose()}}>
-        {"Просмотренные фильмы"}
+        {t("nav.watchedMovies")}
         </li>
         <li onClick={() => {navigate("/watched/series"); onClose()}}>
-        {"Просмотренные сериалы"}
+        {t("nav.watchedSeries")}
         </li>
     </ul>
 </div>

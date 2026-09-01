@@ -1,33 +1,39 @@
-import React, { useState } from "react"
-import styles from "./Header.module.css"
+import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
-import Button from "../Button"
 import Dropdown from "../Dropdown/Dropdown"
+import styles from "./Header.module.css"
+
+const NAV_ROUTES = {
+  movies: "/",
+  series: "/series",
+  watchedMovies: "/watched",
+  watchedSeries: "/watched/series",
+}
 
 const TabsSection = () => {
-  const [showDropdown, setShowDropdown] = useState(false)
-  const options = ["Фильмы", "Сериалы"]
-  const watchedOptions = ["Просмотренные фильмы", "Просмотренные сериалы"]
+  const { t } = useTranslation()
   const navigate = useNavigate()
-  const handleSelect = (option) => {
-    // console.log("Selected option:", option)
 
-    if (option === "Фильмы") {
-      navigate("/")
-    } else if (option === "Сериалы") {
-      navigate("/series")
-    } else if (option === "Просмотренные фильмы") {
-      navigate("/watched")
-    } else if (option === "Просмотренные сериалы") {
-      navigate("/watched/series")
-    }
+  const options = [
+    { value: "movies", label: t("nav.movies") },
+    { value: "series", label: t("nav.series") },
+  ]
+  const watchedOptions = [
+    { value: "watchedMovies", label: t("nav.watchedMovies") },
+    { value: "watchedSeries", label: t("nav.watchedSeries") },
+  ]
+
+  const handleSelect = (option) => {
+    const path = NAV_ROUTES[option.value]
+    if (path) navigate(path)
   }
+
   return (
     <section className={styles.navigationSection}>
       <div className={styles.buttonSection}>
         <Dropdown
           className={styles.navButton}
-          label="Будем смотреть"
+          label={t("nav.watch")}
           options={options}
           onSelect={handleSelect}
         />
@@ -35,7 +41,7 @@ const TabsSection = () => {
       <div className={styles.buttonSection}>
         <Dropdown
           className={styles.navButton}
-          label="Просмотренные"
+          label={t("nav.watched")}
           options={watchedOptions}
           onSelect={handleSelect}
         />
