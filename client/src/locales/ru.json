@@ -1,0 +1,98 @@
+{
+  "language": {
+    "ru": "RU",
+    "en": "EN"
+  },
+  "nav": {
+    "watch": "Будем смотреть",
+    "watched": "Просмотренные",
+    "movies": "Фильмы",
+    "series": "Сериалы",
+    "watchedMovies": "Просмотренные фильмы",
+    "watchedSeries": "Просмотренные сериалы"
+  },
+  "header": {
+    "searchPlaceholder": "Найти фильм",
+    "logout": "Выход",
+    "logoAlt": "логотип"
+  },
+  "auth": {
+    "loginTitle": "Вход в систему",
+    "registerTitle": "Регистрация",
+    "nickname": "Никнейм",
+    "nicknamePlaceholder": "Введите ваш никнейм",
+    "email": "Email",
+    "emailPlaceholder": "Введите ваш email",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите ваш пароль",
+    "submitLogin": "Войти",
+    "submitRegister": "Регистрация",
+    "loading": "Загрузка...",
+    "haveAccount": "Уже есть аккаунт?",
+    "noAccount": "Нет аккаунта?",
+    "signInLink": "Войти",
+    "signUpLink": "Зарегистрироваться",
+    "errors": {
+      "nameRequired": "Никнейм обязателен",
+      "emailRequired": "Email обязателен",
+      "emailInvalid": "Некорректный формат email",
+      "passwordRequired": "Пароль обязателен",
+      "passwordMin": "Пароль должен содержать минимум 6 символов",
+      "wrongCredentials": "Неверный email или пароль",
+      "emailTaken": "Пользователь с таким email уже зарегистрирован"
+    }
+  },
+  "cookies": {
+    "title": "Ваш браузер блокирует куки. Разрешите их в настройках!",
+    "hint": "А то чуда не случится, как закроете сайт можете включить обратно, простите...",
+    "path": "Настройки браузера > конфиденциальность и безопасность > сторонние файлы куки > разрешить использование сторонних файлов куки"
+  },
+  "disclaimer": {
+    "text": "Для входа можно использовать любой email — даже вымышленный, например test@mail.com",
+    "close": "Закрыть"
+  },
+  "modals": {
+    "ok": "Ок",
+    "yes": "Да",
+    "no": "Нет",
+    "noDescription": "Описание пока не добавлено",
+    "addToWatchedTitle": "Добавить в просмотренные?",
+    "addToWatchedBody": "Вы добавляете: <strong>{{title}}</strong> в просмотренные",
+    "deleteTitle": "Удалить фильм?",
+    "deleteBody": "Вы удаляете: <strong>{{title}}</strong> из текущего списка"
+  },
+  "result": {
+    "heading": "Что смотрим сегодня?",
+    "button": "Тык",
+    "picking": "Выбираю ваш фильм...",
+    "today": "Сегодня смотрим этот шедевр:",
+    "emptyAlert": "Добавьте хотя бы 1 фильм..",
+    "details": "Подробнее"
+  },
+  "card": {
+    "noShortDescription": "Описание по кнопке ниже ↓",
+    "noRating": "Рейтинг пока не добавлен",
+    "noPoster": "Нет постера"
+  },
+  "common": {
+    "details": "Подробнее",
+    "description": "Описание",
+    "add": "Добавить",
+    "notFound": "Фильмы не найдены"
+  },
+  "kinopoisk": {
+    "placeholder": "Поиск в Кинопоиске",
+    "searching": "Поиск...",
+    "searchError": "Ошибка поиска",
+    "resetSearch": "Сбросить поиск",
+    "linkPlaceholder": "Введите ссылку на Кинопоиск",
+    "addMovie": "Добавить фильм"
+  },
+  "addFilm": {
+    "titlePlaceholder": "Введите название фильма",
+    "coverPlaceholder": "Введите URL обложки"
+  },
+  "duration": {
+    "hoursMinutes": "{{hours}}ч.{{minutes}}м."
+  }
+}

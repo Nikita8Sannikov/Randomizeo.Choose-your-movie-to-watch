@@ -1,0 +1,98 @@
+{
+  "language": {
+    "ru": "RU",
+    "en": "EN"
+  },
+  "nav": {
+    "watch": "Watching",
+    "watched": "Watched",
+    "movies": "Movies",
+    "series": "Series",
+    "watchedMovies": "Watched movies",
+    "watchedSeries": "Watched series"
+  },
+  "header": {
+    "searchPlaceholder": "Find a movie",
+    "logout": "Log out",
+    "logoAlt": "logo"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "registerTitle": "Sign up",
+    "nickname": "Nickname",
+    "nicknamePlaceholder": "Enter your nickname",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submitLogin": "Sign in",
+    "submitRegister": "Sign up",
+    "loading": "Loading...",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "signInLink": "Sign in",
+    "signUpLink": "Sign up",
+    "errors": {
+      "nameRequired": "Nickname is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 6 characters",
+      "wrongCredentials": "Wrong email or password",
+      "emailTaken": "A user with this email is already registered"
+    }
+  },
+  "cookies": {
+    "title": "Your browser is blocking cookies. Please allow them in settings!",
+    "hint": "Otherwise nothing will work. You can turn them back off after you close the site, sorry...",
+    "path": "Browser settings > privacy and security > third-party cookies > allow third-party cookies"
+  },
+  "disclaimer": {
+    "text": "You can sign in with any email — even a fake one, for example test@mail.com",
+    "close": "Close"
+  },
+  "modals": {
+    "ok": "OK",
+    "yes": "Yes",
+    "no": "No",
+    "noDescription": "No description yet",
+    "addToWatchedTitle": "Add to watched?",
+    "addToWatchedBody": "You are adding: <strong>{{title}}</strong> to watched",
+    "deleteTitle": "Delete movie?",
+    "deleteBody": "You are deleting: <strong>{{title}}</strong> from the current list"
+  },
+  "result": {
+    "heading": "What are we watching today?",
+    "button": "Go",
+    "picking": "Picking your movie...",
+    "today": "Today we watch this masterpiece:",
+    "emptyAlert": "Add at least 1 movie..",
+    "details": "Details"
+  },
+  "card": {
+    "noShortDescription": "Description via the button below ↓",
+    "noRating": "No rating yet",
+    "noPoster": "No poster"
+  },
+  "common": {
+    "details": "Details",
+    "description": "Description",
+    "add": "Add",
+    "notFound": "No movies found"
+  },
+  "kinopoisk": {
+    "placeholder": "Search Kinopoisk",
+    "searching": "Searching...",
+    "searchError": "Search failed",
+    "resetSearch": "Clear search",
+    "linkPlaceholder": "Paste a Kinopoisk link",
+    "addMovie": "Add movie"
+  },
+  "addFilm": {
+    "titlePlaceholder": "Enter movie title",
+    "coverPlaceholder": "Enter cover URL"
+  },
+  "duration": {
+    "hoursMinutes": "{{hours}}h {{minutes}}m"
+  }
+}

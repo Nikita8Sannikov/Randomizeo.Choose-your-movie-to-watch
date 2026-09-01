@@ -1,9 +1,11 @@
 import { useContext, useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 import BurgerModal from "../BurgerModal/BurgerModal"
 import TabsSection from "./TabsSection"
 import LogoutSection from "./LogoutSection"
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher"
 import Input from "../Input"
 import Button from "../Button"
 
@@ -13,6 +15,7 @@ import { WatchedFilterContext } from "../Filter/WatchedFilterContext"
 import styles from "./Header.module.css"
 
 const Header = () => {
+  const { t } = useTranslation()
   const [openBurgerModal, setOpenBurgerModal] = useState(false)
   const [searchShow, setSearchShow] = useState(false)
   
@@ -48,7 +51,7 @@ const Header = () => {
         
 
         <div className={styles.logo} onClick={() => navigate("/")}>
-          <img src="/svg/logo.svg" alt="logo" />
+          <img src="/svg/logo.svg" alt={t("header.logoAlt")} />
         </div>
 
         <div className={styles.siteName} onClick={() => navigate("/")}>
@@ -59,7 +62,7 @@ const Header = () => {
       </div>
       <div className={styles.searchArea}>
         <Input
-          placeholder="Найти фильм"
+          placeholder={t("header.searchPlaceholder")}
           labelFor="text"
           value={searchTerm}
           onChange={searchFilmChange}
@@ -67,13 +70,14 @@ const Header = () => {
         <Button className={styles.searchIcon} onclick={handleSearchIconClick}>
           <span className="fa-solid fa-magnifying-glass fa-2xl fa-flip  search-icon"></span>
         </Button>
+      <LanguageSwitcher />
       <LogoutSection/>
       </div>
     </nav>
     { searchShow &&
     <div className={styles.searchAreaMobile}>
         <Input
-          placeholder="Найти фильм"
+          placeholder={t("header.searchPlaceholder")}
           labelFor="text"
           value={searchTerm}
           onChange={searchFilmChange}

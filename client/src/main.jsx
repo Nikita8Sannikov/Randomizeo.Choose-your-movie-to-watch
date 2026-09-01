@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react"
 
 import { store } from "./store"
 import App from './App.jsx'
+import './i18n'
 
 import './index.css'
 
