@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
+import { Trans, useTranslation } from "react-i18next"
 
 import { deleteMovie as deleteMoviesFromApi } from "../../api"
 import { deleteWatchedMovie as deleteWatchedMoviesFromApi } from "../../api"
@@ -14,6 +15,7 @@ export const ModalContext = React.createContext()
 
 export const ModalProvider = ({ children, movies, setMovies, watchedMovies, setWatchedMovies, series, setSeries,
   watchedSeries, setWatchedSeries }) => {
+    const { t } = useTranslation()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalContent, setModalContent] = useState(null)
     const [modalTitle, setModalTitle] = useState(null)
@@ -38,26 +40,38 @@ export const ModalProvider = ({ children, movies, setMovies, watchedMovies, setW
 
       const showDetails = (movie) => {
         openModal( movie.title,
-            <p>{ movie.description ? movie.description : 'Описание пока не добавлено' }</p> ,
-          <StyledButton onClick={closeModal}>Ок</StyledButton>
+            <p>{ movie.description ? movie.description : t("modals.noDescription") }</p> ,
+          <StyledButton onClick={closeModal}>{t("modals.ok")}</StyledButton>
         )
       }
     
       const showViewedConfirmation = (movie, list, setList) => {
-        openModal( 'Добавить в просмотренные?',
-            <p>Вы добавляете: <strong>{movie.title}</strong> в просмотренные</p>,
+        openModal( t("modals.addToWatchedTitle"),
+            <p>
+              <Trans
+                i18nKey="modals.addToWatchedBody"
+                values={{ title: movie.title }}
+                components={{ strong: <strong /> }}
+              />
+            </p>,
           <>
-            <StyledButton onClick={() => confirmViewed (movie, list, setList)}>Да</StyledButton>
-            <StyledButton onClick={() => showDeleteConfirmation(movie, list, setList)}>Нет</StyledButton>
+            <StyledButton onClick={() => confirmViewed (movie, list, setList)}>{t("modals.yes")}</StyledButton>
+            <StyledButton onClick={() => showDeleteConfirmation(movie, list, setList)}>{t("modals.no")}</StyledButton>
           </>
         )
       }
       const showDeleteConfirmation = (movie, list, setList, isWatched=false) => {
-        openModal('Удалить фильм?',
-            <p>Вы удаляете: <strong>{movie.title}</strong> из текущего списка</p>,
+        openModal(t("modals.deleteTitle"),
+            <p>
+              <Trans
+                i18nKey="modals.deleteBody"
+                values={{ title: movie.title }}
+                components={{ strong: <strong /> }}
+              />
+            </p>,
           <>
-            <StyledButton onClick={() => confirmDelete(movie, list, setList, isWatched)}>Да</StyledButton>
-            <StyledButton onClick={closeModal}>Нет</StyledButton>
+            <StyledButton onClick={() => confirmDelete(movie, list, setList, isWatched)}>{t("modals.yes")}</StyledButton>
+            <StyledButton onClick={closeModal}>{t("modals.no")}</StyledButton>
           </>
         )
       }
@@ -75,7 +89,6 @@ export const ModalProvider = ({ children, movies, setMovies, watchedMovies, setW
             await deleteMovie(movie, list, setList, deleteWatchedMoviesFromApi, userId)
           }
          
-        //  removeMovieFromList(movie, list, setList)
          closeModal()
         }catch(error){
           console.error("Error deleting movie:", error)
