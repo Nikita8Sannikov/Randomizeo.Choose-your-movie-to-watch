@@ -35,16 +35,18 @@ const AddKinopoisk = ({ setOptionsShow, onFocus, setMovies, setSeries, onMovieAd
   useEffect(() => {
     if (filmData && kinoId) {
       addMovieOrSeries(
-        filmData.name,
-        filmData.posterUrl,
-        filmData.shortDescription,
-        filmData.description,
-        filmData.year,
-        filmData.genres,
-        filmData.rating,
-        filmData.movieLength,
-        filmData.kinopoiskId,
-        filmData.isSeries,
+        {
+          title: filmData.name,
+          img: filmData.posterUrl,
+          shortDescription: filmData.shortDescription,
+          description: filmData.description,
+          year: filmData.year,
+          genres: filmData.genres,
+          rating: filmData.rating,
+          movieLength: filmData.movieLength,
+          kinopoiskId: filmData.kinopoiskId,
+          isSeries: filmData.isSeries,
+        },
         addSeriesToApi,
         addMovieToApi,
         setSeries,

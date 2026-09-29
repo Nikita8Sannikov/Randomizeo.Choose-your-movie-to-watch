@@ -60,14 +60,19 @@ export const fetchApi = async(url, method = "GET", body) => {
     export async function addToWatchedMovies(movie, addSeriesToApi, addMovieToApi, setWatchedSeries, setWatchedMovies, userId) {
       const newItem = {
         title: movie.title,
+        titleEn: movie.titleEn,
         img: movie.img,
         shortDescription: movie.shortDescription,
+        shortDescriptionEn: movie.shortDescriptionEn,
         description: movie.description,
+        descriptionEn: movie.descriptionEn,
         year: movie.year,
         genres: movie.genres,
         rating: movie.rating,
         movieLength: movie.movieLength,
         kinopoiskId: movie.kinopoiskId,
+        tmdbId: movie.tmdbId,
+        tmdbMediaType: movie.tmdbMediaType,
         isSeries: movie.isSeries,
       }
       await addItem(newItem,
@@ -77,18 +82,8 @@ export const fetchApi = async(url, method = "GET", body) => {
          )
     }
     
-    // Функция для добавления фильмов и сериалов через инпут, прокинута в AddKinopoisk
     export async function addMovieOrSeries(
-          title,
-          img,
-          shortDescription = "",
-          description = "",
-          year = "",
-          genres = "",
-          rating = "",
-          movieLength = "",
-          kinopoiskId = "",
-          isSeries = false,
+          movie,
           addSeriesToApi,
           addMovieToApi,
           setSeries,
@@ -96,16 +91,21 @@ export const fetchApi = async(url, method = "GET", body) => {
           userId
         ) {
           const newItem = {
-            title,
-            img,
-            shortDescription,
-            description,
-            year,
-            genres,
-            rating,
-            movieLength,
-            kinopoiskId,
-            isSeries,
+            title: movie.title,
+            titleEn: movie.titleEn,
+            img: movie.img,
+            shortDescription: movie.shortDescription,
+            shortDescriptionEn: movie.shortDescriptionEn,
+            description: movie.description,
+            descriptionEn: movie.descriptionEn,
+            year: movie.year,
+            genres: movie.genres,
+            rating: movie.rating,
+            movieLength: movie.movieLength,
+            kinopoiskId: movie.kinopoiskId,
+            tmdbId: movie.tmdbId,
+            tmdbMediaType: movie.tmdbMediaType,
+            isSeries: movie.isSeries,
           }
     
           return await addItem(newItem,
@@ -115,13 +115,18 @@ export const fetchApi = async(url, method = "GET", body) => {
              )
         }
 
-// Вынесена логика добавления и недублирования фильма
      async function addItem( item, addToApi, setState, userId) {
       try{
         const addedItem = await addToApi(item, userId )
 
         setState(prev => {
-          return prev.some(el => el.kinopoiskId === addedItem.kinopoiskId)
+          const isSame = (el) => {
+            if (item.tmdbId && el.tmdbId) {
+              return el.tmdbId === addedItem.tmdbId && el.tmdbMediaType === addedItem.tmdbMediaType
+            }
+            return el.kinopoiskId && addedItem.kinopoiskId && el.kinopoiskId === addedItem.kinopoiskId
+          }
+          return prev.some(isSame)
           ? prev
           : [addedItem, ...prev]
         })
