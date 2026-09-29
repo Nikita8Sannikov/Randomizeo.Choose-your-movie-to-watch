@@ -272,6 +272,28 @@
     }
 }
 
+@media (max-width: 393px) {
+    .header {
+        margin-right: 16px;
+    }
+    .burger {
+        margin-right: 8px;
+    }
+    .searchArea {
+        align-items: center;
+        gap: 8px;
+    }
+    .searchIcon {
+        position: static;
+        left: auto;
+        top: auto;
+        transform: none;
+    }
+    .siteName>h1 {
+        font-size: 16px;
+    }
+}
+
 
 
 /* @media(max-width: 1150px){
