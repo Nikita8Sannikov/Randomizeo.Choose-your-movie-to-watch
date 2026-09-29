@@ -10,6 +10,7 @@ import seriesRoutes from "./routes/series.js";
 import watchedSeriesRoutes from "./routes/watchedSeries.js";
 import authRoutes from "./routes/auth.js";
 import kinopoiskRoutes from "./routes/kinopoisk.js";
+import tmdbRoutes from "./routes/tmdb.js";
 import { authMiddleware } from "./middleware/auth.js";
 import finalConfig from "./config/index.js";
 
@@ -74,6 +75,8 @@ app.use("/api/watched-movies/series", authMiddleware, watchedSeriesRoutes);
 app.use("/api/auth", authRoutes);
 // Прокси-роуты к неофициальной Kinopoisk API (auth + rate limit)
 app.use("/api/kinopoisk", authMiddleware, kinopoiskRateLimiter, kinopoiskRoutes);
+// Использование роутов для обработки запросов по пути /api/tmdb
+app.use("/api/tmdb", authMiddleware, kinopoiskRateLimiter, tmdbRoutes);
 
 const PORT = process.env.PORT || 5000;
 

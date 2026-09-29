@@ -17,6 +17,7 @@ const finalConfig = {
   jwtSecret: process.env.JWT_SECRET,
   kinopoiskApiKey: process.env.KINOPOISK_API_KEY,
   kinopoiskApiUrl: process.env.KINOPOISK_API_URL,
+  tmdbAccessToken: process.env.TMDB_ACCESS_TOKEN,
 };
 
 export default finalConfig;
