@@ -41,7 +41,11 @@
     transition: background .2s ease-in;
 }
 .modalWindow {
-    width: 60vw;
+    width: min(60vw, calc(100vw - 32px));
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     border-radius: 25px;
     border: 1px solid white;
     background:  rgb(68 68 68 / 50%);
@@ -93,4 +97,16 @@
 }
 .btn:hover {
     background-color: #C45EF1;
+}
+
+@media (max-width: 768px) {
+  .modal.open .modalWindow {
+    transform: none;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  .modalWindow {
+    width: calc(100vw - 24px);
+    max-height: calc(100dvh - 32px);
+  }
 }
