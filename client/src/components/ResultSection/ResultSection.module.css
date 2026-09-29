@@ -113,3 +113,8 @@
     font-size: 30px;
 }
 }
+@media(max-width: 393px){
+  .outputSection>h3{
+    text-align: center;
+}
+}
