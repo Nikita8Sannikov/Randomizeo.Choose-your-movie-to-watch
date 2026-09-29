@@ -5,6 +5,7 @@ import {
   addMovieOrSeriesValidation,
   handleValidationErrors,
 } from "../validators/movieValidators.js"
+import { findMovieByExternalIds, movieDocFromBody } from "../utils/findMovie.js"
 
 console.log("Series routes file loaded");
 const router = Router()
@@ -13,36 +14,11 @@ const router = Router()
 router.post("/add", addMovieOrSeriesValidation, handleValidationErrors, async (req, res) => {
   try {
     const userId = req.userId;
-    const {
-      // id,
-      title,
-      img,
-      shortDescription,
-      description,
-      year,
-      genres,
-      rating,
-      movieLength,
-      kinopoiskId,
-      isSeries,
-    } = req.body
+    const body = req.body
     
-    // Проверка, существует ли сериал с таким kinopoiskId
-        let series = await Movie.findOne({ kinopoiskId });
+        let series = await findMovieByExternalIds(Movie, body);
         if (!series) {
-           series = new Movie({
-            // id,
-            title,
-            img,
-            shortDescription,
-            description,
-            year,
-            genres,
-            rating,
-            movieLength,
-            kinopoiskId,
-            isSeries,
-          })
+           series = new Movie(movieDocFromBody(body))
 
           await series.save()
         }

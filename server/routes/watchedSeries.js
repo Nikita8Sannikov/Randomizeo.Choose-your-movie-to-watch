@@ -6,6 +6,7 @@ import {
   addToWatchedValidation,
   handleValidationErrors,
 } from "../validators/movieValidators.js"
+import { findMovieByExternalIds } from "../utils/findMovie.js"
 
 const router = Router()
 
@@ -13,23 +14,9 @@ const router = Router()
 router.post("/add", addToWatchedValidation, handleValidationErrors, async (req, res) => {
   try {
     const userId = req.userId;
+    const body = req.body
 
-    const {
-      // id,
-      title,
-      img,
-      shortDescription,
-      description,
-      year,
-      genres,
-      rating,
-      movieLength,
-      kinopoiskId,
-      isSeries,
-    } = req.body
-
-    // Проверка, существует ли фильм с таким kinopoiskId
-    let series = await Movie.findOne({ kinopoiskId });
+    let series = await findMovieByExternalIds(Movie, body);
 
         if (!series) {
           return res.status(404).json({ error: "Movie not found in the database" });

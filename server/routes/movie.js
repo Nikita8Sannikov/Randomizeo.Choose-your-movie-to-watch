@@ -7,6 +7,8 @@ import {
   addMovieOrSeriesValidation,
   handleValidationErrors,
 } from "../validators/movieValidators.js"
+import { findMovieByExternalIds, movieDocFromBody } from "../utils/findMovie.js"
+import { tmdbFetch, tmdbPosterUrl } from "../utils/tmdbClient.js"
 
 const router = Router()
 
@@ -18,39 +20,12 @@ const router = Router()
 router.post("/add", addMovieOrSeriesValidation, handleValidationErrors, async (req, res) => {
   try {
     const userId = req.userId;
-    const {
-      // id,
-      title,
-      img,
-      shortDescription,
-      description,
-      year,
-      genres,
-      rating,
-      movieLength,
-      kinopoiskId,
-      isSeries,
-    } = req.body
+    const body = req.body
 
-    // Проверка, существует ли фильм с таким kinopoiskId
-    let movie = await Movie.findOne({ kinopoiskId });
+    let movie = await findMovieByExternalIds(Movie, body);
     
     if (!movie) {
-   movie = new Movie({
-      // id,
-      title,
-      img,
-      shortDescription,
-      description,
-      year,
-      genres,
-      rating,
-      movieLength,
-      kinopoiskId,
-      isSeries,
-    })
-    // console.log(newMovie);
-    
+   movie = new Movie(movieDocFromBody(body))
     await movie.save()
     }
     //  const updatedUser = await User.findByIdAndUpdate(
@@ -161,8 +136,23 @@ router.post("/refresh-poster/:id", async (req, res) => {
       return res.status(404).json({ error: "Movie not found" });
     }
 
+    if (movie.tmdbId) {
+      const mediaType = movie.tmdbMediaType === "tv" ? "tv" : "movie";
+      const data = await tmdbFetch(
+        finalConfig.tmdbAccessToken,
+        `/${mediaType}/${movie.tmdbId}`
+      );
+      const newPosterUrl = tmdbPosterUrl(data.poster_path);
+      if (!newPosterUrl) {
+        return res.status(400).json({ error: "No poster in TMDB data" });
+      }
+      movie.img = newPosterUrl;
+      await movie.save();
+      return res.json({ img: newPosterUrl });
+    }
+
     if (!movie.kinopoiskId) {
-      return res.status(400).json({ error: "Movie has no kinopoiskId" });
+      return res.status(400).json({ error: "Movie has no poster source id" });
     }
 
     const kpResponse = await fetch(

@@ -12,6 +12,11 @@ const movieSchema = new Schema({
     rating: String, // Рейтинг фильма
     movieLength: String, //Продолжительность фильма
     kinopoiskId: Number, //Оригинальный id с Кинопоиска
+    tmdbId: Number,
+    tmdbMediaType: { type: String, enum: ["movie", "tv"] },
+    titleEn: String,
+    shortDescriptionEn: String,
+    descriptionEn: String,
     isSeries: Boolean, //Флаг сериал это или нет
   })
 
