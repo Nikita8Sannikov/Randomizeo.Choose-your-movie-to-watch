@@ -7,6 +7,7 @@ import { deleteWatchedMovie as deleteWatchedMoviesFromApi } from "../../api"
 import { addWatchedMovie as addWatchedMovieToApi } from "../../api"
 import { addWatchedSeries as addWatchedSeriesToApi } from "../../api"
 
+import { movieDescription, movieTitle } from "../../utils/localizedMovie"
 import { deleteMovie, addToWatchedMovies } from "../../utils/utils"
 
 import {StyledButton} from "./Modal"
@@ -15,7 +16,7 @@ export const ModalContext = React.createContext()
 
 export const ModalProvider = ({ children, movies, setMovies, watchedMovies, setWatchedMovies, series, setSeries,
   watchedSeries, setWatchedSeries }) => {
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalContent, setModalContent] = useState(null)
     const [modalTitle, setModalTitle] = useState(null)
@@ -39,18 +40,21 @@ export const ModalProvider = ({ children, movies, setMovies, watchedMovies, setW
       }
 
       const showDetails = (movie) => {
-        openModal( movie.title,
-            <p>{ movie.description ? movie.description : t("modals.noDescription") }</p> ,
+        const lang = i18n.resolvedLanguage || i18n.language
+        const description = movieDescription(movie, lang)
+        openModal( movieTitle(movie, lang),
+            <p>{ description ? description : t("modals.noDescription") }</p> ,
           <StyledButton onClick={closeModal}>{t("modals.ok")}</StyledButton>
         )
       }
     
       const showViewedConfirmation = (movie, list, setList) => {
+        const lang = i18n.resolvedLanguage || i18n.language
         openModal( t("modals.addToWatchedTitle"),
             <p>
               <Trans
                 i18nKey="modals.addToWatchedBody"
-                values={{ title: movie.title }}
+                values={{ title: movieTitle(movie, lang) }}
                 components={{ strong: <strong /> }}
               />
             </p>,
@@ -61,11 +65,12 @@ export const ModalProvider = ({ children, movies, setMovies, watchedMovies, setW
         )
       }
       const showDeleteConfirmation = (movie, list, setList, isWatched=false) => {
+        const lang = i18n.resolvedLanguage || i18n.language
         openModal(t("modals.deleteTitle"),
             <p>
               <Trans
                 i18nKey="modals.deleteBody"
-                values={{ title: movie.title }}
+                values={{ title: movieTitle(movie, lang) }}
                 components={{ strong: <strong /> }}
               />
             </p>,

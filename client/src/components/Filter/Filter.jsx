@@ -6,6 +6,7 @@ import { ModalContext } from "../Modal/ModalContext"
 import { MoviesFilterContext } from "./MoviesFilterContext"
 import { WatchedFilterContext } from "./WatchedFilterContext"
 import { useLocation } from "react-router-dom"
+import { movieMatchesQuery } from "../../utils/localizedMovie"
 
 const Filter = ({ movies, watchedMovies }) => {
   const { t } = useTranslation()
@@ -23,7 +24,7 @@ const Filter = ({ movies, watchedMovies }) => {
     if (!filmList || !trimmedVal) return []
     return filmList.filter(
       (el) => {
-        return el.title.toLowerCase().includes(trimmedVal)
+        return movieMatchesQuery(el, trimmedVal)
       }
     )
   }
