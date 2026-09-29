@@ -2,8 +2,7 @@ import React from "react";
 import { useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getPlaceholderPosterUrl } from "../src/constants";
-
-const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL || "";
+import { SERVER_API_URL } from "../src/serverApiUrl";
 
 export default function useFilmData(kinoId) {
   const { t } = useTranslation();

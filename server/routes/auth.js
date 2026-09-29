@@ -10,6 +10,14 @@ import finalConfig from "../config/index.js";
 const router = Router();
 const jwtSecret = finalConfig.jwtSecret;
 
+/** Shared flags for auth_token: set on login, clear on logout (no maxAge on clear). */
+const authCookieOptions = {
+	httpOnly: true,
+	secure: true,
+	sameSite: "lax",
+	path: "/",
+};
+
 const authRateLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000,
 	max: 10,
@@ -116,17 +124,14 @@ router.post(
 			});
 
 			res.cookie("auth_token", token, {
-				httpOnly: true,
-				sameSite: "none",
-				secure: true,
+				...authCookieOptions,
 				maxAge: 3600000,
-				partitioned: true, // позволяет браузеру сохранять third-party cookies (куки с другого домена) в изолированном контексте.
 			});
-				res.status(200).json({
-					_id: user.id,
-					email: user.email,
-					name: user.name,
-				});
+			res.status(200).json({
+				_id: user.id,
+				email: user.email,
+				name: user.name,
+			});
 		} catch (e) {
 			res.status(500).json({ message: "Smth wrong, try again" });
 		}
@@ -136,11 +141,7 @@ router.post(
 // /api/auth/logout
 router.post("/logout", async (req, res) => {
 	try {
-		res.clearCookie("auth_token", {
-			httpOnly: true,
-			sameSite: "none",
-			secure: true,
-		});
+		res.clearCookie("auth_token", authCookieOptions);
 		res.status(200).json({ message: "Logout successful" });
 	} catch (e) {
 		res.status(500).json({ message: "Smth wrong, try again" });

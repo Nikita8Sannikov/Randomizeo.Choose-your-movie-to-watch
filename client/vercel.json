@@ -1,6 +1,9 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
-    ]
-  }
-  
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://randomizeo-choose-your-movie-to-watch.onrender.com/api/:path*"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

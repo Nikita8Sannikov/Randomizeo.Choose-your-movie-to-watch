@@ -1,5 +1,5 @@
 import {fetchApi} from "./utils/utils"
-const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL;
+import { SERVER_API_URL } from "./serverApiUrl";
 
 // фильмы с главной
 export const addMovie = (movie, userId) => fetchApi(`${SERVER_API_URL}/api/movies/add?userId=${userId}`, "POST", movie)

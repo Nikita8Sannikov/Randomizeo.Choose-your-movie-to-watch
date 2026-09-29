@@ -28,6 +28,9 @@ const kinopoiskRateLimiter = rateLimit({
 });
 
 const app = express();
+// Цепочка: пользователь → rewrite Vercel → load balancer Render — два прокси-хопа.
+// Нужно, чтобы express-rate-limit видел IP пользователя, а не Vercel.
+app.set("trust proxy", 2);
 
 // Разрешаем запросы с других доменов (CORS)
 // В проде (деплой на Vercel) разрешаем только нужные домены фронтенда,

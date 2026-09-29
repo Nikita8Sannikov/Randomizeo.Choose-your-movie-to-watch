@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-const SERVER_API_URL = import.meta.env.VITE_SERVER_API_URL;
+import { SERVER_API_URL } from '../../../serverApiUrl';
 
 const initialState = {
     user: null,
