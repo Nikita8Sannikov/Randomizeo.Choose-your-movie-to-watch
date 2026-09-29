@@ -20,6 +20,11 @@ export const getSeries = (userId) => fetchApi(`${SERVER_API_URL}/api/movies/seri
 export const addWatchedSeries = (movie, userId) => fetchApi(`${SERVER_API_URL}/api/watched-movies/series/add?userId=${userId}`, "POST", movie)
 export const getWatchedSeries = (userId) => fetchApi(`${SERVER_API_URL}/api/watched-movies/series?userId=${userId}`)
 
-// Поиск в API Кинопоиска
-export const searchKinopoisk = (query) =>
-  fetchApi(`${SERVER_API_URL}/api/kinopoisk/search?query=${encodeURIComponent(query)}`)
+// Поиск TMDB
+export const searchTmdb = (query, language) =>
+  fetchApi(
+    `${SERVER_API_URL}/api/tmdb/search?query=${encodeURIComponent(query)}&language=${encodeURIComponent(language)}`
+  )
+
+export const getTmdbDetails = (mediaType, id) =>
+  fetchApi(`${SERVER_API_URL}/api/tmdb/details/${mediaType}/${id}`)

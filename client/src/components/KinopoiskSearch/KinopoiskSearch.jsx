@@ -7,40 +7,13 @@ import Card, { StyledButton } from "../Card/Card"
 import { ModalContext } from "../Modal/ModalContext"
 import { addMovie as addMovieToApi } from "../../api"
 import { addSeries as addSeriesToApi } from "../../api"
-import { searchKinopoisk } from "../../api"
+import { getTmdbDetails, searchTmdb } from "../../api"
 import { addMovieOrSeries } from "../../utils/utils"
+import { movieTitle } from "../../utils/localizedMovie"
 import useDebounce from "../../../hooks/useDebounce"
 
 import { getPlaceholderPosterUrl } from "../../constants"
 import styles from "./KinopoiskSearch.module.css"
-
-function formatMovieLength(minutes, t) {
-  if (minutes == null) return ""
-  return t("duration.hoursMinutes", {
-    hours: Math.trunc(minutes / 60),
-    minutes: minutes % 60,
-  })
-}
-
-function mapKinopoiskToCard(doc, t) {
-  return {
-    title: doc.name || "",
-    img: doc.poster?.previewUrl || doc.poster?.url || getPlaceholderPosterUrl(t("card.noPoster")),
-    shortDescription: doc.shortDescription || "",
-    description: doc.description || "",
-    year: doc.year || "",
-    genres: Array.isArray(doc.genres)
-      ? doc.genres.map((g) => g.name).join(", ")
-      : "",
-    rating:
-      doc.rating && typeof doc.rating.kp === "number"
-        ? doc.rating.kp.toFixed(2)
-        : "",
-    movieLength: formatMovieLength(doc.movieLength, t),
-    kinopoiskId: doc.id,
-    isSeries: doc.isSeries ?? false,
-  }
-}
 
 export default function KinopoiskSearch({
   setMovies,
@@ -51,10 +24,12 @@ export default function KinopoiskSearch({
   const { t, i18n } = useTranslation()
   const { showDetails } = useContext(ModalContext)
   const userId = useSelector((state) => state.auth.user?._id)
+  const language = (i18n.resolvedLanguage || i18n.language || "ru").startsWith("en")
+    ? "en-US"
+    : "ru-RU"
 
   const [searchQuery, setSearchQuery] = useState("")
   const [results, setResults] = useState([])
-  const [docs, setDocs] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
@@ -64,7 +39,6 @@ export default function KinopoiskSearch({
     const q = debouncedQuery.trim()
     if (!q) {
       setResults([])
-      setDocs([])
       setError(false)
       return
     }
@@ -73,21 +47,25 @@ export default function KinopoiskSearch({
     setLoading(true)
     setError(false)
 
-    searchKinopoisk(q)
+    searchTmdb(q, language)
       .then((data) => {
         if (cancelled) return
         const items = Array.isArray(data) ? data : []
-        const qLower = q.toLowerCase()
-        const filtered = items.filter((doc) =>
-          (doc.name || "").toLowerCase().includes(qLower)
+        setResults(
+          language === "en-US"
+            ? items.map((item) => ({
+                ...item,
+                titleEn: item.titleEn || item.title,
+                shortDescriptionEn: item.shortDescriptionEn || item.shortDescription,
+                descriptionEn: item.descriptionEn || item.description,
+              }))
+            : items
         )
-        setDocs(filtered)
       })
       .catch(() => {
         if (cancelled) return
         setError(true)
         setResults([])
-        setDocs([])
       })
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -96,31 +74,23 @@ export default function KinopoiskSearch({
     return () => {
       cancelled = true
     }
-  }, [debouncedQuery])
-
-  useEffect(() => {
-    setResults(docs.map((doc) => mapKinopoiskToCard(doc, t)))
-  }, [docs, t, i18n.language])
+  }, [debouncedQuery, language])
 
   const handleAdd = async (movie) => {
-    const success = await addMovieOrSeries(
-      movie.title,
-      movie.img,
-      movie.shortDescription,
-      movie.description,
-      movie.year,
-      movie.genres,
-      movie.rating,
-      movie.movieLength,
-      movie.kinopoiskId,
-      movie.isSeries,
-      addSeriesToApi,
-      addMovieToApi,
-      setSeries,
-      setMovies,
-      userId
-    )
-    if (success) onMovieAdded?.(movie.isSeries)
+    try {
+      const details = await getTmdbDetails(movie.tmdbMediaType, movie.tmdbId)
+      const success = await addMovieOrSeries(
+        details,
+        addSeriesToApi,
+        addMovieToApi,
+        setSeries,
+        setMovies,
+        userId
+      )
+      if (success) onMovieAdded?.(details.isSeries)
+    } catch (err) {
+      console.error("Failed to add movie from TMDB:", err)
+    }
   }
 
   const filterContent = (movie) => (
@@ -162,8 +132,12 @@ export default function KinopoiskSearch({
           ) : (
             results.map((movie) => (
               <Card
-                key={movie.kinopoiskId}
-                movie={movie}
+                key={`${movie.tmdbMediaType}-${movie.tmdbId}`}
+                movie={{
+                  ...movie,
+                  img: movie.img || getPlaceholderPosterUrl(t("card.noPoster")),
+                  title: movieTitle(movie, i18n.resolvedLanguage || i18n.language),
+                }}
                 styleType="kinopoiskSearch"
                 buttons={filterContent(movie)}
               />

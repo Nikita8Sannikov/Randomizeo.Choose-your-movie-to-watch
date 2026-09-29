@@ -81,7 +81,7 @@
     "notFound": "Фильмы не найдены"
   },
   "kinopoisk": {
-    "placeholder": "Поиск в Кинопоиске",
+    "placeholder": "Найти фильм или сериал",
     "searching": "Поиск...",
     "searchError": "Ошибка поиска",
     "resetSearch": "Сбросить поиск",

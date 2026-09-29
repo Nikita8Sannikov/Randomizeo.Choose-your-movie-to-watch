@@ -81,7 +81,7 @@
     "notFound": "No movies found"
   },
   "kinopoisk": {
-    "placeholder": "Search Kinopoisk",
+    "placeholder": "Search movies or series",
     "searching": "Searching...",
     "searchError": "Search failed",
     "resetSearch": "Clear search",
