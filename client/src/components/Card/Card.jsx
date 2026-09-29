@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./Card.module.css";
 import Button from "../Button";
+import { movieShortDescription, movieTitle, formatMovieLength, truncateText } from "../../utils/localizedMovie";
 import { getPlaceholderPosterUrl } from "../../constants";
 import { refreshPoster } from "../../api";
 
@@ -9,7 +10,11 @@ const CARD_HEIGHT_TALL = 520;   /* переключаем на мелкий шр
 const CARD_HEIGHT_SHORT = 480;  /* переключаем обратно (гистерезис, чтобы не дергалось) */
 
 export default function Card({ movie, cardRef, styleType, buttons }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.resolvedLanguage || i18n.language;
+  const title = movieTitle(movie, lang);
+  const shortDescription = truncateText(movieShortDescription(movie, lang));
+  const lengthLabel = formatMovieLength(movie.movieLength, t);
   const containerRef = useRef(null);
   const placeholderSrc = getPlaceholderPosterUrl(t("card.noPoster"));
   const [isCardTall, setIsCardTall] = useState(false);
@@ -71,25 +76,25 @@ export default function Card({ movie, cardRef, styleType, buttons }) {
       <div className={styles.imgWrapper}>
         <img
           src={movie.img || placeholderSrc}
-          alt={movie.title}
+          alt={title}
           className={styles.cardImg}
           onError={handleImageError}
         />
         <div className={styles.descriptionLayer}>
           <p className={styles.cardText}>
             <>
-              {movie.shortDescription || t("card.noShortDescription")}
+              {shortDescription || t("card.noShortDescription")}
               <br />
               <i>{movie.genres || ""}</i>
               <br />
-              <i>{movie.movieLength || ""}</i>
+              <i>{lengthLabel}</i>
             </>
           </p>
         </div>
       </div>
       <div className={styles.cardBody}>
         <h5 className={styles.cardTitle}>
-          {movie.title} {(movie.year || "") && `(${movie.year})`}
+          {title} {(movie.year || "") && `(${movie.year})`}
         </h5>
         <p className={styles.cardText}>
           <i className="fa-solid fa-star star-icon"></i>
