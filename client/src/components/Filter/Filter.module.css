@@ -3,6 +3,8 @@
     flex-wrap: wrap;
     justify-content: center;
     max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 16px;
 }
 #filterResults>p{
     margin-top: 20px;

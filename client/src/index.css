@@ -3,6 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 body {
   font-family: "Manrope", sans-serif;
   background: linear-gradient(0deg, #151616 -103%, #000000 4%);

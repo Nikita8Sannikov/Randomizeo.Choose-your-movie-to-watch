@@ -121,7 +121,7 @@
     gap: 10px;
     justify-content: center;
     margin-top: auto;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 .btn{
     border-radius: 10px;
@@ -147,6 +147,30 @@
     }
 }
 @media(max-width: 1024px){
+    .card.filter {
+        width: min(280px, 100%);
+        max-width: 100%;
+        min-width: 0;
+    }
+    .card.filter .imgWrapper,
+    .card.filter .cardImg {
+        max-width: 100%;
+    }
+    .card.filter .buttonSection {
+        max-width: 100%;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+        padding: 0 12px;
+    }
+    .card.filter .btn {
+        -webkit-appearance: none;
+        appearance: none;
+        max-width: 100%;
+        padding: 6px 10px;
+        font-size: 14px;
+        white-space: normal;
+        line-height: 1.2;
+    }
     .card {
         width: 24vh;
         margin: 10px;
