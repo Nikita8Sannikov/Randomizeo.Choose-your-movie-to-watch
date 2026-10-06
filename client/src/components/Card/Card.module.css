@@ -110,6 +110,7 @@
     font-size: 20px;
     font-weight: 700;
     text-align: center;
+    margin: 0 5px 0 5px;
 }
 
 .cardTall .cardTitle {
@@ -122,6 +123,7 @@
     justify-content: center;
     margin-top: auto;
     margin-top: 10px;
+    /* margin-bottom: 10px; */
 }
 .btn{
     border-radius: 10px;
@@ -138,7 +140,12 @@
     background-color: rgb(68 68 68 / 50%);
 }
 @media(max-width: 1030px){
-    
+}
+
+@media(max-width: 2600px){
+    .card .buttonSection {
+        margin-bottom: 10px;
+    }
 }
 @media(max-width: 1040px){
     .movieSection.card,
@@ -181,7 +188,7 @@
         flex-direction: column;
         align-items: center;
         background-color: rgb(68 68 68 / 20%);
-        padding: 15px;
+        /* padding: 15px; */
         transform-origin: bottom center;
         transition: transform 0.3s;
         color: white;
